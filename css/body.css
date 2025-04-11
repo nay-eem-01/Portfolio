@@ -1,0 +1,29 @@
+h1{
+  font-size: 52px;
+  font-weight: 700;
+}
+.main-container{
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+.profile-container{
+  flex: 1;
+  background-color: rgb(21, 19, 18);
+  color: white;
+  padding: 20px;
+
+}
+.content-container{
+  flex:2;
+  padding: 20px 40px;
+  background-color: rgb(21, 19, 18);
+  overflow-y: auto;
+  color: white;
+}
+
+.about-me-par p {
+  margin: 20px;
+  font-size: 18px;
+  line-height: 25px;
+}
