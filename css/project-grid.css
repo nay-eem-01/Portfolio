@@ -1,0 +1,48 @@
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 16px;
+}
+
+.project-preview {
+  background-color: #1f2937;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  transition: transform 0.3s ease;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.project-preview:hover {
+  transform: translateY(-10px);
+}
+
+.projec-title {
+  padding-bottom: 20px;
+  font-weight: 700;
+}
+
+.project-description{
+  padding-bottom: 10px;
+  line-height: 22px;
+}
+
+.tech-stack{
+  padding-bottom: 20px;
+  font-weight: 500;
+  
+
+}
+
+.links a {
+  margin-right: 15px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #0a66c2;
+}

@@ -1,0 +1,65 @@
+.contact {
+  background-color: rgb(21, 19, 18);
+  color: white;
+  padding: 60px 40px;
+}
+
+.contact h1 {
+  font-size: 48px;
+  margin-bottom: 40px;
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-text {
+  flex: 1;
+  font-size: 18px;
+  line-height: 1.7;
+  padding-right: 20px;
+}
+
+.contact-card {
+  flex: 1;
+  background-color: #1f2937;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contact-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-card li {
+  margin-bottom: 25px;
+}
+
+.contact-card h5 {
+  margin: 0;
+  font-size: 16px;
+  color: #facc15;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contact-card p {
+  margin: 0;
+  font-size: 15px;
+  color: #e2e8f0;
+  word-break: break-word;
+}
+.contact-card a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+.contact-card a:hover {
+  text-decoration: underline;
+}
