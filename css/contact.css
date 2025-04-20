@@ -1,32 +1,45 @@
 .contact {
   background-color: rgb(21, 19, 18);
   color: white;
-  padding: 60px 40px;
+  width: 100%;
 }
 
-.contact h1 {
-  font-size: 48px;
-  margin-bottom: 40px;
-}
+/* .contact h1 {
+  font-size: clamp(32px, 4vw, 48px);
+  margin-bottom: clamp(20px, 4%, 40px);
+  padding-top: clamp(45px, 5vh, 55px);
+  scroll-margin-top: clamp(45px, 5vh, 55px);
+  padding-left: clamp(20px, 4%, 40px);
+} */
 
 .contact-container {
   display: flex;
   flex-direction: row;
-  gap: 40px;
+  gap: clamp(20px, 4%, 40px);
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4%, 40px) clamp(30px, 5%, 60px);
 }
 
 .contact-text {
   flex: 1;
-  font-size: 18px;
+  min-width: 300px;
+  font-size: clamp(16px, 1.8vw, 18px);
   line-height: 1.7;
-  padding-right: 20px;
+  padding-right: clamp(10px, 2%, 20px);
 }
 
 .contact-card {
   flex: 1;
-  background-color: #1f2937;
-  padding: 30px;
+  min-width: 300px;
+  /* background-color: #1f2937; */
+  background-color: rgb(21, 19, 18);
+  border: 2px solid #761e1e;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  padding: clamp(20px, 3%, 30px);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -38,12 +51,12 @@
 }
 
 .contact-card li {
-  margin-bottom: 25px;
+  margin-bottom: clamp(15px, 2.5%, 25px);
 }
 
 .contact-card h5 {
   margin: 0;
-  font-size: 16px;
+  font-size: clamp(14px, 1.5vw, 16px);
   color: #facc15;
   margin-bottom: 6px;
   text-transform: uppercase;
@@ -52,14 +65,68 @@
 
 .contact-card p {
   margin: 0;
-  font-size: 15px;
+  font-size: clamp(14px, 1.5vw, 15px);
   color: #e2e8f0;
   word-break: break-word;
 }
+
 .contact-card a {
   color: #60a5fa;
   text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
+
 .contact-card a:hover {
   text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 1200px) {
+  .contact-container {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .contact-text,
+  .contact-card {
+    min-width: 250px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contact {
+    padding: clamp(20px, 3%, 40px) clamp(15px, 2%, 20px);
+  }
+
+  .contact h1 {
+    font-size: clamp(28px, 3.5vw, 32px);
+    margin-bottom: clamp(15px, 3%, 30px);
+    padding-top: clamp(35px, 4vh, 45px);
+    scroll-margin-top: clamp(35px, 4vh, 45px);
+  }
+
+  .contact-container {
+    flex-direction: column;
+    gap: clamp(15px, 2%, 20px);
+  }
+
+  .contact-text,
+  .contact-card {
+    flex: 1 1 100%;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .contact-text,
+  .contact-card {
+    min-width: 100%;
+  }
+
+  .contact-card {
+    padding: 15px;
+  }
 }

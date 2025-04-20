@@ -1,13 +1,86 @@
 .footer {
   margin: 0;
-  padding: 20px 10px;
+  padding: clamp(15px, 2%, 20px) clamp(10px, 1%, 15px);
   background-color: #111827;
   color: #ffffff;
   text-align: center;
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px);
   font-weight: 500;
   border-top: 1px solid #1f2937;
-  margin-top: 20px;
+  margin-top: clamp(15px, 2%, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 100;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
 
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-left: min(600px, 30%); /* Match sidebar width */
+}
 
+.footer-links {
+  display: flex;
+  gap: clamp(10px, 2%, 20px);
+}
+
+.footer-links a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.footer-links a:hover {
+  color: #60a5fa;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 992px) {
+  .footer-content {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: clamp(10px, 1.5%, 15px) clamp(5px, 1%, 10px);
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 0; /* Remove padding on mobile */
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .footer {
+    font-size: 12px;
+  }
+
+  .footer-links {
+    gap: 8px;
+  }
+
+  .footer-links a {
+    padding: 4px 8px;
+  }
 }

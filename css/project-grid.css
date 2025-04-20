@@ -1,48 +1,93 @@
 .project-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 20px;
-  row-gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(25px, 3%, 35px);
+  padding: clamp(10px, 2%, 20px) 0;
 }
 
 .project-preview {
-  background-color: #1f2937;
-  padding: 20px;
+  background-color: var(--card-bg);
+  padding: clamp(15px, 2%, 20px);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   color: #ffffff;
-  transition: transform 0.3s ease;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  margin: clamp(10px, 2%, 20px) 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 2px solid var(--accent-color);
 }
 
 .project-preview:hover {
   transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.2);
 }
 
 .projec-title {
-  padding-bottom: 20px;
+  padding-bottom: clamp(15px, 2%, 20px);
   font-weight: 700;
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--accent-color);
 }
 
-.project-description{
-  padding-bottom: 10px;
-  line-height: 22px;
+.project-description {
+  padding-bottom: clamp(20px, 1.5%, 15px);
+  line-height: 1.6;
+  font-size: clamp(14px, 1.5vw, 16px);
+  flex-grow: 1;
 }
 
-.tech-stack{
-  padding-bottom: 20px;
+.tech-stack {
+  padding-bottom: clamp(15px, 2%, 20px);
   font-weight: 500;
-  
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: var(--accent-color);
+}
 
+.links {
+  display: flex;
+  gap: clamp(10px, 2%, 15px);
+  align-items: center;
 }
 
 .links a {
-  margin-right: 15px;
-  color: white;
-  transition: color 0.3s ease;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: clamp(14px, 1.5vw, 16px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
 }
 
 .links a:hover {
-  color: #0a66c2;
+  background-color: var(--accent-color);
+  color: var(--card-bg);
+  text-decoration: none;
 }
+
+@media screen and (max-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+    padding: 10px 0;
+  }
+
+  .project-preview {
+    margin: 10px 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .project-preview {
+    padding: 15px;
+  }
+
+  .links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+

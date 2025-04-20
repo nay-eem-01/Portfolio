@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/project-grid.css">
     <link rel="stylesheet" href="css/contact.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -21,12 +23,12 @@
 
         <nav>
             <ul>
-                <li><a href="#home"><i class="fas fa-home"></i></a></li>
-                <li><a href="#about"><i class="fas fa-user-circle"></i></a></li>
-                <li><a href="#experience"><i class="fas fa-briefcase"></i></a></li>
-                <li><a href="#skillset"><i class="fas fa-code"></i></a></li>
-                <li><a href="#projects"><i class="fas fa-folder-open"></i></a></li>
-                <li><a href="#contact"> <i class="fas fa-envelope"></i></a></li>
+                <li><a href="./" data-tooltip="Home"><i class="fas fa-home"></i></a></li>
+                <li><a href="#about" data-tooltip="About"><i class="fas fa-user-circle"></i></a></li>
+                <li><a href="#experience" data-tooltip="Experience"><i class="fas fa-briefcase"></i></a></li>
+                <li><a href="#skillset" data-tooltip="Skills"><i class="fas fa-code"></i></a></li>
+                <li><a href="#projects" data-tooltip="Projects"><i class="fas fa-folder-open"></i></a></li>
+                <li><a href="#contact" data-tooltip="Contact"><i class="fas fa-envelope"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -44,21 +46,21 @@
                     <ul>
                         <li>
                             <a href="mailto:ahmedmdnayeem05@gmail.com" title="Email">
-                              <i class="fas fa-envelope fa-xl"></i>
+                                <i class="fas fa-envelope fa-xl"></i>
                             </a>
-                          </li>
-                          <li>
+                        </li>
+                        <li>
                             <a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank" title="LinkedIn">
-                              <i class="fab fa-linkedin fa-xl"></i>
+                                <i class="fab fa-linkedin fa-xl"></i>
                             </a>
-                          </li>
-                          <li>
+                        </li>
+                        <li>
                             <a href="https://github.com/nay-eem-01" target="_blank" title="GitHub">
-                              <i class="fab fa-github fa-xl"></i>
+                                <i class="fab fa-github fa-xl"></i>
                             </a>
-                          </li>
-                        
-                          
+                        </li>
+
+
                     </ul>
 
                 </div>
@@ -71,10 +73,9 @@
 
                 <h1>About me</h1>
                 <div class="about-me-par">
-                    <p>Hi, I’m <strong>Mohammad Nayeem Ahmed</strong>, a backend-focused <strong>Software
-                            Developer</strong> passionate about building efficient and scalable systems using <em>Java,
-                            Spring Boot</em>, and more. I love learning, solving problems, and connecting with fellow
-                        tech enthusiasts. Let’s connect—links are on the sidebar!</p>
+                    <p>Hey there! I'm a <strong>Backend Developer</strong> who's absolutely in love with <strong>Java</strong> and <strong>Spring Boot</strong>. There's something incredibly satisfying about building the backbone of applications - making them fast, reliable, and ready to handle whatever users throw at them.</p>
+
+                    <p>I thrive on solving complex problems and turning them into elegant solutions. Whether it's designing RESTful APIs or optimizing database queries, I'm always up for a good challenge. My goal? To keep growing, keep learning, and one day build systems that millions of people rely on.</p>
                 </div>
 
             </section>
@@ -87,8 +88,8 @@
                 <div class="experience-item">
                     <h3>Java Intern - Tech-Phi IT</h3>
                     <span class="duration">January 2025 - March 2025</span>
-                    <p>Worked on building REST APIs in Java using Spring Boot. Collaborated with the frontend team and
-                        handled user authentication.</p>
+                    <p>Contributed to the development of RESTful APIs using Spring Boot. Collaborated closely with the
+                        frontend team and implemented user authentication features.</p>
                 </div>
 
             </section>
@@ -135,16 +136,13 @@
                         <div class="skill-category tools">
                             <h3>Database & Tools</h3>
                             <div class="icon-grid">
-                                <div class="icon-item"><i class="fas fa-database" title="MySQL"></i><span>MySQL</span>
-                                </div>
-                                <div class="icon-item"><i class="fas fa-vial" title="Postman"></i><span>Postman</span>
-                                </div>
-                                <div class="icon-item"><i class="fab fa-github" title="GitHub"></i><span>GitHub</span>
-                                </div>
-                                <div class="icon-item"><i class="fas fa-code" title="VS Code"></i><span>VS Code</span>
-                                </div>
-                                <div class="icon-item"><i class="fas fa-lightbulb"
-                                        title="IntelliJ IDEA"></i><span>IntelliJ IDEA</span></div>
+                                <div class="icon-item"><i class="fas fa-database" title="MySQL"></i><span>MySQL</span></div>
+                                <div class="icon-item"><i class="fas fa-database" title="PostgreSQL"></i><span>PostgreSQL</span></div>
+                                <div class="icon-item"><i class="fas fa-vial" title="Postman"></i><span>Postman</span></div>
+                                <div class="icon-item"><i class="fab fa-git-alt" title="Git"></i><span>Git</span></div>
+                                <div class="icon-item"><i class="fab fa-github" title="GitHub"></i><span>GitHub</span></div>
+                                <div class="icon-item"><i class="fas fa-code" title="VS Code"></i><span>VS Code</span></div>
+                                <div class="icon-item"><i class="fas fa-lightbulb" title="IntelliJ IDEA"></i><span>IntelliJ IDEA</span></div>
                             </div>
                         </div>
 
@@ -163,17 +161,21 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-                         
+
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">E-Commerce Application</h2>
-                            <p class="project-description">A modern full responsive e-commerce application that has key fetures like searching, category, products , checkout and payment gateway most importantly authentication and authorization</p>
-                            <br>
-                            <p class="tech-stack"><strong>Tech stack:</strong> Springboot, React,mySql,Jwt and Spring-Security</p>
+                            <p class="project-description">A fully responsive modern e-commerce application with
+                                features like product search, category browsing, checkout, and payment gateway
+                                integration. It also includes robust authentication and authorization mechanisms.</p>
+                            <p class="tech-stack"><strong>Tech stack:</strong> Spring Boot, React, MySQL, JWT, Spring
+                                Security</p>
+
                             <div class="links">
-                                <a href="https://github.com/nay-eem-01/E-commerce-application-with-springboot"  title="GitHub Repo"><i class="fab fa-github fa-xl"></i></a>
-                                <a href="https://your-live-site-link.com" target="_blank" title="Live Site">
-                                    <i class="fas fa-external-link-alt fa-xl"></i></a>
+                                <a href="https://github.com/nay-eem-01/E-commerce-application-with-springboot"
+                                    title="GitHub Repo"><i class="fab fa-github fa-xl"></i></a>
+                                <!-- <a href="https://your-live-site-link.com" target="_blank" title="Live Site">
+                                    <i class="fas fa-external-link-alt fa-xl"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -186,15 +188,19 @@
                         <div class="project-details">
 
                             <h2 class="projec-title">Banking Application</h2>
-                            <p class="project-description">
-                                This is a simple banking application management that has key features like login, register account , deposit and withdraw money. Currently it doesn't carry spring boot security but soon it will be and the login consist JWT Authentication.
-                            </p><br>
-                            <p class="tech-stack"><strong>Tech stack: </strong>Java,Springboot</p>
+                            <p class="project-description">A basic banking management system featuring user
+                                registration, login, account creation, deposit, and withdrawal functionalities. While it
+                                currently lacks Spring Security, JWT-based authentication is implemented and future
+                                improvements are planned.</p>
+                            <p class="tech-stack"><strong>Tech stack:</strong> Java, Spring Boot</p>
+
+                         
                             <div class="links">
-                                <a href="https://github.com/nay-eem-01/BankingApplicationManagementSystem"><i class="fab fa-github fa-xl"></i></a>
-                                
-                                <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a>
-                                
+                                <a href="https://github.com/nay-eem-01/BankingApplicationManagementSystem"><i
+                                        class="fab fa-github fa-xl"></i></a>
+
+                                <!-- <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a> -->
+
                             </div>
 
                         </div>
@@ -207,13 +213,16 @@
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">Cryptography Encryption Application</h2>
-                            <p class="project-description">A web based encryption application that is implemented with RSA,AES MonoAlphabetic and Mononumeric encryption algorithm</p>
-                            <br>
-                            <p class="tech-stack"><strong>Tech stack: </strong>Java, Springboot, Thymleaf</p>
+                            <p class="project-description">A web-based application for data encryption using algorithms
+                                like RSA, AES, Monoalphabetic, and Mononumeric ciphers. Ideal for learning and
+                                demonstrating cryptographic techniques.</p>
+                            <p class="tech-stack"><strong>Tech stack:</strong> Java, Spring Boot, Thymeleaf</p>
+
                             <div class="links">
-                                <a href="https://github.com/nay-eem-01/CyrptographyEncrytption_Application"><i class="fab fa-github fa-xl"></i></a>
-                                <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a>
-                                
+                                <a href="https://github.com/nay-eem-01/CyrptographyEncrytption_Application"><i
+                                        class="fab fa-github fa-xl"></i></a>
+                                <!-- <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a> -->
+
                             </div>
                         </div>
                     </div>
@@ -225,11 +234,16 @@
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">Data Conversion Tool</h2>
-                            <p class="project-description">A Spring Boot web application that performs various data communication operations, including Hamming Distance calculation, Parity Check, Bit Stuffing, and Bit Destuffing. Users can input their data and select the desired operation to get the results instantly. </p>
-                            <p class="tech-stack"><strong>Tech stack: </strong> Spring Boot, Thymeleaf, Java, HTML, CSS </strong></p>
+                            <p class="project-description">A Spring Boot web app for performing data communication
+                                operations such as Hamming Distance calculation, Parity Check, Bit Stuffing, and Bit
+                                Destuffing. Users can input data and select the operation to instantly see results.</p>
+                            <p class="tech-stack"><strong>Tech stack:</strong> Spring Boot, Thymeleaf, Java, HTML, CSS
+                            </p>
+
                             <div class="links">
-                                <a href="https://github.com/nay-eem-01/DataCommunicationProject"><i class="fab fa-github fa-xl"></i></a>
-                                <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a>                      
+                                <a href="https://github.com/nay-eem-01/DataCommunicationProject"><i
+                                        class="fab fa-github fa-xl"></i></a>
+                                <!-- <a href=""><i class="fas fa-external-link-alt fa-xl"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -303,29 +317,32 @@
 
                 <div class="contact-container">
                     <div class="contact-text">
-                    <p>
-                        I am interested in working with any company that thinks my skill will be helpful for them. If you are looking for someone like me, please let me know. Or you can just 'say hi' to me.
-                    </p>
+                        <p>
+                            I am interested in working with any company that thinks my skill will be helpful for them.
+                            If you are looking for someone like me, please let me know. Or you can just 'say hi' to me.
+                        </p>
                     </div>
                     <div class="contact-card">
                         <ul>
                             <li>
                                 <h5><i class="fas fa-envelope"></i> Email</h5>
                                 <p>ahmedmdnayeem05@gmail.com</p>
-                              </li>
-                              <li>
+                            </li>
+                            <li>
                                 <h5><i class="fab fa-linkedin"></i> LinkedIn</h5>
-                                <p><a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank">https://www.linkedin.com/in/md-nayeem-ahmed/</a></p>
-                              </li>
-                              <li>
+                                <p><a href="https://www.linkedin.com/in/md-nayeem-ahmed/"
+                                        target="_blank">https://www.linkedin.com/in/md-nayeem-ahmed/</a></p>
+                            </li>
+                            <li>
                                 <h5><i class="fab fa-github"></i> GitHub</h5>
-                                <p><a href="https://github.com/nay-eem-01" target="_blank">https://github.com/nay-eem-01</a></p>
-                              </li>
-                              <li>
+                                <p><a href="https://github.com/nay-eem-01"
+                                        target="_blank">https://github.com/nay-eem-01</a></p>
+                            </li>
+                            <li>
                                 <h5><i class="fas fa-map-marker-alt"></i> ADDRESS</h5>
                                 <p>Uttara, Dhaka-1230, Bangladesh</p>
-                              </li>
-                              
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -335,9 +352,6 @@
 
 
     <footer class="footer"> Designed and developed by Md. Nayeem Ahmed</footer>
-
-
-
 
 </body>
 
