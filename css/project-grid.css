@@ -69,6 +69,45 @@
   text-decoration: none;
 }
 
+/* Base style for tech stack icons */
+.tech-stack i {
+  margin-right: 8px;
+  font-size: 1.3rem;
+  color: #ffffff; /* Bright white for visibility */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* subtle glow */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  vertical-align: middle;
+}
+
+/* Override any existing 'colored' class colors */
+.tech-stack i.colored {
+  color: #ffffff !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Hover effect to highlight icon */
+.tech-stack i:hover {
+  color: #00FFAA; /* Bright accent color (teal/greenish) */
+  text-shadow: 0 0 15px #00FFAA;
+  cursor: pointer;
+}
+
+/* Optional: add a circular background badge for extra style */
+.tech-stack i.badged {
+  background-color: #222; /* dark grey circle */
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-stack i.badged:hover {
+  background-color: #00FFAA;
+  box-shadow: 0 0 20px #00FFAA;
+  color: #000; /* dark text inside bright bg */
+}
+
+
 @media screen and (max-width: 768px) {
   .project-grid {
     grid-template-columns: 1fr;
