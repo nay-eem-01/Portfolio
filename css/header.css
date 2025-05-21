@@ -15,18 +15,20 @@ body {
   scroll-behavior: smooth;
 }
 
-.header{
+.header {
   background-color: rgb(21, 19, 18);
   position: fixed;
   height: clamp(45px, 5vh, 55px);
-  top: 0;
+  top: 5px; /* add padding from the top */
   left: 0;
   right: 0;
   z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.4s ease, opacity 0.4s ease; /* for scroll effect */
 }
+
 
 nav{
   display: flex;

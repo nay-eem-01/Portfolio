@@ -195,7 +195,11 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-                            <!-- Optional project image or preview -->
+
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/agrotrends.jpg">
+                            </div>
+
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">AgroTrends – Agricultural Knowledge Platform</h2>
@@ -232,7 +236,9 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/e-com.png">
+                            </div>
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">E-Commerce Application</h2>
@@ -240,7 +246,7 @@
                                 features like product search, category browsing, checkout, and payment gateway
                                 integration. It also includes robust authentication and authorization mechanisms.</p>
                             <p class="tech-stack">
-                                <strong>Tech stack:</strong>
+                                <strong>Tech stack: </strong>
                                 <i class="devicon-spring-plain colored" title="Spring Boot"></i>
                                 <i class="devicon-react-original colored" title="React"></i>
                                 <i class="devicon-mysql-plain colored" title="MySQL"></i>
@@ -261,7 +267,11 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-                            <!-- Optional project image or preview -->
+
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/spam.png">
+                            </div>
+
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">AI Email Spam Detector</h2>
@@ -297,7 +307,9 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/bank.png">
+                            </div>
                         </div>
                         <div class="project-details">
 
@@ -328,7 +340,9 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/crypto (1).png">
+                            </div>
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">Cryptography Encryption Application</h2>
@@ -356,7 +370,9 @@
 
                     <div class="project-preview">
                         <div class="project-template">
-
+                            <div class="thumbnail-picture">
+                                <img src="project thumbnail/datacom.png">
+                            </div>
                         </div>
                         <div class="project-details">
                             <h2 class="projec-title">Data Conversion Tool</h2>
@@ -424,7 +440,52 @@
     </div>
 
 
-    <footer class="footer"> Designed and developed by Md. Nayeem Ahmed</footer>
+<footer class="footer">
+  <div class="footer-content">
+    <div>Designed and developed by <strong>Md. Nayeem Ahmed</strong></div>
+    <!-- <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#blogs">Blogs</a>
+      <a href="#contact">Contact</a>
+      <a href="#courses">Courses</a>
+    </div> -->
+  </div>
+</footer>
+
+
+
+
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector('.header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+                header.style.transform = 'translateY(0)';
+                header.style.opacity = '1';
+                return;
+            }
+
+            if (currentScroll > lastScroll) {
+                // Scrolling down -> hide header
+                header.style.transform = 'translateY(-100%)';
+                header.style.opacity = '0';
+            } else {
+                // Scrolling up -> show header
+                header.style.transform = 'translateY(0)';
+                header.style.opacity = '1';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+
+</html>
+
 
 </body>
 
