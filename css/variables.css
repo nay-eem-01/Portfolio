@@ -1,0 +1,27 @@
+:root {
+  /* Colors */
+  --bg: #0c0d0f;
+  --bg-raised: #17181b;
+  --border: #2a2b2f;
+  --text: #f4f3ef;
+  --text-muted: #9a9a97;
+  --accent: #e8b44b;
+  --accent-dim: #6b5726;
+
+  /* Type */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing scale */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+  --space-7: 9rem;
+
+  /* Layout */
+  --max-width: 1180px;
+  --radius: 10px;
+}
