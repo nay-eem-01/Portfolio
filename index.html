@@ -20,16 +20,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
 </head>
 <body>
-
+  
 <header class="header">
   <nav>
     <a href="#" class="logo">Nayeem Ahmed</a>
     <ul>
-      <li><a href="#about"><span>01. </span>About</a></li>
-      <li><a href="#experience"><span>02. </span>Experience</a></li>
-      <li><a href="#skillset"><span>03. </span>Skills</a></li>
-      <li><a href="#projects"><span>04. </span>Projects</a></li>
-      <li><a href="#contact"><span>05. </span>Contact</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skillset">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -51,6 +51,7 @@
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">View Projects</a>
           <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+          <a href="assets/Nayeem-Ahmed-Resume.pdf" class="btn btn-secondary" download>Download CV</a>
         </div>
       </div>
       <div class="hero-portrait">
@@ -74,15 +75,16 @@
     </div>
   </section>
 
-  <!-- Marquee -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>Java</span><span>Spring Boot</span><span>Spring WebFlux</span><span>Neo4j</span>
-      <span>Kafka</span><span>Redis</span><span>Docker</span><span>PostgreSQL</span>
-      <span>Java</span><span>Spring Boot</span><span>Spring WebFlux</span><span>Neo4j</span>
-      <span>Kafka</span><span>Redis</span><span>Docker</span><span>PostgreSQL</span>
+<!-- Terminal strip -->
+<div class="terminal">
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="terminal-title">nayeem@backend:~</span>
     </div>
+    <div class="terminal-body"><span id="terminalLine"></span><span class="cursor">&nbsp;</span></div>
   </div>
+</div>
 
   <!-- About -->
   <section class="section reveal" id="about">
@@ -127,24 +129,34 @@
 
           <div class="timeline-subgroup">
             <span>TaskATask — Reactive task management platform (Spring WebFlux, Neo4j)</span>
-            <ul>
-              <li>Built a real-time chat system using <strong>WebFlux Sinks</strong>, supporting
-                group conversations, pin/archive/mute, scheduled and self-destructing
-                messages.</li>
-              <li>Secured message content end-to-end with <strong>Jasypt</strong>
-                encryption/decryption at the persistence layer.</li>
-              <li>Engineered a bulk contact-import pipeline (up to 10,000 records) via
-                <strong>Redis</strong>-backed job queues with chunked processing and batch
-                duplicate-detection queries, cutting import latency significantly.</li>
-              <li>Designed appointment accept/reject/reschedule flow with
-                <strong>Kafka</strong>-driven notifications, synced to Google Calendar and
-                iCalendar.</li>
-              <li>Implemented multi-provider <strong>OAuth2</strong> authentication — Google,
-                Facebook, Apple, and email/phone OTP.</li>
-              <li>Diagnosed and fixed a critical <strong>Neo4j</strong> bug causing
-                full-relationship fetch on every node save; resolved via projection-based
-                updates for scalar fields and custom Cypher queries for relationships.</li>
-            </ul>
+            <p class="exp-summary">Owned the platform's real-time chat, secure messaging,
+              bulk contact import, and Kafka-driven notification systems end-to-end.</p>
+
+            <button class="exp-toggle" aria-expanded="false">
+              <span class="toggle-label">Show details</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="exp-details">
+              <div>
+                <ul>
+                  <li>Built a real-time chat system using <strong>WebFlux Sinks</strong>, supporting
+                    group conversations, pin/archive/mute, scheduled and self-destructing
+                    messages.</li>
+                  <li>Secured message content end-to-end with <strong>Jasypt</strong>
+                    encryption/decryption at the persistence layer.</li>
+                  <li>Engineered a bulk contact-import pipeline (up to 10,000 records) via
+                    <strong>Redis</strong>-backed job queues with chunked processing and batch
+                    duplicate-detection queries, cutting import latency significantly.</li>
+                  <li>Designed appointment accept/reject/reschedule flow with
+                    <strong>Kafka</strong>-driven notifications, synced to Google Calendar and
+                    iCalendar.</li>
+                  <li>Implemented multi-provider <strong>OAuth2</strong> authentication — Google,
+                    Facebook, Apple, and email/phone OTP.</li>
+                  <li>Diagnosed and fixed a critical <strong>Neo4j</strong> bug causing
+                    full-relationship fetch on every node save; resolved via projection-based
+                    updates for scalar fields and custom Cypher queries for relationships.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -207,7 +219,7 @@
         <div class="skill-category">
           <h3>Messaging &amp; Caching</h3>
           <div class="icon-grid">
-            <div class="icon-item"><i class="devicon-apachekafka-original colored"></i><span>Kafka</span></div>
+            <div class="icon-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/apachekafka.svg" alt="Kafka" class="icon-invert"><span>Kafka</span></div>
             <div class="icon-item"><i class="devicon-redis-plain colored"></i><span>Redis</span></div>
           </div>
         </div>
@@ -218,7 +230,7 @@
             <div class="icon-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
             <div class="icon-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
             <div class="icon-item"><i class="fab fa-github"></i><span>GitHub</span></div>
-            <div class="icon-item"><i class="devicon-postman-plain colored"></i><span>Postman</span></div>
+            <div class="icon-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/postman.svg" alt="Postman"><span>Postman</span></div>
             <div class="icon-item"><i class="fas fa-lightbulb"></i><span>IntelliJ IDEA</span></div>
             <div class="icon-item"><i class="devicon-vscode-plain colored"></i><span>VS Code</span></div>
           </div>
@@ -237,7 +249,9 @@
       <div class="project-grid">
 
         <article class="project-card">
-          <div class="project-thumb"><img src="project-thumbnail/agrotrends.jpg" alt="AgroTrends"></div>
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">A</span><span class="cover-tag">AGROTRENDS</span>
+          </div>
           <div class="project-body">
             <h3 class="project-title">AgroTrends</h3>
             <p class="project-description">A full-stack platform for farmers featuring blogs,
@@ -254,7 +268,9 @@
         </article>
 
         <article class="project-card">
-          <div class="project-thumb"><img src="project-thumbnail/e-com.png" alt="E-Commerce Application"></div>
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">E</span><span class="cover-tag">E-COMMERCE</span>
+          </div>
           <div class="project-body">
             <h3 class="project-title">E-Commerce Application</h3>
             <p class="project-description">A responsive e-commerce platform with product
@@ -271,7 +287,9 @@
         </article>
 
         <article class="project-card">
-          <div class="project-thumb"><img src="project-thumbnail/spam.png" alt="AI Email Spam Detector"></div>
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">S</span><span class="cover-tag">SPAM DETECTOR</span>
+          </div>
           <div class="project-body">
             <h3 class="project-title">AI Email Spam Detector</h3>
             <p class="project-description">A machine learning application that classifies
@@ -289,7 +307,9 @@
         </article>
 
         <article class="project-card">
-          <div class="project-thumb"><img src="project-thumbnail/bank.png" alt="Banking Application"></div>
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">B</span><span class="cover-tag">BANKING APP</span>
+          </div>
           <div class="project-body">
             <h3 class="project-title">Banking Application</h3>
             <p class="project-description">A banking management system with user registration,
@@ -304,7 +324,9 @@
         </article>
 
         <article class="project-card">
-          <div class="project-thumb"><img src="project-thumbnail/crypto (1).png" alt="Cryptography Encryption Application"></div>
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">C</span><span class="cover-tag">CRYPTOGRAPHY</span>
+          </div>
           <div class="project-body">
             <h3 class="project-title">Cryptography Encryption Application</h3>
             <p class="project-description">A web-based application for data encryption using
@@ -315,6 +337,24 @@
             </div>
             <div class="project-links">
               <a href="https://github.com/nay-eem-01/CyrptographyEncrytption_Application" target="_blank"><i class="fab fa-github"></i> Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb project-cover">
+            <span class="cover-glyph">D</span><span class="cover-tag">DATA CONVERSION</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Data Conversion Tool</h3>
+            <p class="project-description">A Spring Boot app for data communication operations
+              — Hamming Distance, Parity Check, Bit Stuffing, and Bit Destuffing — with instant
+              results.</p>
+            <div class="tech-pills">
+              <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/nay-eem-01/DataCommunicationProject" target="_blank"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
@@ -342,10 +382,6 @@
           </ul>
         </div>
 
-        <!--
-          Sign up free at https://formspree.io, create a form, and replace
-          YOUR_FORM_ID below with the ID Formspree gives you.
-        -->
         <form class="contact-form" action="https://formspree.io/f/xkjngalv" method="POST">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>

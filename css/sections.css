@@ -103,6 +103,54 @@
   color: var(--text);
 }
 
+.exp-summary {
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* Collapsible bullet list - keeps long roles from growing the page endlessly */
+.exp-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.exp-toggle i {
+  font-size: 0.7rem;
+  transition: transform 0.25s ease;
+}
+
+.exp-toggle.open i {
+  transform: rotate(180deg);
+}
+
+.exp-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.exp-details > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.exp-details.open {
+  grid-template-rows: 1fr;
+}
+
+.exp-details.open > div {
+  padding-top: 0.25rem;
+}
+
 /* Skills */
 .skills-grid {
   display: grid;
@@ -145,6 +193,17 @@
   font-size: 0.7rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+/* Some brand logos (Kafka, Postman) come as <img> instead of the devicon font */
+.icon-item img {
+  width: 1.7rem;
+  height: 1.7rem;
+  object-fit: contain;
+}
+
+.icon-item img.icon-invert {
+  filter: invert(1);
 }
 
 @media (max-width: 860px) {

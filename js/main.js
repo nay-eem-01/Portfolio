@@ -62,6 +62,51 @@
   items.forEach((item) => observer.observe(item));
 })();
 
+// --- Terminal strip: typewriter loop through a few real "commands" ---
+(() => {
+  const el = document.getElementById('terminalLine');
+  if (!el) return;
+
+  const lines = [
+    '$ whoami\n> backend engineer building reactive systems',
+    '$ stack --core\n> Java · Spring WebFlux · Neo4j · Kafka · Redis',
+    '$ status\n> currently shipping TaskATask @ DISL',
+  ];
+  let lineIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  function tick() {
+    const current = lines[lineIndex];
+    charIndex += deleting ? -1 : 1;
+    el.textContent = current.slice(0, charIndex);
+
+    if (!deleting && charIndex === current.length) {
+      setTimeout(() => { deleting = true; tick(); }, 1800);
+      return;
+    }
+    if (deleting && charIndex === 0) {
+      deleting = false;
+      lineIndex = (lineIndex + 1) % lines.length;
+    }
+    setTimeout(tick, deleting ? 22 : 42);
+  }
+  tick();
+})();
+
+// --- Experience: expand/collapse long bullet lists ---
+(() => {
+  document.querySelectorAll('.exp-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const details = btn.nextElementSibling;
+      const isOpen = details.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.querySelector('.toggle-label').textContent = isOpen ? 'Show less' : 'Show details';
+    });
+  });
+})();
+
 // --- Contact form: submit to Formspree without leaving the page ---
 (() => {
   const form = document.querySelector('.contact-form');
