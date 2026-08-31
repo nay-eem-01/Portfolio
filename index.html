@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/hero.css">
 <link rel="stylesheet" href="css/sections.css">
 <link rel="stylesheet" href="css/projects.css">
+<link rel="stylesheet" href="css/blog.css">
 <link rel="stylesheet" href="css/contact.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +21,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
 </head>
 <body>
-  
+
 <header class="header">
   <nav>
     <a href="#" class="logo">Nayeem Ahmed</a>
@@ -29,6 +30,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skillset">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#blog">Blog</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -54,9 +56,16 @@
           <a href="assets/Nayeem-Ahmed-Resume.pdf" class="btn btn-secondary" download>Download CV</a>
         </div>
       </div>
-      <div class="hero-portrait">
-        <img src="images/profile-hero.jpg" alt="Md. Nayeem Ahmed">
-      </div>
+<div class="hero-portrait-wrap">
+  <div class="hero-portrait">
+    <img src="images/profile-hero.jpg" alt="Md. Nayeem Ahmed">
+  </div>
+  <div class="hero-socials">
+    <a href="mailto:ahmedmdnayeem05@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/nay-eem-01" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+  </div>
+</div>
     </div>
 
     <div class="hero-stats">
@@ -230,7 +239,7 @@
             <div class="icon-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
             <div class="icon-item"><i class="devicon-git-plain colored"></i><span>Git</span></div>
             <div class="icon-item"><i class="fab fa-github"></i><span>GitHub</span></div>
-            <div class="icon-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/postman.svg" alt="Postman"><span>Postman</span></div>
+            <div class="icon-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/postman.svg" alt="Postman" class="icon-invert"><span>Postman</span></div>
             <div class="icon-item"><i class="fas fa-lightbulb"></i><span>IntelliJ IDEA</span></div>
             <div class="icon-item"><i class="devicon-vscode-plain colored"></i><span>VS Code</span></div>
           </div>
@@ -363,15 +372,59 @@
     </div>
   </section>
 
+  <!-- Blog -->
+  <section class="section reveal" id="blog">
+    <div class="container">
+      <p class="section-eyebrow">05 — Insights</p>
+      <h2 class="section-title">Blog</h2>
+
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-meta">
+            <span class="blog-date">Jun 5, 2025</span>
+            <span class="blog-read-time">2 min read</span>
+          </div>
+          <h3 class="blog-title">How HashMap Dynamically Resizes in Java</h3>
+          <p class="blog-excerpt">
+            If you've ever used a HashMap in Java and wondered how it keeps working efficiently as you keep adding more and more key-value pairs, this post is for you. Let's explore how HashMap dynamically resizes itself under the hood and what that means for performance.
+          </p>
+          <div class="blog-tags">
+            <span class="blog-tag">Java</span>
+            <span class="blog-tag">HashMap</span>
+            <span class="blog-tag">Data Structures</span>
+          </div>
+          <a href="https://medium.com/@ahmedmdnayeem05/how-hashmap-dynamically-resizes-in-java-e4688976b93f" target="_blank" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-meta">
+            <span class="blog-date">Jan 17, 2025</span>
+            <span class="blog-read-time">3 min read</span>
+          </div>
+          <h3 class="blog-title">Why Java's Vector Class Is Rarely Used Today</h3>
+          <p class="blog-excerpt">
+            I was learning about the Java Collections Framework and came across the Vector class. Interestingly, while Vector is conceptually similar to std::vector in C++, it has significant differences. I wondered why we don't often use Vector in Java, and after researching, I found the answer.
+          </p>
+          <div class="blog-tags">
+            <span class="blog-tag">Java</span>
+            <span class="blog-tag">Collections</span>
+            <span class="blog-tag">Performance</span>
+          </div>
+          <a href="https://medium.com/@ahmedmdnayeem05/why-javas-vector-class-is-rarely-used-today-79ebd2188c50" target="_blank" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section class="section reveal" id="contact" style="border-bottom: none;">
     <div class="container">
-      <p class="section-eyebrow">05 — Get in Touch</p>
+      <p class="section-eyebrow">06 — Get in Touch</p>
       <h2 class="section-title">Let's Work Together</h2>
 
       <div class="contact-grid">
         <div class="contact-intro">
-          <p>I'm interested in backend roles where reactive systems, clean architecture, and
+          <p>I'm interested in backend roles where clean architecture and
             performance actually matter. If that's you, say hello — or just reach out directly
             below.</p>
           <ul class="contact-details">

@@ -138,3 +138,30 @@
     }
   });
 })();
+
+// --- Touch hover states for cards (mobile devices) ---
+(() => {
+  const cards = document.querySelectorAll('.project-card, .blog-card, .skill-category');
+  
+  cards.forEach((card) => {
+    let touchTimeout;
+    
+    card.addEventListener('touchstart', () => {
+      card.classList.add('is-touched');
+      clearTimeout(touchTimeout);
+    });
+    
+    card.addEventListener('touchend', () => {
+      touchTimeout = setTimeout(() => {
+        card.classList.remove('is-touched');
+      }, 300);
+    });
+    
+    // Remove touch state if clicking elsewhere
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.project-card, .blog-card, .skill-category')) {
+        card.classList.remove('is-touched');
+      }
+    });
+  });
+})();

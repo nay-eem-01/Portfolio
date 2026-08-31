@@ -10,11 +10,23 @@
   border-radius: var(--radius);
   overflow: hidden;
   transition: border-color 0.25s ease, transform 0.25s ease;
+  will-change: transform, border-color;
+  cursor: pointer;
 }
 
-.project-card:hover {
+@media (hover: hover) {
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+}
+
+.project-card:active,
+.project-card:focus-visible,
+.project-card.is-touched {
   border-color: var(--accent);
   transform: translateY(-4px);
+  outline: none;
 }
 
 .project-thumb {
@@ -124,9 +136,18 @@
   font-size: 0.85rem;
   color: var(--text);
   border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.project-links a:hover {
+@media (hover: hover) {
+  .project-links a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
+
+.project-links a:active {
   color: var(--accent);
   border-color: var(--accent);
 }
@@ -134,5 +155,11 @@
 @media (max-width: 860px) {
   .project-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-thumb {
+    aspect-ratio: 4 / 3;
   }
 }
