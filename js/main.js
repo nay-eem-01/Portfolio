@@ -1,100 +1,269 @@
-// --- Header: hide on scroll down, show on scroll up ---
+'use strict';
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------------------------------------------------------------------
+   Theme — apply before paint to avoid a flash of wrong theme.
+   Order of precedence:
+     1. localStorage("theme") if the user has explicitly chosen
+     2. prefers-color-scheme media query
+     3. default to "dark"
+--------------------------------------------------------------------------- */
+(() => {
+  const STORAGE_KEY = 'portfolio-theme';
+  const root = document.documentElement;
+
+  let saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (_) { /* private mode */ }
+
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const theme = saved === 'light' || saved === 'dark'
+    ? saved
+    : (prefersLight ? 'light' : 'dark');
+
+  root.setAttribute('data-theme', theme);
+})();
+
+/* ---------------------------------------------------------------------------
+   Theme toggle button
+   - Reads the current [data-theme] from <html> on click and flips it.
+   - Persists the choice in localStorage so reloads keep it.
+   - Updates aria-pressed for screen readers.
+   - Stays in sync with the OS preference if the user hasn't made an
+     explicit choice (i.e. localStorage has no value).
+--------------------------------------------------------------------------- */
+(() => {
+  const btn = document.querySelector('.theme-toggle');
+  if (!btn) return;
+
+  const STORAGE_KEY = 'portfolio-theme';
+  const mq = window.matchMedia('(prefers-color-scheme: light)');
+
+  const apply = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    btn.setAttribute('aria-pressed', String(theme === 'light'));
+  };
+
+  // Set the correct pressed-state on first paint.
+  apply(document.documentElement.getAttribute('data-theme') || 'dark');
+
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem(STORAGE_KEY, next); } catch (_) { /* ignore */ }
+  });
+
+  // If the user has never toggled, follow the OS preference live.
+  mq.addEventListener('change', (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (_) {}
+    if (saved === 'light' || saved === 'dark') return; // user has a choice
+    apply(e.matches ? 'light' : 'dark');
+  });
+})();
+
+/* ---------------------------------------------------------------------------
+   Header: hide on scroll down, reveal on scroll up
+--------------------------------------------------------------------------- */
 (() => {
   const header = document.querySelector('.header');
+  if (!header) return;
   let lastScroll = 0;
 
   window.addEventListener('scroll', () => {
     const current = window.pageYOffset;
     if (current <= 0) {
       header.style.transform = 'translateY(0)';
+      lastScroll = 0;
       return;
     }
+    // don't hide while the mobile menu is open
+    if (document.querySelector('.nav-links.open')) return;
     header.style.transform = current > lastScroll ? 'translateY(-100%)' : 'translateY(0)';
     lastScroll = current;
+  }, { passive: true });
+})();
+
+/* ---------------------------------------------------------------------------
+   Mobile navigation toggle
+--------------------------------------------------------------------------- */
+(() => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+
+  const setOpen = (open) => {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  toggle.addEventListener('click', () => {
+    setOpen(!links.classList.contains('open'));
+  });
+
+  links.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && links.classList.contains('open')) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 760) setOpen(false);
   });
 })();
 
-// --- Animated stat counters: count up once when scrolled into view ---
+/* ---------------------------------------------------------------------------
+   Scroll-reveal for sections
+   - Marks any element with the .reveal class as is-visible when it enters
+     the viewport, then unobserves it (one-shot animation, no jank on
+     scroll-back).
+   - Inside every .reveal section, we look for child elements that opt in
+     via [data-reveal] and stagger their entrance with --reveal-delay so
+     each block cascades in instead of popping all at once.
+   - Hero (the first section) reveals immediately on first paint so users
+     see motion before they ever start scrolling.
+--------------------------------------------------------------------------- */
 (() => {
-  const stats = document.querySelectorAll('.stat-number');
-  if (!stats.length) return;
-
-  const animateCount = (el) => {
-    const target = parseInt(el.dataset.count, 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1200;
-    const start = performance.now();
-
-    const step = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      el.textContent = Math.floor(progress * target) + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCount(entry.target);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.6 });
-
-  stats.forEach((stat) => observer.observe(stat));
-})();
-
-// --- Scroll-reveal for sections ---
-(() => {
-  const items = document.querySelectorAll('.reveal');
+  const items = Array.from(document.querySelectorAll('.reveal'));
   if (!items.length) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    items.forEach((i) => {
+      i.classList.add('is-visible');
+      i.querySelectorAll('[data-reveal]').forEach((c) => c.classList.add('is-visible'));
     });
-  }, { threshold: 0.15 });
-
-  items.forEach((item) => observer.observe(item));
-})();
-
-// --- Terminal strip: typewriter loop through a few real "commands" ---
-(() => {
-  const el = document.getElementById('terminalLine');
-  if (!el) return;
-
-  const lines = [
-    '$ whoami\n> backend engineer building reactive systems',
-    '$ stack --core\n> Java · Spring WebFlux · Neo4j · Kafka · Redis',
-    '$ status\n> currently shipping TaskATask @ DISL',
-  ];
-  let lineIndex = 0;
-  let charIndex = 0;
-  let deleting = false;
-
-  function tick() {
-    const current = lines[lineIndex];
-    charIndex += deleting ? -1 : 1;
-    el.textContent = current.slice(0, charIndex);
-
-    if (!deleting && charIndex === current.length) {
-      setTimeout(() => { deleting = true; tick(); }, 1800);
-      return;
-    }
-    if (deleting && charIndex === 0) {
-      deleting = false;
-      lineIndex = (lineIndex + 1) % lines.length;
-    }
-    setTimeout(tick, deleting ? 22 : 42);
+    return;
   }
-  tick();
+
+  // Stagger direct children that opt in via data-reveal, so cards / list
+  // items inside a section cascade in instead of flashing together.
+  items.forEach((section) => {
+    const children = section.querySelectorAll('[data-reveal]');
+    children.forEach((child, i) => {
+      child.style.setProperty('--reveal-delay', `${Math.min(i * 70, 420)}ms`);
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        entry.target.querySelectorAll('[data-reveal]').forEach((c) =>
+          c.classList.add('is-visible')
+        );
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      // Reveal as soon as ~12% of the element is in view; this fires early
+      // enough that the animation finishes before the user has read the
+      // top of the section, so it never feels late.
+      threshold: 0.12,
+      // Pull the trigger a touch early so the lift completes in time.
+      rootMargin: '0px 0px -8% 0px',
+    }
+  );
+
+  items.forEach((item, idx) => {
+    // The very first .reveal (hero) is above the fold; mark it visible on
+    // the next frame so the entrance plays immediately without scroll.
+    if (idx === 0) {
+      requestAnimationFrame(() => item.classList.add('is-visible'));
+    }
+    observer.observe(item);
+  });
 })();
 
-// --- Experience: expand/collapse long bullet lists ---
+/* ---------------------------------------------------------------------------
+   Query console — types real Cypher, then shows the result.
+   Replaces the fake terminal, the big-number stats, and the count-up JS.
+--------------------------------------------------------------------------- */
+(() => {
+  const qEl = document.getElementById('consoleQuery');
+  const rEl = document.getElementById('consoleResult');
+  if (!qEl || !rEl) return;
+
+  const kw = (s) => `<span class="kw">${s}</span>`;
+  const rel = (s) => `<span class="rel">${s}</span>`;
+
+  const queries = [
+    {
+      plain: 'MATCH (me)-[:BUILT]->(p:Project) RETURN count(p)',
+      html: `${kw('MATCH')} (me)-[:${rel('BUILT')}]->(p:Project) ${kw('RETURN')} count(p)`,
+      result: '<span class="num">6</span> projects shipped',
+    },
+    {
+      plain: 'MATCH (me)-[:KNOWS]->(t:Tech) RETURN count(t)',
+      html: `${kw('MATCH')} (me)-[:${rel('KNOWS')}]->(t:Tech) ${kw('RETURN')} count(t)`,
+      result: '<span class="num">15+</span> tools &amp; technologies',
+    },
+    {
+      plain: 'MATCH (me)-[:WORKED_AT]->(:Company) RETURN me.since',
+      html: `${kw('MATCH')} (me)-[:${rel('WORKED_AT')}]->(:Company) ${kw('RETURN')} me.since`,
+      result: 'in production since <span class="num">2025</span>',
+    },
+    {
+      plain: 'MATCH (me)-[:WROTE]->(post) RETURN count(post)',
+      html: `${kw('MATCH')} (me)-[:${rel('WROTE')}]->(post) ${kw('RETURN')} count(post)`,
+      result: '<span class="num">2</span> articles published',
+    },
+  ];
+
+  // Reduced motion: show the first query and its result, statically.
+  if (reduceMotion) {
+    qEl.innerHTML = queries[0].html;
+    rEl.innerHTML = '→ ' + queries[0].result;
+    return;
+  }
+
+  let qi = 0;
+
+  const type = (text, i, done) => {
+    qEl.textContent = text.slice(0, i);
+    if (i <= text.length) {
+      setTimeout(() => type(text, i + 1, done), 34 + Math.random() * 26);
+    } else {
+      done();
+    }
+  };
+
+  const runQuery = () => {
+    const cur = queries[qi];
+    rEl.innerHTML = '';
+    type(cur.plain, 0, () => {
+      qEl.innerHTML = cur.html;                 // colourise once fully typed
+      setTimeout(() => {
+        rEl.innerHTML = '→ ' + cur.result;
+        setTimeout(() => {
+          rEl.style.opacity = '0';
+          setTimeout(() => {
+            rEl.style.opacity = '1';
+            qi = (qi + 1) % queries.length;
+            runQuery();
+          }, 350);
+        }, 2600);
+      }, 380);
+    });
+  };
+
+  rEl.style.transition = 'opacity 0.3s ease';
+  setTimeout(runQuery, 700);
+})();
+
+/* ---------------------------------------------------------------------------
+   Experience: expand / collapse long bullet lists
+--------------------------------------------------------------------------- */
 (() => {
   document.querySelectorAll('.exp-toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -107,7 +276,9 @@
   });
 })();
 
-// --- Contact form: submit to Formspree without leaving the page ---
+/* ---------------------------------------------------------------------------
+   Contact form: submit to Formspree without leaving the page
+--------------------------------------------------------------------------- */
 (() => {
   const form = document.querySelector('.contact-form');
   if (!form) return;
@@ -115,7 +286,7 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    status.textContent = 'Sending...';
+    status.textContent = 'Sending…';
     status.className = 'form-status';
 
     try {
@@ -139,29 +310,19 @@
   });
 })();
 
-// --- Touch hover states for cards (mobile devices) ---
+/* ---------------------------------------------------------------------------
+   Touch feedback for cards (mobile)
+--------------------------------------------------------------------------- */
 (() => {
   const cards = document.querySelectorAll('.project-card, .blog-card, .skill-category');
-  
   cards.forEach((card) => {
-    let touchTimeout;
-    
+    let t;
     card.addEventListener('touchstart', () => {
       card.classList.add('is-touched');
-      clearTimeout(touchTimeout);
-    });
-    
+      clearTimeout(t);
+    }, { passive: true });
     card.addEventListener('touchend', () => {
-      touchTimeout = setTimeout(() => {
-        card.classList.remove('is-touched');
-      }, 300);
-    });
-    
-    // Remove touch state if clicking elsewhere
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.project-card, .blog-card, .skill-category')) {
-        card.classList.remove('is-touched');
-      }
-    });
+      t = setTimeout(() => card.classList.remove('is-touched'), 400);
+    }, { passive: true });
   });
 })();

@@ -1,18 +1,146 @@
+/* ===========================================================================
+   Design tokens — semantic, theme-aware
+   Every color in the rest of the stylesheet is expressed through one of
+   these tokens, so toggling [data-theme="light"] on <html> switches the
+   entire site to a light variant. Dark is the default (matches the
+   original graph theme); light is opt-in via the header toggle.
+   =========================================================================== */
+
+:root,
+:root[data-theme="dark"] {
+  /* ---- Surfaces ---- */
+  --ink:          #0b0e13;        /* page background */
+  --ink-raised:   #121824;        /* cards / panels */
+  --ink-sunken:   #090c11;        /* console, deep wells */
+  --line:         #212b3a;        /* hairlines / graph edges */
+  --line-soft:    #171f2b;        /* quieter divisions */
+
+  /* ---- Text ----
+     AA-safe on --ink: --chalk ≥ 14:1, --fog ≥ 7.5:1, --fog-dim ≥ 5.5:1. */
+  --chalk:        #f5f7fb;
+  --fog:          #b8c0cf;
+  --fog-dim:      #8b95a8;
+
+  /* ---- Accent (signal) ---- */
+  --signal:        #e8b44b;
+  --signal-bright: #f5cc7a;
+  --signal-deep:   #6b5726;
+  --signal-glow:   rgba(232, 180, 75, 0.18);
+
+  /* ---- Node-type hues — kept identical in light mode for semantic
+          continuity (amber for the person, blue for frameworks, etc.). ---- */
+  --node-self:    #f4b350;
+  --node-fw:      #6c9cf0;
+  --node-db:      #58d7c4;
+  --node-msg:     #c08cf0;
+
+  /* ---- Header / nav backdrop ---- */
+  --header-bg:    rgba(11, 14, 19, 0.55);
+  --menu-bg:      rgba(11, 14, 19, 0.96);
+
+  /* ---- Decorative: page-wide ambient glow ---- */
+  --ambient-1:    rgba(88, 215, 196, 0.06);
+  --ambient-2:    rgba(108, 156, 240, 0.05);
+  --dot-grid:     rgba(255, 255, 255, 0.028);
+
+  /* ---- Project cover gradient (kept in sync with ambient hues) ---- */
+  --cover-glow-1: rgba(88, 215, 196, 0.10);
+  --cover-glow-2: rgba(108, 156, 240, 0.10);
+  --cover-dot:    rgba(255, 255, 255, 0.05);
+
+  /* ---- Self-node halo & entrance glow (the central photo) ---- */
+  --self-halo:    rgba(244, 179, 80, 0.35);
+  --self-pulse-1: rgba(244, 179, 80, 0.14);
+  --self-pulse-2: rgba(244, 179, 80, 0.05);
+
+  /* ---- Blog-card hover glow (violet) ---- */
+  --blog-glow:    rgba(192, 140, 240, 0.35);
+
+  /* ---- Form error red (works in both themes) ---- */
+  --error:        #e07a6e;
+
+  /* ---- Photo / circle backdrop (sits behind the avatar in the graph) ---- */
+  --photo-bg:     #0b0e13;
+
+  /* ---- Shadows ---- */
+  --shadow-elev-1: 0 22px 50px -30px rgba(232, 180, 75, 0.18);
+  --shadow-elev-2: 0 16px 40px -24px rgba(0, 0, 0, 0.6);
+  --shadow-elev-3: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+  --shadow-text-glow: 0 0 8px currentColor;
+
+  /* Theme marker — some components read this to flip inverted images. */
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  /* ---- Surfaces ---- */
+  --ink:          #f7f5ef;        /* warm off-white page background */
+  --ink-raised:   #ffffff;        /* cards / panels */
+  --ink-sunken:   #ecebe4;        /* console, deep wells */
+  --line:         #d8d3c4;        /* hairline borders */
+  --line-soft:    #e6e2d4;        /* quieter divisions */
+
+  /* ---- Text — AA on the warm off-white surface. ---- */
+  --chalk:        #1a1d24;        /* near-black primary */
+  --fog:          #4a5160;        /* secondary */
+  --fog-dim:      #6b7385;        /* tertiary */
+
+  /* ---- Accent — amber still, but a touch deeper for AA on white. ---- */
+  --signal:        #b8861f;
+  --signal-bright: #d09c2a;
+  --signal-deep:   #e8b44b;
+  --signal-glow:   rgba(184, 134, 31, 0.16);
+
+  /* ---- Node-type hues — same semantic colors, just the rings/halos use
+          them in a way that's legible on white. ---- */
+  --node-self:    #c0861c;
+  --node-fw:      #4670c8;
+  --node-db:      #1f9f8c;
+  --node-msg:     #8a4ec8;
+
+  /* ---- Header / nav backdrop ---- */
+  --header-bg:    rgba(247, 245, 239, 0.78);
+  --menu-bg:      rgba(255, 255, 255, 0.98);
+
+  /* ---- Decorative ---- */
+  --ambient-1:    rgba(184, 134, 31, 0.05);
+  --ambient-2:    rgba(70, 112, 200, 0.04);
+  --dot-grid:     rgba(26, 29, 36, 0.06);
+
+  /* ---- Project cover gradient ---- */
+  --cover-glow-1: rgba(70, 112, 200, 0.10);
+  --cover-glow-2: rgba(31, 159, 140, 0.10);
+  --cover-dot:    rgba(26, 29, 36, 0.05);
+
+  /* ---- Self-node halo & pulse (deeper amber for white) ---- */
+  --self-halo:    rgba(184, 134, 31, 0.35);
+  --self-pulse-1: rgba(184, 134, 31, 0.14);
+  --self-pulse-2: rgba(184, 134, 31, 0.05);
+
+  /* ---- Blog-card hover glow ---- */
+  --blog-glow:    rgba(138, 78, 200, 0.25);
+
+  /* ---- Error (slightly deeper for legibility on white) ---- */
+  --error:        #c44a3e;
+
+  /* ---- Photo backdrop ---- */
+  --photo-bg:     #f7f5ef;
+
+  /* ---- Shadows — softer in light mode ---- */
+  --shadow-elev-1: 0 22px 50px -30px rgba(184, 134, 31, 0.25);
+  --shadow-elev-2: 0 16px 40px -24px rgba(70, 80, 100, 0.18);
+  --shadow-elev-3: 0 30px 80px -40px rgba(70, 80, 100, 0.22);
+  --shadow-text-glow: 0 0 0 transparent;
+
+  color-scheme: light;
+}
+
+/* ---- Type, spacing, layout — identical in both themes ---- */
 :root {
-  /* Colors */
-  --bg: #0c0d0f;
-  --bg-raised: #17181b;
-  --border: #2a2b2f;
-  --text: #f4f3ef;
-  --text-muted: #9a9a97;
-  --accent: #e8b44b;
-  --accent-dim: #6b5726;
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Type */
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-
-  /* Spacing scale */
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -21,7 +149,11 @@
   --space-6: 6rem;
   --space-7: 9rem;
 
-  /* Layout */
   --max-width: 1180px;
-  --radius: 10px;
+  --radius:    12px;
+  --radius-sm: 8px;
+
+  /* Honour the OS preference only when the user has not made an explicit
+     choice via the toggle (see main.js, which sets [data-theme] on load). */
+  --t: 0.3s ease;
 }

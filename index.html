@@ -5,6 +5,8 @@
 <title>Md. Nayeem Ahmed — Backend Engineer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Backend engineer working with Java, Spring WebFlux, Neo4j and Kafka to build reactive, production-grade systems.">
+<meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
 
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/base.css">
@@ -16,107 +18,220 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
+
+<!-- Apply theme before paint to avoid flash. Synchronous, runs in <head>
+     so the initial variables.css sees the right [data-theme] attribute. -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('portfolio-theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = (saved === 'light' || saved === 'dark') ? saved : (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (_) { document.documentElement.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
 </head>
 <body>
 
 <header class="header">
   <nav>
-    <a href="#" class="logo">Nayeem Ahmed</a>
-    <ul>
+    <a href="#" class="logo">nayeem.ahmed</a>
+    <ul class="nav-links" id="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#skillset">Skills</a></li>
+      <li><a href="#skillset">Stack</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#blog">Blog</a></li>
+      <li><a href="#blog">Writing</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button"
+              aria-label="Toggle colour theme"
+              aria-pressed="false"
+              title="Toggle light / dark theme">
+        <span class="icon-sun" aria-hidden="true"><i class="fas fa-sun"></i></span>
+        <span class="icon-moon" aria-hidden="true"><i class="fas fa-moon"></i></span>
+      </button>
+      <button class="nav-toggle" type="button"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 </header>
 
 <main>
 
-  <!-- Hero -->
+  <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="container">
-      <div>
-        <p class="hero-eyebrow">Backend Engineer</p>
-        <h1 class="hero-name">Md. Nayeem<br>Ahmed</h1>
-        <p class="hero-role">Reactive systems · Java &amp; Spring WebFlux</p>
+      <div class="hero-copy">
+        <p class="hero-eyebrow">// backend engineer · reactive systems</p>
+        <h1 class="hero-name">Md. Nayeem<br><span class="accent">Ahmed</span></h1>
+        <p class="hero-role">Java<span class="dot">·</span>Spring WebFlux<span class="dot">·</span>Neo4j<span class="dot">·</span>Kafka</p>
         <p class="hero-summary">
-          Backend developer experienced across both reactive (Spring WebFlux) and traditional
-          (Spring MVC, JPA/Hibernate) stacks. Skilled in Neo4j, Kafka-based messaging, Spring
-          Security, and designing scalable, production-grade REST APIs.
+          I build <strong>reactive, production-grade backends</strong> — non-blocking APIs on
+          Spring WebFlux, graph data in Neo4j, and event flows over Kafka. Comfortable across
+          reactive and traditional JPA/Hibernate stacks.
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">View Projects</a>
           <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-          <a href="assets/Nayeem-Ahmed-Resume.pdf" class="btn btn-secondary" download>Download CV</a>
+          <a href="assets/Nayeem-Ahmed-Resume.pdf" class="btn btn-secondary" download><i class="fas fa-arrow-down"></i> CV</a>
         </div>
       </div>
-<div class="hero-portrait-wrap">
-  <div class="hero-portrait">
-    <img src="images/profile-hero.jpg" alt="Md. Nayeem Ahmed">
-  </div>
-  <div class="hero-socials">
-    <a href="mailto:ahmedmdnayeem05@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-    <a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://github.com/nay-eem-01" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-  </div>
-</div>
+
+      <!-- The professional graph: his photo as the root :Engineer node -->
+      <figure class="graph-figure">
+
+        <!-- graph-visual wraps ONLY the SVG + photo, so the photo's
+             percentage-based position (left/top) is measured against
+             this box's height alone — not against the taller box that
+             also includes the legend and social icons below it. -->
+        <div class="graph-visual">
+          <svg class="graph-svg" viewBox="0 0 460 470" role="img"
+               aria-label="A graph with Nayeem Ahmed at the centre, connected to Java, Spring WebFlux, Neo4j, Kafka and his employer DISL.">
+            <defs>
+              <clipPath id="selfClip"><circle cx="215" cy="205" r="58"/></clipPath>
+            </defs>
+
+            <!-- edges (drawn first, sit behind nodes) -->
+            <g stroke-linecap="round">
+              <line class="g-edge" style="--d:.45s" pathLength="100" x1="215" y1="205" x2="80"  y2="98"/>
+              <line class="g-edge" style="--d:.55s" pathLength="100" x1="215" y1="205" x2="388" y2="118"/>
+              <line class="g-edge" style="--d:.65s" pathLength="100" x1="215" y1="205" x2="410" y2="272"/>
+              <line class="g-edge" style="--d:.75s" pathLength="100" x1="215" y1="205" x2="300" y2="388"/>
+              <line class="g-edge" style="--d:.85s" pathLength="100" x1="215" y1="205" x2="62"  y2="322"/>
+            </g>
+
+            <!-- reactive-stream pulses -->
+            <circle class="g-pulse" r="3" style="offset-path:path('M215 205 L 80 98');  --pd:.2s"/>
+            <circle class="g-pulse" r="3" style="offset-path:path('M215 205 L 388 118'); --pd:1.1s"/>
+            <circle class="g-pulse" r="3" style="offset-path:path('M215 205 L 410 272'); --pd:2s"/>
+            <circle class="g-pulse" r="3" style="offset-path:path('M215 205 L 300 388'); --pd:.9s"/>
+            <circle class="g-pulse" r="3" style="offset-path:path('M215 205 L 62 322');  --pd:1.6s"/>
+
+            <!-- relationship labels -->
+            <text class="g-rel" style="--d:1s"   x="140" y="146" text-anchor="middle">WORKS_AT</text>
+            <text class="g-rel" style="--d:1.1s" x="305" y="150" text-anchor="middle">KNOWS</text>
+            <text class="g-rel" style="--d:1.2s" x="322" y="232" text-anchor="middle">BUILDS_WITH</text>
+            <text class="g-rel" style="--d:1.3s" x="272" y="322" text-anchor="middle">STREAMS</text>
+            <text class="g-rel" style="--d:1.4s" x="132" y="258" text-anchor="middle">WRITES</text>
+
+            <!-- satellite nodes -->
+            <g class="g-node type-co drift-a" style="--d:.9s">
+              <circle class="g-node-fill" cx="80" cy="98" r="30"/>
+              <circle class="g-node-ring" cx="80" cy="98" r="30"/>
+              <text class="g-node-label" x="80" y="102">DISL</text>
+              <text class="g-node-kind"  x="80" y="146">:Company</text>
+            </g>
+
+            <g class="g-node type-db drift-b" style="--d:1s">
+              <circle class="g-node-fill" cx="388" cy="118" r="30"/>
+              <circle class="g-node-ring" cx="388" cy="118" r="30"/>
+              <text class="g-node-label" x="388" y="122">Neo4j</text>
+              <text class="g-node-kind"  x="388" y="166">:Database</text>
+            </g>
+
+            <g class="g-node type-fw drift-c" style="--d:1.1s">
+              <circle class="g-node-fill" cx="410" cy="272" r="30"/>
+              <circle class="g-node-ring" cx="410" cy="272" r="30"/>
+              <text class="g-node-label" x="410" y="276">WebFlux</text>
+              <text class="g-node-kind"  x="410" y="320">:Framework</text>
+            </g>
+
+            <g class="g-node type-msg drift-a" style="--d:1.2s">
+              <circle class="g-node-fill" cx="300" cy="388" r="30"/>
+              <circle class="g-node-ring" cx="300" cy="388" r="30"/>
+              <text class="g-node-label" x="300" y="392">Kafka</text>
+              <text class="g-node-kind"  x="300" y="432">:Messaging</text>
+            </g>
+
+            <g class="g-node type-fw drift-b" style="--d:1.3s">
+              <circle class="g-node-fill" cx="62" cy="322" r="30"/>
+              <circle class="g-node-ring" cx="62" cy="322" r="30"/>
+              <text class="g-node-label" x="62" y="326">Java</text>
+              <text class="g-node-kind"  x="62" y="366">:Language</text>
+            </g>
+
+            <!-- central self node: the portrait (HTML, not SVG, so srcset / HiDPI
+                 work properly across browsers; the SVG only owns the ring and
+                 the label, the photo is a real <img> on top). -->
+            <g class="g-node" style="--d:.15s">
+              <circle class="g-self-glow" cx="215" cy="205" r="60"/>
+              <circle class="g-self-ring" cx="215" cy="205" r="58"/>
+              <text class="g-self-label" x="215" y="292">:Engineer</text>
+            </g>
+          </svg>
+
+          <!-- The portrait itself, overlaid on the SVG so the ring sits around
+               it. Use the source file directly with no resampling chain — the
+               browser renders the file at its natural resolution. To upgrade
+               the image, just replace images/profile-hero.jpg. -->
+          <img class="g-self-photo"
+               src="images/profile-hero.jpg"
+               alt="Md. Nayeem Ahmed"
+               decoding="async"
+               fetchpriority="high">
+        </div>
+
+        <div class="graph-legend" aria-hidden="true">
+          <span><i class="lg-co"></i>Company</span>
+          <span><i class="lg-db"></i>Database</span>
+          <span><i class="lg-fw"></i>Framework</span>
+          <span><i class="lg-msg"></i>Messaging</span>
+        </div>
+
+        <div class="hero-socials">
+          <a href="mailto:ahmedmdnayeem05@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/nay-eem-01" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </figure>
     </div>
 
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-number" data-count="10" data-suffix="+">0</div>
-        <div class="stat-label">Months in Production</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-count="6" data-suffix="+">0</div>
-        <div class="stat-label">Projects Shipped</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-count="10" data-suffix="+">0</div>
-        <div class="stat-label">Tools &amp; Technologies</div>
+    <!-- Query console — real Cypher, real results. Carries the stats. -->
+    <div class="console container">
+      <div class="console-window">
+        <div class="console-bar">
+          <span class="dot co"></span><span class="dot db"></span><span class="dot fw"></span>
+          <span class="console-title">cypher-shell — nayeem@neo4j</span>
+        </div>
+        <div class="console-body">
+          <div><span class="console-prompt">neo4j&gt;&nbsp;</span><span class="console-query" id="consoleQuery"></span><span class="console-cursor"></span></div>
+          <div class="console-result" id="consoleResult"></div>
+        </div>
       </div>
     </div>
   </section>
 
-<!-- Terminal strip -->
-<div class="terminal">
-  <div class="terminal-window">
-    <div class="terminal-bar">
-      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-      <span class="terminal-title">nayeem@backend:~</span>
-    </div>
-    <div class="terminal-body"><span id="terminalLine"></span><span class="cursor">&nbsp;</span></div>
-  </div>
-</div>
-
-  <!-- About -->
+  <!-- ================= ABOUT ================= -->
   <section class="section reveal" id="about">
     <div class="container">
-      <p class="section-eyebrow">01 — Introduction</p>
-      <h2 class="section-title">About Me</h2>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">me</span>:Engineer)&nbsp;<span class="kw">RETURN</span>&nbsp;<span class="var">me.story</span></p>
+      <h2 class="section-title">About</h2>
       <div class="about-content">
-        <p>Hello! I'm a <strong>Backend Developer</strong> with a strong passion for building
-        scalable, high-performance systems using <strong>Java</strong> and <strong>Spring
-        Boot</strong>. I take pride in crafting clean, efficient backend architectures that
-        drive robust and reliable applications.</p>
-        <p>I enjoy turning complex challenges into simple, elegant solutions — from designing
-        secure <strong>REST APIs</strong> to fine-tuning <strong>database performance</strong>.
-        I'm always looking to grow my skills, contribute to impactful projects, and be part of
-        a team that values clean code and continuous improvement.</p>
+        <p>Hello! I'm a <strong>backend developer</strong> drawn to building scalable,
+        high-performance systems with <strong>Java</strong> and <strong>Spring Boot</strong>.
+        I take pride in clean, efficient backend architecture that stays reliable under load.</p>
+        <p>I like turning complex problems into simple, elegant solutions — from designing
+        secure <strong>REST APIs</strong> to tuning <strong>database performance</strong>.
+        I'm always growing, contributing to work that matters, and looking for a team that
+        values clean code and steady improvement.</p>
       </div>
     </div>
   </section>
 
-  <!-- Experience -->
+  <!-- ================= EXPERIENCE ================= -->
   <section class="section reveal" id="experience">
     <div class="container">
-      <p class="section-eyebrow">02 — Career</p>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">me</span>)-[:<span class="rel">WORKED_AT</span>]-&gt;(<span class="var">c</span>)</p>
       <h2 class="section-title">Experience</h2>
 
       <div class="timeline">
@@ -184,14 +299,14 @@
     </div>
   </section>
 
-  <!-- Skills -->
+  <!-- ================= SKILLS ================= -->
   <section class="section reveal" id="skillset">
     <div class="container">
-      <p class="section-eyebrow">03 — Toolbox</p>
-      <h2 class="section-title">Skills &amp; Tools</h2>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">me</span>)-[:<span class="rel">KNOWS</span>]-&gt;(<span class="var">tech</span>)</p>
+      <h2 class="section-title">Stack</h2>
       <div class="skills-grid">
 
-        <div class="skill-category">
+        <div class="skill-category type-fw" data-reveal>
           <h3>Languages</h3>
           <div class="icon-grid">
             <div class="icon-item"><i class="devicon-java-plain colored"></i><span>Java</span></div>
@@ -203,7 +318,7 @@
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category type-fw" data-reveal>
           <h3>Frameworks</h3>
           <div class="icon-grid">
             <div class="icon-item"><i class="devicon-spring-plain colored"></i><span>Spring Boot</span></div>
@@ -213,7 +328,7 @@
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category type-db" data-reveal>
           <h3>Databases</h3>
           <div class="icon-grid">
             <div class="icon-item"><i class="devicon-neo4j-plain colored"></i><span>Neo4j</span></div>
@@ -225,7 +340,7 @@
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category type-msg" data-reveal>
           <h3>Messaging &amp; Caching</h3>
           <div class="icon-grid">
             <div class="icon-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/apachekafka.svg" alt="Kafka" class="icon-invert"><span>Kafka</span></div>
@@ -233,7 +348,7 @@
           </div>
         </div>
 
-        <div class="skill-category">
+        <div class="skill-category type-co" data-reveal>
           <h3>DevOps &amp; Tools</h3>
           <div class="icon-grid">
             <div class="icon-item"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
@@ -249,16 +364,16 @@
     </div>
   </section>
 
-  <!-- Projects -->
+  <!-- ================= PROJECTS ================= -->
   <section class="section reveal" id="projects">
     <div class="container">
-      <p class="section-eyebrow">04 — Selected Work</p>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">me</span>)-[:<span class="rel">BUILT</span>]-&gt;(<span class="var">p</span>:Project)</p>
       <h2 class="section-title">Projects</h2>
 
       <div class="project-grid">
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">A</span><span class="cover-tag">AGROTRENDS</span>
           </div>
           <div class="project-body">
@@ -268,16 +383,16 @@
               role-based access control and paginated filtering.</p>
             <div class="tech-pills">
               <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span>
-              <span class="tech-pill">MySQL</span><span class="tech-pill">Thymeleaf</span>
+              <span class="tech-pill">Postgresql</span><span class="tech-pill">React</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/AgroTrends" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://github.com/nay-eem-01/AgroTrends" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">E</span><span class="cover-tag">E-COMMERCE</span>
           </div>
           <div class="project-body">
@@ -290,13 +405,13 @@
               <span class="tech-pill">MySQL</span><span class="tech-pill">JWT</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/E-commerce-application-with-springboot" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://github.com/nay-eem-01/E-commerce-application-with-springboot" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">S</span><span class="cover-tag">SPAM DETECTOR</span>
           </div>
           <div class="project-body">
@@ -309,14 +424,14 @@
               <span class="tech-pill">Pandas</span><span class="tech-pill">NumPy</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/Email_Spam_Detection" target="_blank"><i class="fab fa-github"></i> Code</a>
-              <a href="https://email-spam-detection-n801.onrender.com/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+              <a href="https://github.com/nay-eem-01/Email_Spam_Detection" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+              <a href="https://email-spam-detection-n801.onrender.com/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">B</span><span class="cover-tag">BANKING APP</span>
           </div>
           <div class="project-body">
@@ -327,13 +442,13 @@
               <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/BankingApplicationManagementSystem" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://github.com/nay-eem-01/BankingApplicationManagementSystem" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">C</span><span class="cover-tag">CRYPTOGRAPHY</span>
           </div>
           <div class="project-body">
@@ -345,13 +460,13 @@
               <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/CyrptographyEncrytption_Application" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://github.com/nay-eem-01/CyrptographyEncrytption_Application" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb project-cover">
+        <article class="project-card" data-reveal>
+          <div class="project-cover">
             <span class="cover-glyph">D</span><span class="cover-tag">DATA CONVERSION</span>
           </div>
           <div class="project-body">
@@ -363,7 +478,7 @@
               <span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/nay-eem-01/DataCommunicationProject" target="_blank"><i class="fab fa-github"></i> Code</a>
+              <a href="https://github.com/nay-eem-01/DataCommunicationProject" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
             </div>
           </div>
         </article>
@@ -372,14 +487,14 @@
     </div>
   </section>
 
-  <!-- Blog -->
+  <!-- ================= WRITING ================= -->
   <section class="section reveal" id="blog">
     <div class="container">
-      <p class="section-eyebrow">05 — Insights</p>
-      <h2 class="section-title">Blog</h2>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">me</span>)-[:<span class="rel">WROTE</span>]-&gt;(<span class="var">post</span>)</p>
+      <h2 class="section-title">Writing</h2>
 
       <div class="blog-grid">
-        <article class="blog-card">
+        <article class="blog-card" data-reveal>
           <div class="blog-meta">
             <span class="blog-date">Jun 5, 2025</span>
             <span class="blog-read-time">2 min read</span>
@@ -393,10 +508,10 @@
             <span class="blog-tag">HashMap</span>
             <span class="blog-tag">Data Structures</span>
           </div>
-          <a href="https://medium.com/@ahmedmdnayeem05/how-hashmap-dynamically-resizes-in-java-e4688976b93f" target="_blank" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
+          <a href="https://medium.com/@ahmedmdnayeem05/how-hashmap-dynamically-resizes-in-java-e4688976b93f" target="_blank" rel="noopener" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
         </article>
 
-        <article class="blog-card">
+        <article class="blog-card" data-reveal>
           <div class="blog-meta">
             <span class="blog-date">Jan 17, 2025</span>
             <span class="blog-read-time">3 min read</span>
@@ -410,43 +525,42 @@
             <span class="blog-tag">Collections</span>
             <span class="blog-tag">Performance</span>
           </div>
-          <a href="https://medium.com/@ahmedmdnayeem05/why-javas-vector-class-is-rarely-used-today-79ebd2188c50" target="_blank" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
+          <a href="https://medium.com/@ahmedmdnayeem05/why-javas-vector-class-is-rarely-used-today-79ebd2188c50" target="_blank" rel="noopener" class="blog-link">Read on Medium <i class="fas fa-arrow-right"></i></a>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="section reveal" id="contact" style="border-bottom: none;">
+  <!-- ================= CONTACT ================= -->
+  <section class="section reveal" id="contact">
     <div class="container">
-      <p class="section-eyebrow">06 — Get in Touch</p>
+      <p class="section-eyebrow"><span class="kw">MATCH</span>&nbsp;(<span class="var">you</span>)-[:<span class="rel">WANTS</span>]-&gt;(<span class="var">me</span>)</p>
       <h2 class="section-title">Let's Work Together</h2>
 
       <div class="contact-grid">
         <div class="contact-intro">
-          <p>I'm interested in backend roles where clean architecture and
-            performance actually matter. If that's you, say hello — or just reach out directly
-            below.</p>
+          <p>I'm looking for <strong>backend roles</strong> where clean architecture and
+            performance actually matter. If that's you, say hello — or reach me directly below.</p>
           <ul class="contact-details">
             <li><h5>Email</h5><a href="mailto:ahmedmdnayeem05@gmail.com">ahmedmdnayeem05@gmail.com</a></li>
-            <li><h5>LinkedIn</h5><a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank">md-nayeem-ahmed</a></li>
-            <li><h5>GitHub</h5><a href="https://github.com/nay-eem-01" target="_blank">nay-eem-01</a></li>
-            <li><h5>Location</h5><span>Uttara, Dhaka-1230, Bangladesh</span></li>
+            <li><h5>LinkedIn</h5><a href="https://www.linkedin.com/in/md-nayeem-ahmed/" target="_blank" rel="noopener">md-nayeem-ahmed</a></li>
+            <li><h5>GitHub</h5><a href="https://github.com/nay-eem-01" target="_blank" rel="noopener">nay-eem-01</a></li>
+            <li><h5>Location</h5><span>Uttara, Dhaka-1230, BD</span></li>
           </ul>
         </div>
 
         <form class="contact-form" action="https://formspree.io/f/xkjngalv" method="POST">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
+          <input type="text" id="name" name="name" autocomplete="name" required>
 
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" autocomplete="email" required>
 
           <label for="message">Message</label>
           <textarea id="message" name="message" required></textarea>
 
           <button type="submit" class="btn btn-primary">Send Message</button>
-          <p class="form-status"></p>
+          <p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -456,8 +570,8 @@
 
 <footer class="footer">
   <div class="footer-content">
-    <div>Designed and developed by <strong>Md. Nayeem Ahmed</strong></div>
-    <div>&copy; 2026</div>
+    <div>Designed &amp; built by <strong>Md. Nayeem Ahmed</strong></div>
+    <div>&copy; 2026 — RETURN me</div>
   </div>
 </footer>
 

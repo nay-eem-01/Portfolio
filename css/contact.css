@@ -5,10 +5,14 @@
 }
 
 .contact-intro p {
-  color: var(--text-muted);
+  color: var(--chalk);
+  opacity: 0.9;
+  font-size: 1.05rem;
   max-width: 42ch;
   margin-bottom: var(--space-4);
 }
+
+.contact-intro p strong { color: var(--chalk); font-weight: 600; }
 
 .contact-details {
   list-style: none;
@@ -16,107 +20,117 @@
 
 .contact-details li {
   padding: var(--space-2) 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line-soft);
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .contact-details li:last-child {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line-soft);
 }
 
 .contact-details h5 {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--fog-dim);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  font-family: var(--font-display);
 }
 
-.contact-details a:hover {
-  color: var(--accent);
+.contact-details a,
+.contact-details span {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--chalk);
+  transition: color 0.2s ease;
 }
+
+.contact-details a:hover { color: var(--signal); }
 
 /* Form */
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.4rem;
+  background: var(--ink-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--space-3);
 }
 
 .contact-form label {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  color: var(--fog);
+  margin-top: var(--space-2);
 }
+
+.contact-form label:first-of-type { margin-top: 0; }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--ink-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
   padding: 0.8rem 1rem;
-  color: var(--text);
+  color: var(--chalk);
   font-family: var(--font-body);
   font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-glow);
 }
 
 .contact-form textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 130px;
 }
 
 .contact-form button {
   align-self: flex-start;
-  margin-top: var(--space-1);
+  margin-top: var(--space-3);
   border: none;
-  cursor: pointer;
 }
 
 .form-status {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--fog);
   min-height: 1.2em;
+  margin-top: var(--space-1);
 }
 
-.form-status.success {
-  color: var(--accent);
+.form-status.success { color: var(--signal); }
+.form-status.error { color: var(--error); }
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; gap: var(--space-4); }
 }
 
-.form-status.error {
-  color: #e07a5f;
-}
-
-@media (max-width: 860px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 560px) {
   .contact-form input,
-  .contact-form textarea {
-    font-size: 16px;
-  }
-  .contact-form button {
-    width: 100%;
-    align-self: stretch;
-  }
+  .contact-form textarea { font-size: 16px; } /* prevents iOS zoom */
+  .contact-form button { width: 100%; align-self: stretch; }
 }
 
-/* Footer */
+/* ===========================================================================
+   FOOTER
+=========================================================================== */
 .footer {
-  padding: var(--space-3) 0;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line-soft);
 }
 
 .footer-content {
@@ -125,8 +139,12 @@
   padding: 0 var(--space-3);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: var(--space-1);
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--fog-dim);
 }
+
+.footer-content strong { color: var(--fog); font-weight: 500; }

@@ -1,4 +1,6 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -6,31 +8,67 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* clear the fixed header on anchor jumps */
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--ink);
+  color: var(--chalk);
   font-family: var(--font-body);
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background var(--t), color var(--t);
+}
+
+/* Ambient graph atmosphere — a faint node grid, sits behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 18% 12%, var(--ambient-1), transparent 42%),
+    radial-gradient(circle at 84% 78%, var(--ambient-2), transparent 46%);
+  pointer-events: none;
+  transition: background var(--t);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 40%, transparent 100%);
+  pointer-events: none;
+  transition: background-image var(--t);
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 a {
@@ -38,9 +76,21 @@ a {
   text-decoration: none;
 }
 
-img {
+img,
+svg {
   max-width: 100%;
   display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
 }
 
 .container {
@@ -55,33 +105,93 @@ img {
   }
 }
 
-/* Section header pattern used across About / Experience / Skills / Projects / Contact */
+/* ---------------------------------------------------------------------------
+   Section shell
+--------------------------------------------------------------------------- */
 .section {
   padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
-.section-eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: var(--space-2);
+@media (max-width: 760px) {
+  .section { padding: var(--space-5) 0; }
 }
+
+@media (max-width: 480px) {
+  .section { padding: var(--space-4) 0; }
+  .section-title { margin-bottom: var(--space-3); }
+}
+
+.section + .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100% - 2 * var(--space-3), var(--max-width));
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* Cypher-query eyebrow — encodes the real relationship this section describes.
+   Replaces meaningless 01/02/03 numbering with a truthful graph query. */
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--fog);
+  margin-bottom: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--ink-raised);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.section-eyebrow::-webkit-scrollbar {
+  display: none;
+}
+
+.section-eyebrow::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 8px var(--signal);
+}
+
+.section-eyebrow .kw { color: var(--signal); }
+.section-eyebrow .rel { color: var(--node-self); }
+.section-eyebrow .var { color: var(--chalk); }
 
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  text-transform: uppercase;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
   margin-bottom: var(--space-4);
+  letter-spacing: -0.03em;
 }
 
-/* Scroll-reveal: paired with an IntersectionObserver in main.js */
+/* Scroll-reveal — paired with IntersectionObserver in main.js
+   .reveal elements are kept out of the layout flow (transform-only) so they
+   never cause a layout shift; the observer toggles .is-visible as the
+   element enters the viewport, and a small stagger (--reveal-delay) lets us
+   cascade reveals inside a section. prefers-reduced-motion collapses it
+   to a no-op. */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  transition-delay: var(--reveal-delay, 0s);
 }
 
 .reveal.is-visible {
@@ -89,116 +199,224 @@ img {
   transform: translateY(0);
 }
 
-/* Top navigation */
+/* Subtle entrance for the very first paint of the hero (no scroll needed) */
+.reveal--hero {
+  transition-duration: 1.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The base.css reduced-motion block already kills all animation/transition
+     duration globally; this just makes sure the reveal doesn't leave a
+     transformed state behind. */
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Header / navigation
+--------------------------------------------------------------------------- */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(12, 13, 15, 0.35);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border-bottom: 1px solid rgba(244, 243, 239, 0.08);
-  transition: transform 0.3s ease, background 0.3s ease;
+  background: var(--header-bg);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border-bottom: 1px solid var(--line-soft);
+  transition: transform 0.35s ease, background var(--t), border-color var(--t);
 }
 
 .header nav {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-2) var(--space-3);
+  padding: 0.9rem var(--space-3);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Theme toggle + hamburger sit together on the right of the header. */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .header .logo {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: -0.02em;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--chalk);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.header ul {
+.header .logo::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--node-self);
+  box-shadow: 0 0 10px var(--node-self);
+  flex: none;
+}
+
+.nav-links {
   list-style: none;
   display: flex;
-  gap: var(--space-4);
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.header a {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  transition: color 0.2s ease;
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--fog);
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s ease, background 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) {
-  .header a:hover,
-  .header a:focus-visible {
-    color: var(--text);
+  .nav-links a:hover {
+    color: var(--chalk);
+    background: var(--ink-raised);
   }
 }
 
-.header a:active {
-  color: var(--text);
+.nav-links a:active {
+  color: var(--signal);
 }
 
-.header .resume-link {
-  border: 1px solid var(--border);
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius);
-  color: var(--text);
-  transition: border-color 0.2s ease, color 0.2s ease;
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--ink-raised);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--chalk);
+  transition: transform 0.28s ease, opacity 0.2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Theme toggle (dark ↔ light)
+   Lives in the header next to the hamburger. Two stacked icon spans
+   (sun and moon) cross-fade based on the current [data-theme].
+--------------------------------------------------------------------------- */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--ink-raised);
+  color: var(--chalk);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, background var(--t);
+}
+
 @media (hover: hover) {
-  .header .resume-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+  .theme-toggle:hover {
+    border-color: var(--signal);
+    color: var(--signal);
   }
 }
 
-.header .resume-link:active {
-  border-color: var(--accent);
-  color: var(--accent);
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
 }
 
-@media (max-width: 720px) {
-  .header ul {
-    gap: var(--space-2);
-  }
-  .header a span {
-    display: none;
-  }
-}
+:root[data-theme="dark"] .theme-toggle .icon-sun  { opacity: 1; transform: rotate(0); }
+:root[data-theme="dark"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(-90deg); }
 
-@media (max-width: 480px) {
-  .header nav {
-    padding: var(--space-1) var(--space-2);
-    flex-wrap: wrap;
+:root[data-theme="light"] .theme-toggle .icon-sun  { opacity: 0; transform: rotate(90deg); }
+:root[data-theme="light"] .theme-toggle .icon-moon { opacity: 1; transform: rotate(0); }
+
+@media (max-width: 760px) {
+  .nav-toggle {
+    display: flex;
   }
-  
-  .header .logo {
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-1) var(--space-2) var(--space-2);
+    background: var(--menu-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+    /* collapsed state */
+    max-height: 0;
+    overflow: hidden;
+    overflow-y: auto;       /* allow scroll if the menu is taller than the viewport */
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.35s ease, opacity 0.25s ease, background var(--t);
+  }
+
+  .nav-links.open {
+    max-height: calc(100vh - 64px);  /* never taller than the screen under the header */
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-links a {
     font-size: 0.95rem;
-    flex-basis: 100%;
-    margin-bottom: var(--space-1);
+    padding: 0.85rem 0.7rem;
+    border-bottom: 1px solid var(--line-soft);
+    overflow-wrap: anywhere;        /* long labels like '#experience' wrap safely */
   }
-  
-  .header ul {
-    gap: 0.5rem;
-    width: 100%;
-    flex-wrap: wrap;
-  }
-  
-  .header a {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.6rem;
-    white-space: nowrap;
-  }
-  
-  .header .resume-link {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.75rem;
+
+  .nav-links li:last-child a {
+    border-bottom: none;
   }
 }
