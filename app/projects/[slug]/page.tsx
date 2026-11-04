@@ -16,10 +16,10 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const p = projects.find((x) => x.slug === slug);
-  return p ? { title: `${p.name} case study`, description: p.summary, openGraph: { images: [p.image] } } : {};
+  return p ? { title: `${p.name} case study`, description: p.summary, openGraph: { images: p.image ? [p.image] : ["/images/nayeem.jpg"] } } : {};
 }
 
-const toc = [['problem', 'The problem'], ['users', 'Who it is for'], ['built', 'What I built'], ['architecture', 'Architecture'], ['decisions', 'Hard decisions'], ['solved', 'How I solved it'], ['next', 'What I would do next']];
+const toc = [['problem', 'The problem'], ['users', 'Who it is for'], ['built', 'What I built'], ['architecture', 'Architecture'], ['decisions', 'Key decisions'], ['solved', 'How I solved it'], ['next', 'What’s next']];
 
 export default async function CaseStudy({ params }: Props) {
   const { slug } = await params;
@@ -55,10 +55,12 @@ export default async function CaseStudy({ params }: Props) {
         </section>
 
         <div className="container shot-wrap">
-            <figure className="hero-shot">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.image} alt={p.imageAlt} fetchPriority="high" />
-            <figcaption className="muted">{p.caption}</figcaption>
+          <figure className="hero-shot">
+            {p.image
+              // eslint-disable-next-line @next/next/no-img-element
+              ? <img src={p.image} alt={p.imageAlt} fetchPriority="high" />
+              : <span className="slot slot--wide">Screenshot coming soon</span>}
+            {p.caption && <figcaption className="muted">{p.caption}</figcaption>}
           </figure>
         </div>
 
@@ -78,7 +80,7 @@ export default async function CaseStudy({ params }: Props) {
               <Trace label={p.architecture.label} nodes={p.architecture.nodes} edges={p.architecture.edges} steps={p.architecture.steps} />
             </section>
             <section id="decisions">
-              <h2>Hard decisions</h2>
+              <h2>Key decisions</h2>
               {p.decisions.map((d) => <div key={d.title} className="decision-block"><h3>{d.title}</h3><p>{d.body}</p></div>)}
             </section>
             <section id="solved">
@@ -87,7 +89,7 @@ export default async function CaseStudy({ params }: Props) {
               {p.solved.code && <pre tabIndex={0} aria-label="Code from the repository"><code>{p.solved.code}</code></pre>}
               <p>{p.solved.after}</p>
             </section>
-            <section id="next"><h2>What I would do next</h2><ul>{p.next.map((t) => <li key={t}>{t}</li>)}</ul></section>
+            <section id="next"><h2>What’s next</h2><ul>{p.next.map((t) => <li key={t}>{t}</li>)}</ul></section>
 
             <nav className="pager" aria-label="More projects">
               <Link href={`/projects/${next.slug}/`}><span className="muted">Next case study</span>{next.name}</Link>

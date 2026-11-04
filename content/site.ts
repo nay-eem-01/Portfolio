@@ -1,10 +1,11 @@
 // Everything the site says lives here. Every claim is checked against the project's own repo and docs.
+// Do not publish API paths, live endpoints or unfixed security findings here.
 
 export const person = {
   name: 'Md. Nayeem Ahmed',
-  role: 'Backend engineer, Java and Spring Boot',
-  line: 'I design APIs, data models and auth for systems that handle money, parcels and people’s data.',
-  now: 'Junior backend developer at Dhrubok Infotech, Dhaka',
+  role: 'Backend Engineer, Java and Spring Boot',
+  line: 'I build reliable backend systems: clean APIs, solid data models and secure authentication.',
+  now: 'Junior Backend Developer at Dhrubok Infotech, Dhaka',
   email: 'ahmedmdnayeem05@gmail.com',
   github: 'https://github.com/nay-eem-01',
   linkedin: 'https://linkedin.com/in/md-nayeem-ahmed',
@@ -13,8 +14,8 @@ export const person = {
 };
 
 export const about = {
-  lead: 'I work on both sides of Spring: reactive services on WebFlux, Neo4j and Kafka at my job, and servlet systems on MVC, JPA and PostgreSQL in my own products.',
-  body: 'What I care about is the part users never see: a checkout that cannot charge twice, a ledger where every taka is accounted for, a session that is really gone when you sign out. I write the plan, the migrations and the tests in the same repository as the code.',
+  lead: 'I’m a backend engineer who works with both reactive and traditional Spring. At work I build features on Spring WebFlux, Neo4j and Kafka; in my own projects I use Spring MVC, JPA and PostgreSQL.',
+  body: 'I care most about the parts users never see but always feel: payments that are never taken twice, balances that always add up, and accounts that stay secure. I plan each project before I build it, keep database changes in versioned migrations, and write tests alongside the code.',
 };
 
 export type Job = { title: string; company: string; when: string; from: string; summary: string; tags: string[] };
@@ -23,18 +24,18 @@ export const jobs: Job[] = [
   {
     title: 'Junior Backend Developer',
     company: 'Dhrubok Infotech',
-    when: '2026 to now',
+    when: '2026 to present',
     from: '2026-01',
     summary:
-      'On TaskATask, a task platform on Spring WebFlux and Neo4j: real-time group chat on WebFlux Sinks with Jasypt-encrypted messages, a 10,000-row contact import on Redis job queues, Kafka-driven appointment notifications synced to Google Calendar, OAuth2 sign-in with four providers, and the fix for a Neo4j save that re-fetched every relationship. Also booking and cancellation workflows for Hospitalia, a doctor appointment app.',
-    tags: ['WebFlux', 'Reactor', 'Neo4j', 'Kafka', 'Redis', 'OAuth2'],
+      'I work on TaskATask, a task management platform built with Spring WebFlux and Neo4j. I built its real-time group chat with encrypted messages, a bulk contact import that handles up to 10,000 records, appointment notifications through Kafka with Google Calendar sync, and sign-in with Google, Facebook, Apple and one-time codes. I also tracked down and fixed a Neo4j performance bug that reloaded every relationship on each save. Before that, I built the booking and cancellation flows for Hospitalia, a doctor appointment app.',
+    tags: ['Spring WebFlux', 'Project Reactor', 'Neo4j', 'Kafka', 'Redis', 'OAuth2'],
   },
   {
     title: 'Backend Developer Intern',
     company: 'Dhrubok Infotech',
     when: '2025',
     from: '2025-10',
-    summary: 'Full-text search with Hibernate Search on a Lucene backend and custom analyzers.',
+    summary: 'I built full-text search with Hibernate Search and Lucene, including custom analyzers for better matching.',
     tags: ['Hibernate Search', 'Lucene'],
   },
 ];
@@ -49,9 +50,9 @@ export type Project = {
   summary: string;
   decision: string;
   stack: string;
-  image: string;
+  image?: string; // add public/projects/<slug>.jpg (16:10) and set this; without it a blank slot shows
   imageAlt: string;
-  caption: string;
+  caption?: string;
   links: Link[];
   live?: Link;
   meta: { role: string; stack: string; status: string };
@@ -68,40 +69,40 @@ export const projects: Project[] = [
   {
     slug: 'senpai-supply',
     name: 'Senpai Supply',
-    summary: 'An anime merchandise shop for Bangladesh with guest checkout and cash on delivery.',
-    decision: 'Stock is taken with one conditional UPDATE, so two buyers can never get the last figure.',
-    stack: 'Spring Boot 3.5, PostgreSQL, Flyway, nine Maven modules, React 19',
+    summary: 'An online store for anime merchandise in Bangladesh, with guest checkout and cash on delivery.',
+    decision: 'Stock is reduced in a single database update, so two customers can never buy the last item at the same time.',
+    stack: 'Spring Boot 3.5, PostgreSQL, Flyway, modular monolith, React 19',
     image: '/projects/senpai-supply.jpg',
-    imageAlt: 'Senpai Supply storefront home page',
-    caption: 'The storefront running against the local API with the demo catalogue.',
+    imageAlt: 'The Senpai Supply storefront home page',
+    caption: 'The storefront running locally with demo products.',
     links: [
       { label: 'Backend code', href: 'https://github.com/nay-eem-01/E-commerce-application-with-springboot' },
-      { label: 'Storefront code', href: 'https://github.com/nay-eem-01/ecommerce_web' },
+      { label: 'Frontend code', href: 'https://github.com/nay-eem-01/ecommerce_web' },
     ],
     meta: {
-      role: 'Sole developer: plan, API, schema, storefront, tests',
+      role: 'Sole developer: planning, backend, database, frontend and tests',
       stack: 'Java 21, Spring Boot 3.5, PostgreSQL, Flyway, React 19',
-      status: 'Backend and storefront built; online payments coded, not yet sandbox-tested',
+      status: 'Backend and storefront complete. Online payments are built but not yet tested against the providers’ sandboxes.',
     },
     problem: [
-      'My first version of this shop seeded admin/adminPass, let anyone read every cart, kept prices in double and never checked stock.',
-      'Rewriting it meant answering one question for every endpoint: what happens when two people, or one impatient person, do this at the same time?',
+      'This is a full rewrite of an e-commerce project I first built while learning Spring Boot. The first version worked on the happy path, but it had serious gaps: weak security, prices stored as floating-point numbers, and no protection against selling more stock than we had.',
+      'For the rewrite, I asked one question of every feature: what happens if two people do this at the same moment, or one person clicks twice?',
     ],
     users:
-      'Shoppers in Bangladesh buying figures, cosplay, bottles and bags, most of them on a phone and many without a card. It is a portfolio project, not a live shop: there are no real customers yet.',
+      'The store is designed for shoppers in Bangladesh who buy figures, cosplay, bottles and bags, mostly on their phones and often without a card. It is a portfolio project and does not have real customers yet.',
     built: [
-      'Guest checkout with cash on delivery, and phone-code sign-in.',
-      'A catalogue with options, specs and 360-degree product frames.',
-      'Orders with a state machine for their status, and guest order tracking.',
-      'Reviews limited to people who received the product.',
-      'The React storefront and its Playwright end-to-end tests.',
+      'Guest checkout with cash on delivery, and sign-in with a one-time code sent by SMS.',
+      'A product catalogue with options, specifications and a 360-degree product viewer.',
+      'Order management with a clear status lifecycle, plus order tracking for guests.',
+      'Product reviews that only verified buyers can leave.',
+      'The React storefront, covered by end-to-end tests with Playwright.',
     ],
     architecture: {
       intro:
-        'A modular monolith: nine Maven modules in one deployable. A module may call another only through its api interface or an event, so the compiler stops order from reaching into catalog’s tables.',
-      label: 'Request trace: placing a cash-on-delivery order',
+        'The backend is a modular monolith: nine Maven modules deployed as one application. Modules can only talk to each other through public interfaces or events, so the compiler prevents one module from reaching into another’s database tables.',
+      label: 'How an order is placed',
       nodes: [
-        { id: 'api', label: 'api', x: 250, y: 10 },
+        { id: 'api', label: 'checkout', x: 250, y: 10 },
         { id: 'order', label: 'order', x: 250, y: 108 },
         { id: 'catalog', label: 'catalog', x: 40, y: 108 },
         { id: 'payment', label: 'payment', x: 460, y: 108 },
@@ -113,108 +114,108 @@ export const projects: Project[] = [
       ],
       edges: 'M320 54v54M250 130h-70M390 130h70M320 152v54',
       steps: [
-        { label: 'Request', on: ['api'], text: 'POST /api/orders carries an Idempotency-Key. A retry with the same key returns the order already placed instead of a second one.' },
-        { label: 'Price', on: ['order'], text: 'The order module prices the cart again from the database. The browser’s numbers are never used.' },
-        { label: 'Stock', on: ['catalog'], text: 'catalog takes stock with one conditional UPDATE. Zero rows updated means sold out, and the whole order rolls back.' },
-        { label: 'Commit', on: ['order', 'notification'], text: 'Order, items, status history and the outbox email row commit together, or not at all.' },
-        { label: 'Email', on: ['notification'], text: 'After commit, the notification dispatcher claims the email row with SKIP LOCKED, sends it and retries with backoff on failure.' },
+        { label: 'Request', on: ['api'], text: 'Every checkout request carries a unique idempotency key. If the request is sent twice, the second one returns the original order instead of creating a new one.' },
+        { label: 'Price', on: ['order'], text: 'The order module recalculates every price from the database. Prices sent by the browser are never trusted.' },
+        { label: 'Stock', on: ['catalog'], text: 'The catalog module reduces stock with one conditional update. If nothing is left, the whole order is cancelled before anything is saved.' },
+        { label: 'Save', on: ['order', 'notification'], text: 'The order, its items, its status history and the confirmation email are all saved in one transaction. Either everything is saved, or nothing is.' },
+        { label: 'Email', on: ['notification'], text: 'Once the order is saved, a background job sends the email and retries it if sending fails.' },
       ],
     },
     decisions: [
       {
-        title: 'Servlet MVC, not WebFlux',
-        body: 'I work on WebFlux every day, and chose not to use it here. Checkout is one transaction across stock, order, items, history and the email row. With JPA that is a single @Transactional method; reactively it is R2DBC and manual transaction plumbing for no gain at this scale.',
+        title: 'Spring MVC instead of WebFlux',
+        body: 'I use WebFlux every day at work, but it was the wrong fit here. Checkout updates stock, the order, its items and its history together, and with JPA that is one simple transaction. A reactive version would have added complexity without any benefit at this scale.',
       },
       {
-        title: 'Never trust the browser with money',
-        body: 'The client sends product ids and quantities. Prices, delivery fees and totals are computed on the server from the database, in BigDecimal.',
+        title: 'The server owns every price',
+        body: 'The browser only sends product IDs and quantities. Prices, delivery charges and totals are always calculated on the server from the database, using BigDecimal so money is never rounded incorrectly.',
       },
       {
-        title: 'Payment vendors behind one interface',
-        body: 'Cash on delivery, bKash and SSLCommerz each implement one PaymentProvider. Which vendor serves which method is a property, so switching one on is configuration, not code. A payment is marked paid only from the provider’s server-side answer.',
+        title: 'Payment providers behind one interface',
+        body: 'Cash on delivery, bKash and SSLCommerz each implement the same PaymentProvider interface. Which provider handles which payment method is set in configuration, so enabling a new one does not require code changes. An order is marked paid only after the provider confirms it server-to-server.',
       },
     ],
     solved: {
-      before: 'Two shoppers buying the last unit is the classic race. A read-then-write check loses it; one conditional statement cannot:',
+      before: 'When two customers try to buy the last item at the same time, checking the stock first and updating it afterwards is not safe. Both checks can pass. Instead, the check and the update happen in a single statement:',
       code: `update Product p set p.stock = p.stock - :qty, p.version = p.version + 1
 where p.id = :id and p.stock >= :qty and p.status = ACTIVE`,
       after:
-        'It returns 0 rows when stock ran out, and the order fails cleanly. Rows are updated in product-id order so two carts cannot deadlock each other. Order emails are written to an outbox table in the same transaction and sent afterwards with FOR UPDATE SKIP LOCKED, so a rolled-back order never emails anyone and two instances never send the same message.',
+        'If the stock has already run out, the statement updates nothing and the order fails cleanly. Products are always updated in the same order to avoid deadlocks. Order emails are saved to an outbox table in the same transaction and sent afterwards, so a cancelled order never sends an email and two servers never send the same one twice.',
     },
     next: [
-      'CI with Testcontainers covering migrations and the checkout transaction.',
-      'Sandbox-test bKash and SSLCommerz before switching them on.',
-      'Move the rate limiter to Redis, the prerequisite for a second instance.',
+      'Add a CI pipeline with integration tests that run against a real PostgreSQL database.',
+      'Test bKash and SSLCommerz in their sandboxes before enabling online payments.',
+      'Move rate limiting to Redis so the app can safely run on more than one server.',
     ],
   },
   {
     slug: 'agrotrends',
     name: 'AgroTrends',
-    summary: 'A farming knowledge platform whose AI advisor answers from the platform’s own posts.',
-    decision: 'The model only sees retrieved posts and returns them as sources, so every answer can be checked.',
+    summary: 'A knowledge-sharing platform for agriculture, with an AI advisor that answers questions using the platform’s own articles.',
+    decision: 'The AI only answers from articles it has retrieved, and it lists them as sources so every answer can be checked.',
     stack: 'Spring Boot 3.5, Spring AI, PostgreSQL with pgvector, React 19',
     image: '/projects/agrotrends.jpg',
-    imageAlt: 'AgroTrends stories feed with field notes on crops and livestock',
-    caption: 'The stories feed running locally with sample posts.',
+    imageAlt: 'The AgroTrends stories page with articles on crops and livestock',
+    caption: 'The stories page running locally with sample articles.',
     links: [
       { label: 'Backend code', href: 'https://github.com/nay-eem-01/AgroTrends' },
-      { label: 'Web app code', href: 'https://github.com/nay-eem-01/agrotrends_web' },
+      { label: 'Frontend code', href: 'https://github.com/nay-eem-01/agrotrends_web' },
     ],
     meta: {
-      role: 'Backend and web app: audit, security, RAG, React frontend',
+      role: 'Backend and frontend developer: security, AI features and the React app',
       stack: 'Java 21, Spring Boot 3.5, Spring AI, PostgreSQL, pgvector, React 19',
-      status: '114 of 123 roadmap steps done; not yet public',
+      status: 'Most of the roadmap is complete. The platform has not launched publicly yet.',
     },
     problem: [
-      'A plain AI chatbot will happily invent a pesticide dose. Agricultural students and young agronomists in Bangladesh need answers they can check, in Bangla and English.',
-      'The codebase I started from had five Gemini keys, the database password and the JWT secret committed to git, and its AI embedded posts but never read them back.',
+      'General AI chatbots can give confident but wrong farming advice, such as an unsafe pesticide dose. Agriculture students and young agronomists in Bangladesh need answers they can verify, in both Bangla and English.',
+      'In the earlier version of the project, the AI feature saved articles as embeddings but never used them to answer questions, and authentication and access control needed a full review.',
     ],
     users:
-      'Planned for agriculture students and fresh graduates first, then young agronomists as verified experts, and urban growers. It has not launched, so there are no users yet.',
+      'The platform is designed first for agriculture students and recent graduates, then for young agronomists who can become verified experts, and for urban and rooftop growers. It has not launched yet, so it has no users.',
     built: [
-      'Stories with drafts, tags, claps, bookmarks and follows, like Medium for farming.',
-      'Questions and answers with votes, reputation and per-topic expert badges.',
-      'An AI advisor that answers from the platform’s posts and lists the posts it used.',
-      'Hardened sign-in, sessions and password reset.',
-      'The React 19 web app in Bangla and English, in 130+ small PRs.',
+      'Articles with drafts, tags, likes, bookmarks and follows, similar to Medium.',
+      'A question-and-answer section with voting, reputation and expert badges by topic.',
+      'An AI advisor that answers from the platform’s articles and shows which ones it used.',
+      'Secure sign-in, session management and password reset.',
+      'The React web app in Bangla and English, delivered in more than 130 small pull requests.',
     ],
     architecture: {
       intro:
-        'A layered Spring Boot service on PostgreSQL. Posts are split into chunks of about 800 tokens and embedded into pgvector with their blog, author and status as metadata.',
-      label: 'Request trace: asking the AI advisor',
+        'A layered Spring Boot application on PostgreSQL. Each article is split into chunks of about 800 tokens and stored in pgvector, together with details such as its author, category and publishing status.',
+      label: 'How a question is answered',
       nodes: [
-        { id: 'api', label: 'POST /api/ai/ask', x: 230, y: 10 },
-        { id: 'quota', label: 'quota', x: 40, y: 108 },
+        { id: 'api', label: 'question', x: 250, y: 10 },
+        { id: 'quota', label: 'daily limit', x: 40, y: 108 },
         { id: 'retrieve', label: 'pgvector', x: 250, y: 108 },
         { id: 'model', label: 'Gemini', x: 460, y: 108 },
         { id: 'answer', label: 'answer + sources', x: 230, y: 206 },
       ],
       edges: 'M320 54v54M250 130h-70M390 130h70M320 152v54',
       steps: [
-        { label: 'Ask', on: ['api'], text: 'A signed-in user with a confirmed email sends a question of up to 1,000 characters.' },
-        { label: 'Quota', on: ['quota'], text: 'A per-user daily quota of 20 questions is checked first, so nobody can run up the model bill.' },
-        { label: 'Retrieve', on: ['retrieve'], text: 'The question is embedded and the five closest published chunks above 0.7 similarity are retrieved.' },
-        { label: 'Generate', on: ['model'], text: 'Gemini answers from those excerpts only, with a 60-second timeout. Retrieved text is framed as untrusted input.' },
-        { label: 'Cite', on: ['answer'], text: 'The answer comes back with its sources: each post’s id and title, most relevant first.' },
+        { label: 'Ask', on: ['api'], text: 'A signed-in user with a confirmed email asks a question of up to 1,000 characters.' },
+        { label: 'Limit', on: ['quota'], text: 'Each user can ask 20 questions a day, which keeps the AI costs under control.' },
+        { label: 'Search', on: ['retrieve'], text: 'The question is converted into a vector, and the five most relevant published articles are found, as long as they are similar enough to be useful.' },
+        { label: 'Answer', on: ['model'], text: 'Gemini writes an answer using only those articles. The article text is treated as untrusted input, and slow responses time out after 60 seconds.' },
+        { label: 'Cite', on: ['answer'], text: 'The answer is returned with its sources: the title of each article it used, most relevant first.' },
       ],
     },
     decisions: [
       {
-        title: 'Only published, vetted content reaches the AI',
-        body: 'Drafts and unchecked AI answers are never retrievable. AI answers on questions are labelled unchecked until an expert confirms or corrects them, and only then enter the knowledge base.',
+        title: 'Only reviewed content reaches the AI',
+        body: 'Drafts and unreviewed AI answers are never used as sources. AI-generated answers to community questions are marked as unchecked until an expert confirms or corrects them, and only then become part of the AI’s knowledge.',
       },
       {
-        title: 'Sessions that can really be revoked',
-        body: 'A 15-minute access token is validated against a session row; the refresh token is opaque, single-use and rotated. Signing out actually ends the session.',
+        title: 'Sessions that can actually be ended',
+        body: 'Access tokens last 15 minutes and are checked against a stored session on every request. Refresh tokens can only be used once and are replaced each time. When a user signs out, their session really ends.',
       },
       {
-        title: 'Ownership checked in the service',
-        body: 'Every mutation goes through AuthorizationService.assertOwnerOrAdmin, so a new endpoint cannot forget it. Public content answers 403, private data answers 404 so its existence does not leak.',
+        title: 'Permission checks live in the service layer',
+        body: 'Every change to content goes through one ownership check in the service layer, so a new endpoint cannot accidentally skip it. Private data returns “not found” rather than “forbidden”, so it does not reveal that it exists.',
       },
     ],
     solved: {
       before:
-        'The AI was write-only: posts were embedded but no answer ever used them, and the embedding model in config had been shut down by Google. I replaced the model, added chunking with metadata, and put a retrieval advisor in front of the chat client:',
+        'The original AI feature stored articles but never used them, and the embedding model it relied on had been retired by Google. I switched to a supported model, split articles into chunks with useful metadata, and added a retrieval step before the AI answers:',
       code: `return RetrievalAugmentationAdvisor.builder()
         .documentRetriever(VectorStoreDocumentRetriever.builder()
                 .vectorStore(vectorStore)
@@ -224,186 +225,183 @@ where p.id = :id and p.stock >= :qty and p.status = ACTIVE`,
                 .build())
         .queryAugmenter(blogQueryAugmenter())
         .build();`,
-      after: 'Blog updates replace their vectors and deletes remove them, so the advisor never cites a post that changed or no longer exists.',
+      after: 'When an article is edited, its stored chunks are replaced, and when it is deleted they are removed. The AI never cites an article that has changed or no longer exists.',
     },
     next: [
-      'Flyway migrations for the existing schema, then ddl-auto=validate.',
-      'Testcontainers with pgvector so the context test runs in CI.',
-      'GitHub Actions with build, tests and gitleaks.',
+      'Move the database schema to Flyway migrations.',
+      'Run the full application test against a real database in CI using Testcontainers.',
+      'Add a GitHub Actions pipeline for builds, tests and secret scanning.',
     ],
   },
   {
     slug: 'courier',
     name: 'Courier backend',
-    summary: 'Parcel delivery with cash on delivery and merchant settlement, in the mould of Steadfast and Pathao.',
-    decision: 'A parcel can only move along its state machine, and each move writes history and ledger lines in one transaction.',
-    stack: 'Spring MVC, JPA, PostgreSQL, Flyway, @Version locking',
-    image: '/projects/courier.jpg',
-    imageAlt: 'Courier API rider endpoints in Swagger UI',
-    caption: 'The rider endpoints in Swagger UI. The backend has no web app yet.',
+    summary: 'A parcel delivery backend with cash on delivery and merchant payouts, modelled on couriers like Steadfast and Pathao.',
+    decision: 'A parcel can only move through allowed statuses, and every move updates its history and the money ledger together.',
+    stack: 'Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven',
+    imageAlt: 'Courier backend',
     links: [{ label: 'Backend code', href: 'https://github.com/nay-eem-01/delivery_app' }],
     meta: {
-      role: 'Sole developer, an 8-week MVP plan, 35 PRs',
-      stack: 'Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven',
-      status: 'MVP features done; end-to-end findings being fixed before deploy',
+      role: 'Sole developer. Planned and built as an 8-week MVP in 35 pull requests.',
+      stack: 'Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway',
+      status: 'MVP features are complete. Final testing is in progress before deployment.',
     },
     problem: [
-      'A courier is not a CRUD app. It has to answer, at any moment, who has which parcel, in which state, at which hub, and with which money.',
-      'Merchant creates a parcel, a rider picks it up, it passes a hub, another rider delivers it and collects cash, the courier deducts its fees, and the merchant is paid. Every step can fail or be retried.',
+      'A courier service is more than storing records. At any moment it must know who has each parcel, what state it is in, which hub it is at, and how much money is owed to whom.',
+      'A parcel goes from the merchant to a pickup rider, through a hub, to a delivery rider who collects the cash, and finally the merchant is paid after fees. Any step can fail or be retried, and the money must always add up.',
     ],
     users:
-      'Designed for three roles: merchants who send parcels, riders who pick up and deliver, and admins who run hubs and approve payouts. It has not been deployed, so there are no users yet.',
+      'It is designed for three groups: merchants who send parcels, riders who pick up and deliver them, and admins who manage hubs and approve payouts. It has not been deployed yet, so it has no users.',
     built: [
-      'Merchant onboarding, hubs, riders and admin-managed users.',
-      'Pricing rules, parcels and pickup requests.',
-      'The parcel status state machine with history and a public tracking API.',
-      'Rider pickup and delivery flows.',
-      'A COD ledger, merchant dashboard, settlement requests and admin approval.',
+      'Merchant registration, hubs, riders and user management.',
+      'Delivery pricing, parcel creation and pickup requests.',
+      'A parcel status workflow with full history and public tracking.',
+      'Pickup and delivery flows for riders.',
+      'A cash-on-delivery ledger, a merchant dashboard, and payout requests with admin approval.',
     ],
     architecture: {
       intro:
-        'Multi-module Maven, one module per domain: user, hub, pricing, parcel and ledger. No shared persistence module, so parcel cannot read the ledger’s tables. Servlet MVC on purpose: a status change, its history row and its ledger line belong in one @Transactional method.',
-      label: 'Request trace: a rider delivers a parcel',
+        'The project is split into Maven modules by business area: users, hubs, pricing, parcels and the ledger. Each module owns its own tables, so the parcel module cannot change ledger data directly. I chose Spring MVC so that a status change, its history and its ledger entry are saved in one transaction.',
+      label: 'How a delivery is recorded',
       nodes: [
-        { id: 'api', label: 'PATCH status', x: 250, y: 10 },
+        { id: 'api', label: 'rider', x: 250, y: 10 },
         { id: 'parcel', label: 'parcel', x: 250, y: 108 },
         { id: 'history', label: 'history', x: 40, y: 108 },
-        { id: 'event', label: 'ParcelDelivered', x: 460, y: 108 },
+        { id: 'event', label: 'delivered event', x: 460, y: 108 },
         { id: 'ledger', label: 'ledger', x: 250, y: 206 },
       ],
       edges: 'M320 54v54M250 130h-70M390 130h70M530 152v20H320v34',
       steps: [
-        { label: 'Request', on: ['api'], text: 'The rider sends PATCH /api/rider/parcels/{id}/status with the action DELIVER. Only the assigned rider can act on the parcel.' },
-        { label: 'Transition', on: ['parcel'], text: 'The state machine allows DELIVER only from OUT_FOR_DELIVERY. Anything else is refused before a row changes.' },
-        { label: 'History', on: ['history'], text: 'A status history row records who moved the parcel, from which state, and when.' },
-        { label: 'Event', on: ['event'], text: 'The parcel module publishes ParcelDelivered. It never touches the ledger’s tables itself.' },
-        { label: 'Ledger', on: ['ledger'], text: 'The ledger collects the COD line in the same transaction. If anything fails, the status change rolls back too.' },
+        { label: 'Deliver', on: ['api'], text: 'The rider marks the parcel as delivered. Only the rider assigned to that parcel can update it.' },
+        { label: 'Check', on: ['parcel'], text: 'The status workflow only allows “delivered” after “out for delivery”. Any other move is rejected before anything changes.' },
+        { label: 'History', on: ['history'], text: 'A history record is saved showing who changed the status, from what, and when.' },
+        { label: 'Event', on: ['event'], text: 'The parcel module publishes a “parcel delivered” event instead of touching the ledger itself.' },
+        { label: 'Ledger', on: ['ledger'], text: 'The ledger records the cash collected in the same transaction. If anything fails, the status change is rolled back too.' },
       ],
     },
     decisions: [
       {
-        title: 'Optimistic locking on every parcel',
-        body: 'A parcel row carries @Version. Two riders, or a rider and an admin, acting on the same parcel at once: the second write fails instead of silently overwriting the first.',
+        title: 'Optimistic locking on parcels',
+        body: 'Each parcel has a version number. If two people update the same parcel at the same time, the second update fails instead of silently overwriting the first.',
       },
       {
-        title: 'Flyway and NUMERIC(12,2) from day one',
-        body: 'ddl-auto=update cannot express money precision, a unique tracking-number index or seeded pricing rows, and it never drops anything. A few hours of migrations up front keeps dev and prod the same.',
+        title: 'Database migrations from day one',
+        body: 'I used Flyway instead of letting Hibernate generate the schema. That made it possible to store money with exact precision, enforce unique tracking numbers and seed pricing rules, and it keeps development and production databases identical.',
       },
       {
-        title: 'Net settlement',
-        body: 'A merchant is paid what was collected minus delivery charges and COD fees, with any negative balance carried over, so the ledger always adds up.',
+        title: 'Net payouts',
+        body: 'Merchants are paid the cash collected minus delivery and cash-handling fees. Any negative balance carries over to the next payout, so the ledger always balances.',
       },
     ],
     solved: {
       before:
-        'Settlement is where money races hide. A merchant can press request twice, and an admin can approve while another rejects. The settlement request locks the merchant’s open ledger lines, so a second request waits and then finds them claimed:',
+        'Payouts are where money bugs hide. A merchant might request a payout twice, or two admins might approve and reject the same payout at once. When a payout is requested, the merchant’s open ledger entries are locked, so a second request has to wait and then finds nothing left to claim:',
       code: `@Lock(LockModeType.PESSIMISTIC_WRITE)
 @Query("select e from CodEntry e where e.merchantId = :merchantId and e.settlementId is null "
         + "and e.status <> com.delivery.ledger.enums.CodEntryStatus.PENDING")
 List<CodEntry> findSettleableForUpdate(@Param("merchantId") Long merchantId);`,
       after:
-        'Deciding a settlement locks its row the same way, so two admins run one after the other; tests cover two requests at once and approve against reject. I also ran the whole demo chain end to end over real HTTP and wrote down ten findings, from a health check that reports DOWN without SMTP to an endpoint that exposed any user’s email and phone. The critical ones are first on the list below.',
+        'Approving or rejecting a payout locks it in the same way, so two admins are handled one after the other. Both cases are covered by tests. I also tested the complete flow from merchant sign-up to payout and logged every issue I found to fix before deployment.',
     },
     next: [
-      'Fix the end-to-end findings: lock down the starter’s user endpoints and switch timestamps to ISO-8601.',
-      'An Idempotency-Key on parcel creation, so a retry cannot create two COD lines.',
-      'Status notifications to merchants and receivers, then proof of delivery.',
+      'Fix the remaining issues from end-to-end testing, then deploy.',
+      'Make parcel creation safe to retry, so a repeated request cannot create two parcels.',
+      'Send status updates to merchants and receivers, then add proof of delivery.',
     ],
   },
   {
     slug: 'averyday',
     name: 'AveryDay',
-    summary: 'A habit tracker for self-directed learners, installed on the phone as a PWA.',
-    decision: 'Streaks and progress are computed on read, never stored, so no counter can drift.',
+    summary: 'A habit tracker for self-learners that installs on your phone like an app.',
+    decision: 'Streaks and progress are calculated from your check-ins every time, never stored, so they can never be wrong.',
     stack: 'Spring Boot 4, PostgreSQL, Flyway, Testcontainers, React',
     image: '/projects/averyday.jpg',
-    imageAlt: 'AveryDay home dashboard with completion rates and goals',
-    caption: 'The dashboard running locally with a seeded demo account.',
+    imageAlt: 'The AveryDay dashboard with completion rates and goals',
+    caption: 'The dashboard running locally with a demo account.',
     links: [
       { label: 'Backend code', href: 'https://github.com/nay-eem-01/habit-tracker' },
-      { label: 'Web app code', href: 'https://github.com/nay-eem-01/habit-tracker_web' },
+      { label: 'Frontend code', href: 'https://github.com/nay-eem-01/habit-tracker_web' },
     ],
-    live: { label: 'Live beta', href: 'https://averyday.vercel.app' },
+    live: { label: 'Live app', href: 'https://averyday.vercel.app' },
     meta: {
-      role: 'Sole developer: API, web app, deploy',
+      role: 'Sole developer: backend, frontend and deployment',
       stack: 'Java 21, Spring Boot 4, Spring MVC, JPA, PostgreSQL, Flyway, React',
-      status: 'Public beta on Render and Vercel; free hosting, so the first request can take a moment',
+      status: 'In public beta. It runs on free hosting, so the first load can take a few seconds.',
     },
     problem: [
-      'Generic habit trackers do not connect a habit to what you are learning, and their streaks are either too strict to survive a sick day or too loose to mean anything.',
+      'Most habit trackers are not built for learning. They don’t connect a habit to the goal behind it, and their streaks are either so strict that one missed day ruins them or so loose that they mean nothing.',
     ],
     users:
-      'Self-directed learners and developers who set a goal like “learn Rust in 60 days” and check in every day. It is in public beta; I make no claims about user numbers.',
+      'Self-learners and developers who set a goal, such as learning a new language in 60 days, and check in every day. The app is in public beta.',
     built: [
-      'Goals with linked habits, notes and study links.',
-      'Build and quit habits, daily, weekday or N-times-a-week schedules.',
+      'Goals with linked habits, notes and study resources.',
+      'Habits to build or to quit, on daily, weekday or weekly schedules.',
       'Streaks, XP, levels and a dashboard of completion rates.',
-      'Rest days with a weekly limit, and web push reminders.',
-      'Google sign-in, an admin API, and a PWA that installs on the phone.',
+      'Rest days with a weekly limit, and push notification reminders.',
+      'Google sign-in, an admin panel, and an installable web app.',
     ],
     architecture: {
       intro:
-        'One Maven module, package-by-feature. A feature uses another only through its service; repositories are package-private. Flyway owns the schema with ddl-auto=validate.',
-      label: 'Request trace: refreshing a session',
+        'A single Spring Boot application organised by feature. Features talk to each other only through their services, never through another feature’s repository. Flyway manages every database change.',
+      label: 'How a session is kept safe',
       nodes: [
-        { id: 'api', label: 'POST /api/auth/refresh', x: 210, y: 10 },
-        { id: 'cookie', label: 'httpOnly cookie', x: 40, y: 108 },
-        { id: 'hash', label: 'SHA-256 lookup', x: 250, y: 108 },
+        { id: 'api', label: 'web app', x: 250, y: 10 },
+        { id: 'cookie', label: 'secure cookie', x: 40, y: 108 },
+        { id: 'hash', label: 'hashed token', x: 250, y: 108 },
         { id: 'reuse', label: 'reuse check', x: 460, y: 108 },
-        { id: 'rotate', label: 'rotate + new JWT', x: 230, y: 206 },
+        { id: 'rotate', label: 'new token', x: 250, y: 206 },
       ],
       edges: 'M320 54v54M250 130h-70M390 130h70M320 152v54',
       steps: [
-        { label: 'Request', on: ['api'], text: 'The web app calls refresh when an access token expires. Concurrent requests share one in-flight refresh.' },
-        { label: 'Cookie', on: ['cookie'], text: 'The refresh token travels only in an httpOnly, Secure, SameSite=Strict cookie scoped to /api/auth. JavaScript never sees it.' },
-        { label: 'Lookup', on: ['hash'], text: 'The server stores only the token’s SHA-256 hash, so a database leak does not leak sessions.' },
-        { label: 'Reuse', on: ['reuse'], text: 'A token that was already rotated and is used again means theft: every token the user has is revoked.' },
-        { label: 'Rotate', on: ['rotate'], text: 'Otherwise the token is rotated and a new 15-minute access token is issued.' },
+        { label: 'Refresh', on: ['api'], text: 'When the short-lived access token expires, the web app asks for a new one. Several requests at once share a single refresh.' },
+        { label: 'Cookie', on: ['cookie'], text: 'The refresh token is kept in a secure, HTTP-only cookie, so JavaScript on the page can never read it.' },
+        { label: 'Hash', on: ['hash'], text: 'The server stores only a hash of the token, so even a database leak would not expose anyone’s session.' },
+        { label: 'Reuse', on: ['reuse'], text: 'If an old token is ever used again, it is treated as theft and every session for that user is signed out.' },
+        { label: 'Rotate', on: ['rotate'], text: 'Otherwise the token is replaced with a new one and a fresh 15-minute access token is issued.' },
       ],
     },
     decisions: [
       {
-        title: 'Numbers are computed on read',
-        body: 'Streaks, stats, XP, goal progress and the dashboard are derived from check-ins every time. Nothing is stored that could disagree with the history; cache only when a measurement asks for it.',
+        title: 'Calculate progress, don’t store it',
+        body: 'Streaks, statistics, XP and goal progress are all calculated from check-ins when they are requested. Nothing is stored that could fall out of sync with the history.',
       },
       {
-        title: 'A day is judged by the rules of that day',
-        body: 'A day counts as done when it reached the target that applied when it was logged, so raising a target later never rewrites the past. Changing a schedule starts a new streak but keeps the XP.',
+        title: 'Past days follow the rules of that day',
+        body: 'A day counts as complete if it met the target that applied on that day. Raising a target later never changes your past results. Changing a schedule starts a new streak but keeps your XP.',
       },
       {
-        title: 'Someone else’s data is 404, never 403',
-        body: 'Every query is scoped by the user from the security context, so another user’s habit simply does not exist for you.',
+        title: 'Other people’s data simply does not exist',
+        body: 'Every query is filtered by the signed-in user. If you request someone else’s habit, you get “not found”, which reveals nothing about whether it exists.',
       },
     ],
     solved: {
       before:
-        'Google sign-in opened an account pre-hijacking hole: someone could register with your email and a password before you ever signed in with Google. Linking a Google identity to an account whose email was never verified now removes that account’s password and sessions. The integration test that proves it:',
+        'Adding Google sign-in created a subtle security risk called account pre-hijacking. Someone could register with your email address and a password before you ever signed in with Google, and keep access to the account. Now, when a Google account is linked to an account whose email was never verified, that account’s password and sessions are removed. This integration test proves it:',
       code: `@Test
 void linkingAnUnverifiedAccountRemovesItsPasswordAndSessions() throws Exception {
     // someone signed up with this address without owning it (pre-hijacking)
-    Cookie squatter = register("victim@gmail.com").andReturn().getResponse().getCookie(REFRESH_COOKIE);
+    register("victim@gmail.com");
     google("t3", new GoogleIdentity("sub-victim", "victim@gmail.com", true, "Victim"));
 
     signIn("t3", null).andExpect(status().isOk());
     login("victim@gmail.com").andExpect(status().isUnauthorized());
-    mockMvc.perform(post("/api/auth/refresh").cookie(squatter)).andExpect(status().isUnauthorized());
 }`,
       after:
-        'Google ID tokens are verified locally against Google’s keys (issuer, audience, expiry, email_verified), and a Google email that is not verified is refused outright.',
+        'Google sign-in tokens are verified on the server against Google’s public keys, and a Google account without a verified email is refused.',
     },
     next: [
-      'Auto check-ins from GitHub: a “push a commit” habit ticked by real activity.',
-      'A custom domain, so account email stops landing in spam.',
-      'Billing for the Pro plan, once people ask for it.',
+      'Automatic check-ins from GitHub, so a “commit every day” habit is ticked by real activity.',
+      'A custom domain, so account emails stop landing in spam.',
+      'A paid Pro plan, once there is demand for it.',
     ],
   },
 ];
 
 export const skills: { group: string; items: string }[] = [
-  { group: 'Backend', items: 'Spring Boot, WebFlux, Reactor, Spring MVC, Spring Security, JPA, Spring Data Neo4j, Spring AI' },
+  { group: 'Backend', items: 'Spring Boot, Spring WebFlux, Project Reactor, Spring MVC, Spring Security, JPA and Hibernate, Spring Data Neo4j, Spring AI' },
   { group: 'Data', items: 'PostgreSQL, pgvector, Neo4j, MySQL, Redis, Kafka, Flyway' },
-  { group: 'Quality', items: 'JUnit 5, Mockito, Testcontainers, Playwright' },
-  { group: 'Also', items: 'TypeScript and React, Docker, Linux, Git' },
+  { group: 'Testing', items: 'JUnit 5, Mockito, Testcontainers, Playwright' },
+  { group: 'Other', items: 'TypeScript, React, Docker, Linux, Git' },
 ];
 
-export const education = 'B.Sc. in Computer Science and Engineering, Green University of Bangladesh, 2022 to 2026';
+export const education = 'B.Sc. in Computer Science and Engineering, Green University of Bangladesh (2022 to 2026)';
