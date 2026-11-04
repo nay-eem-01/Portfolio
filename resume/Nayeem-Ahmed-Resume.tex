@@ -1,0 +1,129 @@
+\documentclass[10pt, letterpaper]{article}
+
+% One-page backend resume. Compile with pdflatex.
+\usepackage[ignoreheadfoot, top=0.9cm, bottom=0.8cm, left=1.6cm, right=1.6cm, footskip=0.6cm]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\definecolor{linkColor}{RGB}{20, 60, 140}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[
+    pdftitle={MD. NAYEEM AHMED - Backend Developer (Java)},
+    pdfauthor={MD. NAYEEM AHMED},
+    colorlinks=true,
+    urlcolor=linkColor
+]{hyperref}
+\usepackage{bookmark}
+\usepackage{changepage}
+\usepackage{iftex}
+
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+\fi
+
+\usepackage{charter}
+
+\raggedright
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{-1pt}{0.16cm}{0.1cm}
+\usepackage{needspace}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$}
+\newenvironment{highlights}{
+    \begin{itemize}[topsep=1pt, parsep=1pt, partopsep=0pt, itemsep=0pt, leftmargin=12pt]
+}{
+    \end{itemize}
+}
+
+% \entry{left bold title}{right-aligned date}
+\newcommand{\entry}[2]{\textbf{#1}\hfill #2\par}
+% \project{name}{one-line what}{links}
+\newcommand{\project}[3]{\textbf{#1} --- #2\hfill{\small #3}\par}
+\newcommand{\tech}[1]{{\small\textit{#1}}\par}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{20pt}{20pt}\selectfont\textbf{MD. NAYEEM AHMED}}\\[4pt]
+    Backend Developer (Java, Spring Boot)\\[3pt]
+    {\small Dhaka, Bangladesh \;|\; \href{mailto:ahmedmdnayeem05@gmail.com}{ahmedmdnayeem05@gmail.com} \;|\; +880 1833-849973 \;|\;
+    \href{https://linkedin.com/in/md-nayeem-ahmed}{LinkedIn} \;|\;
+    \href{https://github.com/nay-eem-01}{GitHub} \;|\;
+    \href{https://nayeem-ahmed-portfolio.netlify.app/}{Portfolio}}
+\end{center}
+
+\section{Summary}
+Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, Neo4j, Kafka) and \textbf{servlet} (Spring MVC, JPA, PostgreSQL) stacks: chat, messaging and auth on a production WebFlux platform at work, and four end-to-end products of my own (RAG, payments, a courier ledger, a PWA).
+
+\section{Experience}
+
+\entry{Junior Backend Developer (Java) --- Dhrubok Infotech Services Limited, Dhaka}{Jan 2026 -- Present}
+\begin{highlights}
+    \item \textbf{TaskATask} (task management, Spring WebFlux + Neo4j): built the real-time \textbf{chat system} on \textbf{WebFlux Sinks} --- group conversations, pin/archive/mute, scheduled and self-destructing messages; message bodies encrypted at the persistence layer with \textbf{Jasypt}.
+    \item Built a bulk contact-import pipeline for up to \textbf{10,000 records} on \textbf{Redis}-backed job queues with chunked processing and batched duplicate-detection queries.
+    \item Designed the appointment accept/reject/reschedule flow with \textbf{Kafka}-driven notifications, synced to \textbf{Google Calendar} and iCalendar; implemented \textbf{OAuth2} sign-in with Google, Facebook, Apple and email/phone OTP.
+    \item Found and fixed a \textbf{Neo4j} bug where every node save re-fetched all relationships: projection-based updates for scalar fields and custom \textbf{Cypher} for relationship changes.
+    \item \textbf{Hospitalia} (doctor appointment booking): built booking, schedule lookup and cancellation workflows that removed double-booking between doctors and patients.
+\end{highlights}
+
+\vspace{2pt}
+\entry{Backend Developer (Java) Intern --- Dhrubok Infotech Services Limited, Dhaka}{Oct 2025 -- Dec 2025}
+\begin{highlights}
+    \item Implemented full-text search with \textbf{Hibernate Search} on a \textbf{Lucene} backend, with custom analyzers.
+\end{highlights}
+
+\section{Projects}
+
+\project{AgroTrends}{agricultural knowledge platform with an AI advisor that cites its sources}{\href{https://github.com/nay-eem-01/AgroTrends}{API} \,|\, \href{https://github.com/nay-eem-01/agrotrends_web}{Web}}
+\tech{Java 21, Spring Boot 3.5, Spring AI (Gemini), PostgreSQL + pgvector, Docker, Caddy; React 19, TypeScript, TanStack Query}
+\begin{highlights}
+    \item Built \textbf{RAG} over the platform's own posts: chunked embeddings in \textbf{pgvector} with metadata filters, a retrieval advisor (top 5, similarity $\geq$ 0.7) and answers returned with the \textbf{cited posts}; per-user daily quota, 60\,s model timeout.
+    \item Audited and hardened the codebase: secrets out of git, 15-min JWTs checked against a session row, rotating single-use refresh tokens, owner-or-admin checks, rate-limited sign-in.
+    \item Shipped a Medium-style React app (feeds, claps, bookmarks, Q\&A, Bangla/English) in 130+ small PRs; Docker Compose deploy, nightly pg\_dump backups.
+\end{highlights}
+
+\vspace{1pt}
+\project{Senpai Supply}{e-commerce for anime merchandise in Bangladesh}{\href{https://github.com/nay-eem-01/E-commerce-application-with-springboot}{API} \,|\, \href{https://github.com/nay-eem-01/ecommerce_web}{Web}}
+\tech{Java 21, Spring Boot 3.5, PostgreSQL, Flyway, Spring Security + JWT; React 19, TypeScript, Playwright}
+\begin{highlights}
+    \item Modular monolith of 9 Maven modules that talk only through API interfaces and events; orders move only through a state machine; totals computed server-side.
+    \item Put COD, \textbf{bKash} and \textbf{SSLCommerz} behind one PaymentProvider interface selected by config; checkout is safe to retry with an \textbf{Idempotency-Key}; order e-mails go through a \textbf{transactional outbox}.
+\end{highlights}
+
+\vspace{1pt}
+\project{Courier Delivery Backend}{parcel delivery with cash-on-delivery and merchant settlement}{\href{https://github.com/nay-eem-01/delivery_app}{GitHub}}
+\tech{Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven}
+\begin{highlights}
+    \item Modelled the parcel lifecycle as a state machine with status history and @Version optimistic locking; hubs, riders, pickups and pricing as separate modules.
+    \item Built a COD ledger fed by parcel domain events, plus merchant settlement request/approval, with tests for concurrent requests and approve-vs-reject races.
+\end{highlights}
+
+\vspace{1pt}
+\project{AveryDay}{habit tracker for self-directed learners, installable as a PWA}{\href{https://averyday.vercel.app}{Live} \,|\, \href{https://github.com/nay-eem-01/habit-tracker}{API} \,|\, \href{https://github.com/nay-eem-01/habit-tracker_web}{Web}}
+\tech{Java 21, Spring Boot 4, Spring MVC, JPA, PostgreSQL, Flyway, Testcontainers; React, TypeScript; Render + Vercel}
+\begin{highlights}
+    \item Streaks, XP and goal progress computed on read (rest days with a weekly limit), web-push reminders, Google sign-in verified locally against Google's keys, refresh-token reuse detection, an admin API; 110+ PRs.
+\end{highlights}
+
+\section{Skills}
+\textbf{Languages:} Java, SQL, Cypher, TypeScript, JavaScript, Python\par
+\textbf{Backend:} Spring Boot, WebFlux, Project Reactor, Spring MVC, Spring Security, JPA/Hibernate, Spring Data Neo4j, Spring AI\par
+\textbf{Data:} PostgreSQL, pgvector, Neo4j, MySQL, Redis, Kafka, Flyway, Lucene\par
+\textbf{Testing \& ops:} JUnit 5, Mockito, Testcontainers, Playwright, Docker, GitHub Actions, Linux, Git\par
+
+\section{Education}
+\entry{B.Sc. in Computer Science and Engineering, Green University of Bangladesh --- CGPA 3.32}{Feb 2022 -- Feb 2026}
+
+\end{document}
