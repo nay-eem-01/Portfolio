@@ -1,152 +1,95 @@
-import Field from '@/components/Field';
+import Link from 'next/link';
+import Links from '@/components/Links';
 import Reveal from '@/components/Reveal';
-import { GitHubIcon, LinkedInIcon } from '@/components/Icons';
-import { education, experience, person, projects, skills } from '@/content/site';
+import ScrollSpy from '@/components/ScrollSpy';
+import { about, education, jobs, person, projects, skills } from '@/content/site';
+
+const sections = [['about', 'About'], ['experience', 'Experience'], ['projects', 'Projects'], ['skills', 'Skills'], ['contact', 'Contact']];
 
 export default function Home() {
-  const mail = `mailto:${person.email}`;
   return (
-    <>
-      <header className="nav">
-        <div className="container nav__bar">
-          <a className="wordmark" href="#top">Nayeem Ahmed</a>
-          <nav aria-label="Sections">
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a className="key key--sm" href={mail}>Email me</a>
-          </nav>
+    <div className="container shell">
+      <header className="rail">
+        <div className="rail__id">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="avatar" src={person.photo} alt="" width={64} height={64} />
+          <h1>{person.name}</h1>
+          <p className="rail__role">{person.role}</p>
+          <p className="rail__line">{person.line}</p>
+          <p className="rail__now"><span className="now-dot" aria-hidden="true" />{person.now}</p>
         </div>
+        <nav className="rail__nav" aria-label="Sections">
+          {sections.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+        </nav>
+        <Links />
       </header>
 
-      <main id="top">
-        <section className="hero">
-          <Field />
-          <div className="container hero__grid">
-            <div className="hero__text">
-              <h1>{person.name}</h1>
-              <p className="lead">{person.role}</p>
-              <div className="actions">
-                <a className="key key--primary" href={mail}>Email me</a>
-                <a className="key" href={person.resume}>Resume, PDF</a>
-              </div>
-              <ul className="connect" aria-label="Elsewhere">
-                <li><a href={person.github}><GitHubIcon /><span>GitHub</span></a></li>
-                <li><a href={person.linkedin}><LinkedInIcon /><span>LinkedIn</span></a></li>
-                <li><a href={mail}><span>{person.email}</span></a></li>
-              </ul>
-            </div>
-            <figure className="portrait">
-              <div className="portrait__frame cut">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={person.photo} alt={`Portrait of ${person.name}`} width={1024} height={1024} fetchPriority="high" />
-              </div>
-              <figcaption className="now graphite cut">
-                <span className="now__label">Now</span>
-                <span>{person.now}</span>
-              </figcaption>
-            </figure>
-          </div>
+      <main id="main" className="content">
+        <section id="about" className="block">
+          <h2 className="visually-hidden">About</h2>
+          <p className="about__lead">{about.lead}</p>
+          <p>{about.body}</p>
         </section>
 
-        <section id="experience" className="section container">
-          <div className="head" data-reveal>
-            <h2>Where I work</h2>
-            <p>Backend developer at Dhrubok Infotech in Dhaka since October 2025.</p>
-          </div>
-          <ol className="roles">
-            {experience.map((r) => (
-              <li key={r.title} className={r.current ? 'role role--current' : 'role'} data-reveal>
-                <div className="role__when">
-                  <time dateTime={r.from}>{r.dates}</time>
-                  {r.current && <span className="status">Current role</span>}
-                </div>
-                <div className="role__body">
-                  <h3>{r.title}</h3>
-                  <p className="role__org">{r.company}, {r.place}</p>
-                  {r.work.map((w) => (
-                    <div key={w.name} className="work">
-                      <p className="work__name"><strong>{w.name}</strong> <span>{w.what}</span></p>
-                      <ul>{w.points.map((p) => <li key={p}>{p}</li>)}</ul>
-                    </div>
-                  ))}
+        <section id="experience" className="block" data-reveal>
+          <h2>Experience</h2>
+          <ol className="jobs">
+            {jobs.map((j) => (
+              <li key={j.title} className="job">
+                <p className="job__when"><time dateTime={j.from}>{j.when}</time></p>
+                <div>
+                  <h3>{j.title} <span className="at">at {j.company}</span></h3>
+                  <p>{j.summary}</p>
+                  <ul className="tags" aria-label="Technologies">{j.tags.map((t) => <li key={t}>{t}</li>)}</ul>
                 </div>
               </li>
             ))}
           </ol>
+          <a className="more" href={person.resume}>Full CV, PDF</a>
         </section>
 
-        <section id="projects" className="section section--paper">
-          <div className="container">
-            <div className="head" data-reveal>
-              <h2>Personal projects</h2>
-              <p>Built end to end on my own time: API, web app, migrations and tests, all public.</p>
-            </div>
-            <div className="projects">
-              {projects.map((p) => (
-                <article key={p.slug} className="project" data-reveal>
-                  <figure className="shot cut" data-slot={p.slug} data-alt={p.imageAlt}>
-                    {p.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={p.image} alt={p.imageAlt} loading="lazy" />
-                    ) : (
-                      <figcaption className="shot__empty">Screenshot goes here: public/projects/{p.slug}.png</figcaption>
-                    )}
-                  </figure>
-                  <div className="project__text">
-                    <h3>{p.name}</h3>
-                    <p className="project__what">{p.what}</p>
-                    <ul>{p.points.map((x) => <li key={x}>{x}</li>)}</ul>
-                    <p className="project__stack">{p.stack}</p>
-                    <div className="project__links">
-                      {p.links.map((l) => (
-                        <a key={l.href} className={l.kind === 'live' ? 'key key--sm key--primary' : 'key key--sm'} href={l.href}>
-                          {l.kind === 'code' && <GitHubIcon />}
-                          <span>{l.label}</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
+        <section id="projects" className="block">
+          <h2>Projects</h2>
+          <p className="muted block__sub">Built alone, end to end. Each one has a case study on the decision worth asking about.</p>
+          {projects.map((p) => (
+            <article key={p.slug} className="proj" data-reveal>
+              <Link className="proj__shot" href={`/projects/${p.slug}/`} tabIndex={-1} aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.image} alt="" loading="lazy" />
+              </Link>
+              <div className="proj__body">
+                <h3><Link href={`/projects/${p.slug}/`}>{p.name}</Link></h3>
+                <p>{p.summary}</p>
+                <p className="decision"><span>The decision</span>{p.decision}</p>
+                <p className="proj__stack">{p.stack}</p>
+                <p className="proj__links">
+                  <Link href={`/projects/${p.slug}/`}>Read the case study</Link>
+                  {p.live && <a className="live" href={p.live.href}>{p.live.label}</a>}
+                  <a href={p.links[0].href}>Code</a>
+                </p>
+              </div>
+            </article>
+          ))}
         </section>
 
-        <section id="skills" className="section container">
-          <div className="skills" data-reveal>
-            <h2>Skills</h2>
-            <table className="ledger">
-              <tbody>
-                {skills.map((s) => (
-                  <tr key={s.group}><th scope="row">{s.group}</th><td>{s.items}</td></tr>
-                ))}
-                <tr><th scope="row">Education</th><td>{education.degree}, {education.school}. {education.dates}, {education.note}.</td></tr>
-              </tbody>
-            </table>
-          </div>
+        <section id="skills" className="block" data-reveal>
+          <h2>Skills</h2>
+          <dl className="skills">
+            {skills.map((s) => <div key={s.group}><dt>{s.group}</dt><dd>{s.items}</dd></div>)}
+          </dl>
+          <p className="edu">{education}</p>
         </section>
 
-        <section id="contact" className="close graphite">
-          <div className="container close__grid" data-reveal>
-            <h2>Hiring a Java backend developer?</h2>
-            <div className="close__body">
-              <a className="key key--primary" href={mail}>{person.email}</a>
-              <p>Dhaka, Bangladesh. Open to backend roles, on site or remote. Phone {person.phone}.</p>
-            </div>
-          </div>
+        <section id="contact" className="block contact" data-reveal>
+          <h2>Hiring for a backend role?</h2>
+          <p>Email reaches me fastest. Based in Dhaka, open to on-site or remote roles.</p>
+          <p><a className="btn btn--primary" href={`mailto:${person.email}`}>{person.email}</a></p>
         </section>
+
+        <footer className="colophon muted">Built with Next.js and plain CSS, exported as static HTML. Set in Hepta Slab and Rethink Sans. <a href="https://github.com/nay-eem-01/Portfolio">Source</a>.</footer>
       </main>
-
-      <footer className="foot container">
-        <a className="wordmark" href="#top">Nayeem Ahmed</a>
-        <ul>
-          <li><a href={person.github}>GitHub</a></li>
-          <li><a href={person.linkedin}>LinkedIn</a></li>
-          <li><a href={person.resume}>Resume</a></li>
-        </ul>
-      </footer>
+      <ScrollSpy navSelector=".rail__nav" />
       <Reveal />
-    </>
+    </div>
   );
 }
