@@ -18,8 +18,8 @@
   --color-glyph-1: oklch(89% 0.025 254); --color-glyph-2: oklch(81% 0.045 255); --color-glyph-3: oklch(70% 0.085 256); --color-glyph-4: oklch(60% 0.13 257);
   --color-graphite-glyph-1: oklch(33% 0.03 262); --color-graphite-glyph-2: oklch(41% 0.05 260); --color-graphite-glyph-3: oklch(53% 0.1 258);
   --color-key-face: oklch(99.4% 0.003 250); --color-key-edge: oklch(80% 0.016 254);
-  --font-display: "Familjen Grotesk", system-ui, sans-serif; --font-body: "IBM Plex Sans", system-ui, sans-serif;
-  --font-outlier: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: var(--ff-familjen), "Familjen Grotesk", system-ui, sans-serif; --font-body: var(--ff-plex), "IBM Plex Sans", system-ui, sans-serif;
+  --font-outlier: var(--ff-jetbrains), "JetBrains Mono", ui-monospace, monospace;
   --radius-card: 8px; --radius-input: 6px; --radius-pill: 999px;
   --cell-w: 8px; --cell-h: 16px; --cut: 8px; --cut-l: 16px;
   --rule-hair: 1px; --shadow-card: 0 1px 2px oklch(21% 0.028 262 / 0.06);
