@@ -57,10 +57,11 @@
 
 \begin{center}
     {\fontsize{20pt}{20pt}\selectfont\textbf{MD. NAYEEM AHMED}}\\[4pt]
-    Backend Developer (Java, Spring Boot)\\[3pt]
+    Backend Developer, Java and Spring Boot\\[3pt]
     {\small Dhaka, Bangladesh \;|\; \href{mailto:ahmedmdnayeem05@gmail.com}{ahmedmdnayeem05@gmail.com} \;|\; +880 1833-849973 \;|\;
     \href{https://linkedin.com/in/md-nayeem-ahmed}{LinkedIn} \;|\;
     \href{https://github.com/nay-eem-01}{GitHub} \;|\;
+    \href{https://medium.com/@ahmedmdnayeem05}{Medium} \;|\;
     \href{https://nayeem-ahmed-portfolio.netlify.app/}{Portfolio}}
 \end{center}
 
@@ -86,16 +87,16 @@ Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, N
 
 \section{Projects}
 
-\project{AgroTrends}{agricultural knowledge platform with an AI advisor that cites its sources}{\href{https://github.com/nay-eem-01/AgroTrends}{Backend} \,|\, \href{https://github.com/nay-eem-01/agrotrends_web}{Frontend}}
+\project{AgroTrends}{knowledge-sharing platform for agriculture with an AI advisor that cites its sources}{\href{https://github.com/nay-eem-01/AgroTrends}{Backend} \,|\, \href{https://github.com/nay-eem-01/agrotrends_web}{Frontend}}
 \tech{Java 21, Spring Boot 3.5, Spring AI (Gemini), PostgreSQL + pgvector, Docker, Caddy; React 19, TypeScript, TanStack Query}
 \begin{highlights}
     \item Built \textbf{RAG} over the platform's own posts: chunked embeddings in \textbf{pgvector} with metadata filters, a retrieval advisor (top 5, similarity $\geq$ 0.7) and answers returned with the \textbf{cited posts}; per-user daily quota, 60\,s model timeout.
-    \item Audited and hardened the codebase: secrets out of git, 15-min JWTs checked against a session row, rotating single-use refresh tokens, owner-or-admin checks, rate-limited sign-in.
+    \item Hardened authentication: 15-minute JWTs checked against a stored session, rotating single-use refresh tokens, owner-or-admin checks in the service layer, rate-limited sign-in.
     \item Shipped a Medium-style React app (feeds, claps, bookmarks, Q\&A, Bangla/English) in 130+ small PRs; Docker Compose deploy, nightly pg\_dump backups.
 \end{highlights}
 
 \vspace{1pt}
-\project{Senpai Supply}{e-commerce for anime merchandise in Bangladesh}{\href{https://github.com/nay-eem-01/E-commerce-application-with-springboot}{Backend} \,|\, \href{https://github.com/nay-eem-01/ecommerce_web}{Frontend}}
+\project{Senpai Supply}{online store for anime merchandise in Bangladesh}{\href{https://github.com/nay-eem-01/E-commerce-application-with-springboot}{Backend} \,|\, \href{https://github.com/nay-eem-01/ecommerce_web}{Frontend}}
 \tech{Java 21, Spring Boot 3.5, PostgreSQL, Flyway, Spring Security + JWT; React 19, TypeScript, Playwright}
 \begin{highlights}
     \item Modular monolith of 9 Maven modules that talk only through API interfaces and events; orders move only through a state machine; totals computed server-side.
@@ -103,25 +104,25 @@ Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, N
 \end{highlights}
 
 \vspace{1pt}
-\project{Courier Delivery Backend}{parcel delivery with cash-on-delivery and merchant settlement}{\href{https://github.com/nay-eem-01/delivery_app}{GitHub}}
-\tech{Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven}
-\begin{highlights}
-    \item Modelled the parcel lifecycle as a state machine with status history and @Version optimistic locking; hubs, riders, pickups and pricing as separate modules.
-    \item Built a COD ledger fed by parcel domain events, plus merchant settlement request/approval, with tests for concurrent requests and approve-vs-reject races.
-\end{highlights}
-
-\vspace{1pt}
-\project{AveryDay}{habit tracker for self-directed learners, installable as a PWA}{\href{https://averyday.vercel.app}{Live} \,|\, \href{https://github.com/nay-eem-01/habit-tracker}{Backend} \,|\, \href{https://github.com/nay-eem-01/habit-tracker_web}{Frontend}}
+\project{AveryDay}{habit tracker for self-learners, installable as a PWA}{\href{https://averyday.vercel.app}{Live} \,|\, \href{https://github.com/nay-eem-01/habit-tracker}{Backend} \,|\, \href{https://github.com/nay-eem-01/habit-tracker_web}{Frontend}}
 \tech{Java 21, Spring Boot 4, Spring MVC, JPA, PostgreSQL, Flyway, Testcontainers; React, TypeScript; Render + Vercel}
 \begin{highlights}
     \item Streaks, XP and goal progress computed on read (rest days with a weekly limit), web-push reminders, Google sign-in verified locally against Google's keys, refresh-token reuse detection, an admin API; 110+ PRs.
 \end{highlights}
 
+\vspace{1pt}
+\project{Courier Backend}{parcel delivery with cash on delivery and merchant payouts}{\href{https://github.com/nay-eem-01/delivery_app}{Backend}}
+\tech{Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven}
+\begin{highlights}
+    \item Modelled the parcel lifecycle as a state machine with status history and @Version optimistic locking; hubs, riders, pickups and pricing as separate modules.
+    \item Built a COD ledger fed by parcel domain events, plus merchant payout requests with admin approval, tested against concurrent requests and approve-vs-reject races.
+\end{highlights}
+
 \section{Skills}
 \textbf{Languages:} Java, SQL, Cypher, TypeScript, JavaScript, Python\par
-\textbf{Backend:} Spring Boot, WebFlux, Project Reactor, Spring MVC, Spring Security, JPA/Hibernate, Spring Data Neo4j, Spring AI\par
-\textbf{Data:} PostgreSQL, pgvector, Neo4j, MySQL, Redis, Kafka, Flyway, Lucene\par
-\textbf{Testing \& ops:} JUnit 5, Mockito, Testcontainers, Playwright, Docker, GitHub Actions, Linux, Git\par
+\textbf{Backend:} Spring Boot, Spring WebFlux, Project Reactor, Spring MVC, Spring Security, Hibernate, Spring Data Neo4j, Spring AI\par
+\textbf{Data and messaging:} PostgreSQL, pgvector, Neo4j, MySQL, Redis, Apache Kafka, Flyway, Lucene\par
+\textbf{Testing:} JUnit 5, Mockito, Testcontainers, Playwright \quad \textbf{Tools:} Maven, Docker, GitHub Actions, Git, Linux, React\par
 
 \section{Education}
 \entry{B.Sc. in Computer Science and Engineering, Green University of Bangladesh --- CGPA 3.32}{Feb 2022 -- Feb 2026}
