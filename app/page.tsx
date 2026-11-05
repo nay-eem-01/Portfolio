@@ -50,17 +50,19 @@ export default function Home() {
 
         <section id="projects" className="block">
           <h2>Projects</h2>
-          <p className="muted block__sub">Built alone, end to end. Each one has a case study on the decision worth asking about.</p>
+          <p className="muted block__sub">Projects I designed and built on my own, from the database to the user interface. Each one has a case study explaining the key technical decisions.</p>
           {projects.map((p) => (
             <article key={p.slug} className="proj" data-reveal>
               <Link className="proj__shot" href={`/projects/${p.slug}/`} tabIndex={-1} aria-hidden="true">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.image} alt="" loading="lazy" />
+                {p.image
+                  // eslint-disable-next-line @next/next/no-img-element
+                  ? <img src={p.image} alt="" loading="lazy" />
+                  : <span className="slot">Screenshot coming soon</span>}
               </Link>
               <div className="proj__body">
                 <h3><Link href={`/projects/${p.slug}/`}>{p.name}</Link></h3>
                 <p>{p.summary}</p>
-                <p className="decision"><span>The decision</span>{p.decision}</p>
+                <p className="decision"><span>Key decision</span>{p.decision}</p>
                 <p className="proj__stack">{p.stack}</p>
                 <p className="proj__links">
                   <Link href={`/projects/${p.slug}/`}>Read the case study</Link>
@@ -81,8 +83,8 @@ export default function Home() {
         </section>
 
         <section id="contact" className="block contact" data-reveal>
-          <h2>Hiring for a backend role?</h2>
-          <p>Email reaches me fastest. Based in Dhaka, open to on-site or remote roles.</p>
+          <h2>Looking for a backend engineer?</h2>
+          <p>The best way to reach me is by email. I’m based in Dhaka and open to on-site or remote roles.</p>
           <p><a className="btn btn--primary" href={`mailto:${person.email}`}>{person.email}</a></p>
         </section>
 

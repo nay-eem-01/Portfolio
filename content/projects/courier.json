@@ -1,0 +1,130 @@
+{
+  "order": 3,
+  "slug": "courier",
+  "name": "Courier backend",
+  "summary": "A parcel delivery backend with cash on delivery and merchant payouts, modelled on couriers like Steadfast and Pathao.",
+  "decision": "A parcel can only move through allowed statuses, and every move updates its history and the money ledger together.",
+  "stack": "Spring MVC, JPA, PostgreSQL, Flyway, multi-module Maven",
+  "imageAlt": "Courier backend",
+  "links": [
+    {
+      "label": "Backend code",
+      "href": "https://github.com/nay-eem-01/delivery_app"
+    }
+  ],
+  "meta": {
+    "role": "Sole developer. Planned and built as an 8-week MVP in 35 pull requests.",
+    "stack": "Java 21, Spring Boot, Spring MVC, JPA, PostgreSQL, Flyway",
+    "status": "MVP features are complete. Final testing is in progress before deployment."
+  },
+  "problem": [
+    "A courier service is more than storing records. At any moment it must know who has each parcel, what state it is in, which hub it is at, and how much money is owed to whom.",
+    "A parcel goes from the merchant to a pickup rider, through a hub, to a delivery rider who collects the cash, and finally the merchant is paid after fees. Any step can fail or be retried, and the money must always add up."
+  ],
+  "users": "It is designed for three groups: merchants who send parcels, riders who pick up and deliver them, and admins who manage hubs and approve payouts. It has not been deployed yet, so it has no users.",
+  "built": [
+    "Merchant registration, hubs, riders and user management.",
+    "Delivery pricing, parcel creation and pickup requests.",
+    "A parcel status workflow with full history and public tracking.",
+    "Pickup and delivery flows for riders.",
+    "A cash-on-delivery ledger, a merchant dashboard, and payout requests with admin approval."
+  ],
+  "architecture": {
+    "intro": "The project is split into Maven modules by business area: users, hubs, pricing, parcels and the ledger. Each module owns its own tables, so the parcel module cannot change ledger data directly. I chose Spring MVC so that a status change, its history and its ledger entry are saved in one transaction.",
+    "label": "How a delivery is recorded",
+    "nodes": [
+      {
+        "id": "api",
+        "label": "rider",
+        "x": 250,
+        "y": 10
+      },
+      {
+        "id": "parcel",
+        "label": "parcel",
+        "x": 250,
+        "y": 108
+      },
+      {
+        "id": "history",
+        "label": "history",
+        "x": 40,
+        "y": 108
+      },
+      {
+        "id": "event",
+        "label": "delivered event",
+        "x": 460,
+        "y": 108
+      },
+      {
+        "id": "ledger",
+        "label": "ledger",
+        "x": 250,
+        "y": 206
+      }
+    ],
+    "edges": "M320 54v54M250 130h-70M390 130h70M530 152v20H320v34",
+    "steps": [
+      {
+        "label": "Deliver",
+        "on": [
+          "api"
+        ],
+        "text": "The rider marks the parcel as delivered. Only the rider assigned to that parcel can update it."
+      },
+      {
+        "label": "Check",
+        "on": [
+          "parcel"
+        ],
+        "text": "The status workflow only allows “delivered” after “out for delivery”. Any other move is rejected before anything changes."
+      },
+      {
+        "label": "History",
+        "on": [
+          "history"
+        ],
+        "text": "A history record is saved showing who changed the status, from what, and when."
+      },
+      {
+        "label": "Event",
+        "on": [
+          "event"
+        ],
+        "text": "The parcel module publishes a “parcel delivered” event instead of touching the ledger itself."
+      },
+      {
+        "label": "Ledger",
+        "on": [
+          "ledger"
+        ],
+        "text": "The ledger records the cash collected in the same transaction. If anything fails, the status change is rolled back too."
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "title": "Optimistic locking on parcels",
+      "body": "Each parcel has a version number. If two people update the same parcel at the same time, the second update fails instead of silently overwriting the first."
+    },
+    {
+      "title": "Database migrations from day one",
+      "body": "I used Flyway instead of letting Hibernate generate the schema. That made it possible to store money with exact precision, enforce unique tracking numbers and seed pricing rules, and it keeps development and production databases identical."
+    },
+    {
+      "title": "Net payouts",
+      "body": "Merchants are paid the cash collected minus delivery and cash-handling fees. Any negative balance carries over to the next payout, so the ledger always balances."
+    }
+  ],
+  "solved": {
+    "before": "Payouts are where money bugs hide. A merchant might request a payout twice, or two admins might approve and reject the same payout at once. When a payout is requested, the merchant’s open ledger entries are locked, so a second request has to wait and then finds nothing left to claim:",
+    "code": "@Lock(LockModeType.PESSIMISTIC_WRITE)\n@Query(\"select e from CodEntry e where e.merchantId = :merchantId and e.settlementId is null \"\n        + \"and e.status <> com.delivery.ledger.enums.CodEntryStatus.PENDING\")\nList<CodEntry> findSettleableForUpdate(@Param(\"merchantId\") Long merchantId);",
+    "after": "Approving or rejecting a payout locks it in the same way, so two admins are handled one after the other. Both cases are covered by tests. I also tested the complete flow from merchant sign-up to payout and logged every issue I found to fix before deployment."
+  },
+  "next": [
+    "Fix the remaining issues from end-to-end testing, then deploy.",
+    "Make parcel creation safe to retry, so a repeated request cannot create two parcels.",
+    "Send status updates to merchants and receivers, then add proof of delivery."
+  ]
+}

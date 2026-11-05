@@ -1,0 +1,165 @@
+{
+  "order": 1,
+  "slug": "senpai-supply",
+  "name": "Senpai Supply",
+  "summary": "An online store for anime merchandise in Bangladesh, with guest checkout and cash on delivery.",
+  "decision": "Stock is reduced in a single database update, so two customers can never buy the last item at the same time.",
+  "stack": "Spring Boot 3.5, PostgreSQL, Flyway, modular monolith, React 19",
+  "image": "/projects/senpai-supply.jpg",
+  "imageAlt": "The Senpai Supply storefront home page",
+  "caption": "The storefront running locally with demo products.",
+  "links": [
+    {
+      "label": "Backend code",
+      "href": "https://github.com/nay-eem-01/E-commerce-application-with-springboot"
+    },
+    {
+      "label": "Frontend code",
+      "href": "https://github.com/nay-eem-01/ecommerce_web"
+    }
+  ],
+  "meta": {
+    "role": "Sole developer: planning, backend, database, frontend and tests",
+    "stack": "Java 21, Spring Boot 3.5, PostgreSQL, Flyway, React 19",
+    "status": "Backend and storefront complete. Online payments are built but not yet tested against the providers’ sandboxes."
+  },
+  "problem": [
+    "This is a full rewrite of an e-commerce project I first built while learning Spring Boot. The first version worked on the happy path, but it had serious gaps: weak security, prices stored as floating-point numbers, and no protection against selling more stock than we had.",
+    "For the rewrite, I asked one question of every feature: what happens if two people do this at the same moment, or one person clicks twice?"
+  ],
+  "users": "The store is designed for shoppers in Bangladesh who buy figures, cosplay, bottles and bags, mostly on their phones and often without a card. It is a portfolio project and does not have real customers yet.",
+  "built": [
+    "Guest checkout with cash on delivery, and sign-in with a one-time code sent by SMS.",
+    "A product catalogue with options, specifications and a 360-degree product viewer.",
+    "Order management with a clear status lifecycle, plus order tracking for guests.",
+    "Product reviews that only verified buyers can leave.",
+    "The React storefront, covered by end-to-end tests with Playwright."
+  ],
+  "architecture": {
+    "intro": "The backend is a modular monolith: nine Maven modules deployed as one application. Modules can only talk to each other through public interfaces or events, so the compiler prevents one module from reaching into another’s database tables.",
+    "label": "How an order is placed",
+    "nodes": [
+      {
+        "id": "api",
+        "label": "checkout",
+        "x": 250,
+        "y": 10
+      },
+      {
+        "id": "order",
+        "label": "order",
+        "x": 250,
+        "y": 108
+      },
+      {
+        "id": "catalog",
+        "label": "catalog",
+        "x": 40,
+        "y": 108
+      },
+      {
+        "id": "payment",
+        "label": "payment",
+        "x": 460,
+        "y": 108
+      },
+      {
+        "id": "notification",
+        "label": "notification",
+        "x": 250,
+        "y": 206
+      },
+      {
+        "id": "user",
+        "label": "user",
+        "x": 40,
+        "y": 10,
+        "quiet": true
+      },
+      {
+        "id": "cart",
+        "label": "cart",
+        "x": 460,
+        "y": 10,
+        "quiet": true
+      },
+      {
+        "id": "review",
+        "label": "review",
+        "x": 40,
+        "y": 206,
+        "quiet": true
+      },
+      {
+        "id": "common",
+        "label": "common",
+        "x": 460,
+        "y": 206,
+        "quiet": true
+      }
+    ],
+    "edges": "M320 54v54M250 130h-70M390 130h70M320 152v54",
+    "steps": [
+      {
+        "label": "Request",
+        "on": [
+          "api"
+        ],
+        "text": "Every checkout request carries a unique idempotency key. If the request is sent twice, the second one returns the original order instead of creating a new one."
+      },
+      {
+        "label": "Price",
+        "on": [
+          "order"
+        ],
+        "text": "The order module recalculates every price from the database. Prices sent by the browser are never trusted."
+      },
+      {
+        "label": "Stock",
+        "on": [
+          "catalog"
+        ],
+        "text": "The catalog module reduces stock with one conditional update. If nothing is left, the whole order is cancelled before anything is saved."
+      },
+      {
+        "label": "Save",
+        "on": [
+          "order",
+          "notification"
+        ],
+        "text": "The order, its items, its status history and the confirmation email are all saved in one transaction. Either everything is saved, or nothing is."
+      },
+      {
+        "label": "Email",
+        "on": [
+          "notification"
+        ],
+        "text": "Once the order is saved, a background job sends the email and retries it if sending fails."
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "title": "Spring MVC instead of WebFlux",
+      "body": "I use WebFlux every day at work, but it was the wrong fit here. Checkout updates stock, the order, its items and its history together, and with JPA that is one simple transaction. A reactive version would have added complexity without any benefit at this scale."
+    },
+    {
+      "title": "The server owns every price",
+      "body": "The browser only sends product IDs and quantities. Prices, delivery charges and totals are always calculated on the server from the database, using BigDecimal so money is never rounded incorrectly."
+    },
+    {
+      "title": "Payment providers behind one interface",
+      "body": "Cash on delivery, bKash and SSLCommerz each implement the same PaymentProvider interface. Which provider handles which payment method is set in configuration, so enabling a new one does not require code changes. An order is marked paid only after the provider confirms it server-to-server."
+    }
+  ],
+  "solved": {
+    "before": "When two customers try to buy the last item at the same time, checking the stock first and updating it afterwards is not safe. Both checks can pass. Instead, the check and the update happen in a single statement:",
+    "code": "update Product p set p.stock = p.stock - :qty, p.version = p.version + 1\nwhere p.id = :id and p.stock >= :qty and p.status = ACTIVE",
+    "after": "If the stock has already run out, the statement updates nothing and the order fails cleanly. Products are always updated in the same order to avoid deadlocks. Order emails are saved to an outbox table in the same transaction and sent afterwards, so a cancelled order never sends an email and two servers never send the same one twice."
+  },
+  "next": [
+    "Add a CI pipeline with integration tests that run against a real PostgreSQL database.",
+    "Test bKash and SSLCommerz in their sandboxes before enabling online payments.",
+    "Move rate limiting to Redis so the app can safely run on more than one server."
+  ]
+}

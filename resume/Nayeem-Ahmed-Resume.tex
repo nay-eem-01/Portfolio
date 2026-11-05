@@ -86,7 +86,7 @@ Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, N
 
 \section{Projects}
 
-\project{AgroTrends}{agricultural knowledge platform with an AI advisor that cites its sources}{\href{https://github.com/nay-eem-01/AgroTrends}{API} \,|\, \href{https://github.com/nay-eem-01/agrotrends_web}{Web}}
+\project{AgroTrends}{agricultural knowledge platform with an AI advisor that cites its sources}{\href{https://github.com/nay-eem-01/AgroTrends}{Backend} \,|\, \href{https://github.com/nay-eem-01/agrotrends_web}{Frontend}}
 \tech{Java 21, Spring Boot 3.5, Spring AI (Gemini), PostgreSQL + pgvector, Docker, Caddy; React 19, TypeScript, TanStack Query}
 \begin{highlights}
     \item Built \textbf{RAG} over the platform's own posts: chunked embeddings in \textbf{pgvector} with metadata filters, a retrieval advisor (top 5, similarity $\geq$ 0.7) and answers returned with the \textbf{cited posts}; per-user daily quota, 60\,s model timeout.
@@ -95,7 +95,7 @@ Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, N
 \end{highlights}
 
 \vspace{1pt}
-\project{Senpai Supply}{e-commerce for anime merchandise in Bangladesh}{\href{https://github.com/nay-eem-01/E-commerce-application-with-springboot}{API} \,|\, \href{https://github.com/nay-eem-01/ecommerce_web}{Web}}
+\project{Senpai Supply}{e-commerce for anime merchandise in Bangladesh}{\href{https://github.com/nay-eem-01/E-commerce-application-with-springboot}{Backend} \,|\, \href{https://github.com/nay-eem-01/ecommerce_web}{Frontend}}
 \tech{Java 21, Spring Boot 3.5, PostgreSQL, Flyway, Spring Security + JWT; React 19, TypeScript, Playwright}
 \begin{highlights}
     \item Modular monolith of 9 Maven modules that talk only through API interfaces and events; orders move only through a state machine; totals computed server-side.
@@ -111,7 +111,7 @@ Backend developer shipping on both \textbf{reactive} (Spring WebFlux, Reactor, N
 \end{highlights}
 
 \vspace{1pt}
-\project{AveryDay}{habit tracker for self-directed learners, installable as a PWA}{\href{https://averyday.vercel.app}{Live} \,|\, \href{https://github.com/nay-eem-01/habit-tracker}{API} \,|\, \href{https://github.com/nay-eem-01/habit-tracker_web}{Web}}
+\project{AveryDay}{habit tracker for self-directed learners, installable as a PWA}{\href{https://averyday.vercel.app}{Live} \,|\, \href{https://github.com/nay-eem-01/habit-tracker}{Backend} \,|\, \href{https://github.com/nay-eem-01/habit-tracker_web}{Frontend}}
 \tech{Java 21, Spring Boot 4, Spring MVC, JPA, PostgreSQL, Flyway, Testcontainers; React, TypeScript; Render + Vercel}
 \begin{highlights}
     \item Streaks, XP and goal progress computed on read (rest days with a weekly limit), web-push reminders, Google sign-in verified locally against Google's keys, refresh-token reuse detection, an admin API; 110+ PRs.
