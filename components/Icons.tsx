@@ -44,3 +44,8 @@ export function PinIcon() {
     </svg>
   );
 }
+export function ChevronIcon() {
+  return (
+    <svg className="icon" viewBox="0 0 24 24" aria-hidden="true" {...stroke}><path d="M9 6l6 6-6 6" /></svg>
+  );
+}

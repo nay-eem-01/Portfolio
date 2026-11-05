@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import BackToTop from '@/components/BackToTop';
 import ContactForm from '@/components/ContactForm';
-import CopyEmail from '@/components/CopyEmail';
 import Footer from '@/components/Footer';
-import { BriefcaseIcon, GitHubIcon, LinkedInIcon, MediumIcon, PinIcon } from '@/components/Icons';
+import { BriefcaseIcon, ChevronIcon, GitHubIcon, LinkedInIcon, MailIcon, MediumIcon, PinIcon } from '@/components/Icons';
 import Links from '@/components/Links';
 import MobileNav from '@/components/MobileNav';
 import ProjectRail from '@/components/ProjectRail';
@@ -150,18 +149,15 @@ export default function Home() {
             <h2>{contact.heading}</h2>
             <div className="contact">
               <p className="contact__lead">{contact.text}</p>
-              <div className="contact__mail">
-                <a className="contact__email" href={`mailto:${person.email}`}>{person.email.split('@')[0]}@<wbr />{person.email.split('@')[1]}</a>
-                <CopyEmail email={person.email} />
-              </div>
-              <ul className="contact__links">
-                <li><a href={person.linkedin}><LinkedInIcon /><span>{handle(person.linkedin)}</span></a></li>
-                <li><a href={person.github}><GitHubIcon /><span>{handle(person.github)}</span></a></li>
-                {person.medium && <li><a href={person.medium}><MediumIcon /><span>{handle(person.medium)}</span></a></li>}
-                <li className="contact__place"><PinIcon /><span>{person.location}</span></li>
+              <ul className="clist">
+                <li><a className="crow" href={`mailto:${person.email}`}><span className="crow__icon"><MailIcon /></span><span className="crow__text"><span className="crow__label">Email</span><span className="crow__value">{person.email.split('@')[0]}@<wbr />{person.email.split('@')[1]}</span></span><span className="crow__go"><ChevronIcon /></span></a></li>
+                <li><a className="crow" href={person.linkedin}><span className="crow__icon"><LinkedInIcon /></span><span className="crow__text"><span className="crow__label">LinkedIn</span><span className="crow__value">{handle(person.linkedin)}</span></span><span className="crow__go"><ChevronIcon /></span></a></li>
+                <li><a className="crow" href={person.github}><span className="crow__icon"><GitHubIcon /></span><span className="crow__text"><span className="crow__label">GitHub</span><span className="crow__value">{handle(person.github)}</span></span><span className="crow__go"><ChevronIcon /></span></a></li>
+                {person.medium && <li><a className="crow" href={person.medium}><span className="crow__icon"><MediumIcon /></span><span className="crow__text"><span className="crow__label">Medium</span><span className="crow__value">{handle(person.medium)}</span></span><span className="crow__go"><ChevronIcon /></span></a></li>}
+                <li><div className="crow"><span className="crow__icon"><PinIcon /></span><span className="crow__text"><span className="crow__label">Location</span><span className="crow__value">{person.location}</span></span></div></li>
               </ul>
               <div className="contact__form">
-                <h3>Or send a message</h3>
+                <h3>Send a message</h3>
                 <ContactForm endpoint={contact.formEndpoint} email={person.email} />
               </div>
             </div>
