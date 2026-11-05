@@ -472,7 +472,7 @@ strong, b { font-weight: 600; }
 .contact__mail { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-md); }
 .contact__email { font: 500 clamp(1rem, 5.6cqi, 2.5rem)/1.15 var(--font-display); letter-spacing: -0.02em; color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; text-decoration-color: var(--accent); min-width: 0; }
 .contact__email:hover { color: var(--accent); }
-.copy { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 40px; padding: 0 var(--space-sm); border: 1px solid var(--rule-2); border-radius: var(--radius); background: transparent; color: var(--ink-2); font: 500 var(--text-sm)/1 var(--font-body); cursor: pointer; transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.copy { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 44px; padding: 0 var(--space-sm); border: 1px solid var(--rule-2); border-radius: var(--radius); background: transparent; color: var(--ink-2); font: 500 var(--text-sm)/1 var(--font-body); cursor: pointer; transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
 .copy:hover { border-color: var(--ink); color: var(--ink); }
 .copy:active { transform: translateY(1px); }
 .copy .icon { width: 16px; height: 16px; }
