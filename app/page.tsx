@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import BackToTop from '@/components/BackToTop';
 import ContactForm from '@/components/ContactForm';
+import CopyEmail from '@/components/CopyEmail';
 import Footer from '@/components/Footer';
-import { BriefcaseIcon, GitHubIcon, LinkedInIcon, MailIcon, MediumIcon, PinIcon } from '@/components/Icons';
+import { BriefcaseIcon, GitHubIcon, LinkedInIcon, MediumIcon, PinIcon } from '@/components/Icons';
 import Links from '@/components/Links';
 import MobileNav from '@/components/MobileNav';
 import ProjectRail from '@/components/ProjectRail';
@@ -147,18 +148,22 @@ export default function Home() {
 
           <section id="contact" className="block" data-reveal>
             <h2>{contact.heading}</h2>
-            <div className="ccard">
-              <div className="ccard__info">
-                <p>{contact.text}</p>
-                <ul className="clinks">
-                  <li><a className="clink" href={`mailto:${person.email}`}><span className="clink__icon"><MailIcon /></span><span className="clink__text"><span className="clink__label">Email</span><span className="clink__value">{person.email}</span></span></a></li>
-                  <li><a className="clink" href={person.linkedin}><span className="clink__icon"><LinkedInIcon /></span><span className="clink__text"><span className="clink__label">LinkedIn</span><span className="clink__value">{handle(person.linkedin)}</span></span></a></li>
-                  <li><a className="clink" href={person.github}><span className="clink__icon"><GitHubIcon /></span><span className="clink__text"><span className="clink__label">GitHub</span><span className="clink__value">{handle(person.github)}</span></span></a></li>
-                  {person.medium && <li><a className="clink" href={person.medium}><span className="clink__icon"><MediumIcon /></span><span className="clink__text"><span className="clink__label">Medium</span><span className="clink__value">{handle(person.medium)}</span></span></a></li>}
-                  <li><div className="clink clink--static"><span className="clink__icon"><PinIcon /></span><span className="clink__text"><span className="clink__label">Location</span><span className="clink__value">{person.location}</span></span></div></li>
-                </ul>
+            <div className="contact">
+              <p className="contact__lead">{contact.text}</p>
+              <div className="contact__mail">
+                <a className="contact__email" href={`mailto:${person.email}`}>{person.email.split('@')[0]}@<wbr />{person.email.split('@')[1]}</a>
+                <CopyEmail email={person.email} />
               </div>
-              <ContactForm endpoint={contact.formEndpoint} email={person.email} />
+              <ul className="contact__links">
+                <li><a href={person.linkedin}><LinkedInIcon /><span>{handle(person.linkedin)}</span></a></li>
+                <li><a href={person.github}><GitHubIcon /><span>{handle(person.github)}</span></a></li>
+                {person.medium && <li><a href={person.medium}><MediumIcon /><span>{handle(person.medium)}</span></a></li>}
+                <li className="contact__place"><PinIcon /><span>{person.location}</span></li>
+              </ul>
+              <div className="contact__form">
+                <h3>Or send a message</h3>
+                <ContactForm endpoint={contact.formEndpoint} email={person.email} />
+              </div>
             </div>
           </section>
         </main>
