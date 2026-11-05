@@ -1,0 +1,34 @@
+{
+  "skills": [
+    {
+      "group": "Backend",
+      "items": "Spring Boot, Spring WebFlux, Project Reactor, Spring MVC, Spring Security, JPA and Hibernate, Spring Data Neo4j, Spring AI"
+    },
+    {
+      "group": "Data",
+      "items": "PostgreSQL, pgvector, Neo4j, MySQL, Redis, Kafka, Flyway"
+    },
+    {
+      "group": "Testing",
+      "items": "JUnit 5, Mockito, Testcontainers, Playwright"
+    },
+    {
+      "group": "Other",
+      "items": "TypeScript, React, Docker, Linux, Git"
+    }
+  ],
+  "github": "https://github.com/nay-eem-01",
+  "education": "B.Sc. in Computer Science and Engineering, Green University of Bangladesh (2022 to 2026)",
+  "name": "Md. Nayeem Ahmed",
+  "resume": "/Nayeem-Ahmed-Resume.pdf",
+  "about": {
+    "lead": "I’m a backend engineer who works with both reactive and traditional Spring. At work I build features on Spring WebFlux, Neo4j and Kafka; in my own projects I use Spring MVC, JPA and PostgreSQL.",
+    "body": "I care most about the parts users never see but always feel: payments that are never taken twice, balances that always add up, and accounts that stay secure. I plan each project before I build it, keep database changes in versioned migrations, and write tests alongside the code."
+  },
+  "photo": "/images/nayeem.jpg",
+  "line": "I build reliable backend systems: clean APIs, solid data models and secure authentication.",
+  "role": "Backend Engineer, Java and Spring Boot",
+  "now": "Junior Backend Developer at Dhrubok Infotech, Dhaka",
+  "email": "ahmedmdnayeem05@gmail.com",
+  "linkedin": "https://linkedin.com/in/md-nayeem-ahmed"
+}

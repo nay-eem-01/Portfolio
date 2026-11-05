@@ -1,0 +1,136 @@
+{
+  "order": 2,
+  "slug": "agrotrends",
+  "name": "AgroTrends",
+  "summary": "A knowledge-sharing platform for agriculture, with an AI advisor that answers questions using the platform’s own articles.",
+  "decision": "The AI only answers from articles it has retrieved, and it lists them as sources so every answer can be checked.",
+  "stack": "Spring Boot 3.5, Spring AI, PostgreSQL with pgvector, React 19",
+  "image": "/projects/agrotrends.jpg",
+  "imageAlt": "The AgroTrends stories page with articles on crops and livestock",
+  "caption": "The stories page running locally with sample articles.",
+  "links": [
+    {
+      "label": "Backend code",
+      "href": "https://github.com/nay-eem-01/AgroTrends"
+    },
+    {
+      "label": "Frontend code",
+      "href": "https://github.com/nay-eem-01/agrotrends_web"
+    }
+  ],
+  "meta": {
+    "role": "Backend and frontend developer: security, AI features and the React app",
+    "stack": "Java 21, Spring Boot 3.5, Spring AI, PostgreSQL, pgvector, React 19",
+    "status": "Most of the roadmap is complete. The platform has not launched publicly yet."
+  },
+  "problem": [
+    "General AI chatbots can give confident but wrong farming advice, such as an unsafe pesticide dose. Agriculture students and young agronomists in Bangladesh need answers they can verify, in both Bangla and English.",
+    "In the earlier version of the project, the AI feature saved articles as embeddings but never used them to answer questions, and authentication and access control needed a full review."
+  ],
+  "users": "The platform is designed first for agriculture students and recent graduates, then for young agronomists who can become verified experts, and for urban and rooftop growers. It has not launched yet, so it has no users.",
+  "built": [
+    "Articles with drafts, tags, likes, bookmarks and follows, similar to Medium.",
+    "A question-and-answer section with voting, reputation and expert badges by topic.",
+    "An AI advisor that answers from the platform’s articles and shows which ones it used.",
+    "Secure sign-in, session management and password reset.",
+    "The React web app in Bangla and English, delivered in more than 130 small pull requests."
+  ],
+  "architecture": {
+    "intro": "A layered Spring Boot application on PostgreSQL. Each article is split into chunks of about 800 tokens and stored in pgvector, together with details such as its author, category and publishing status.",
+    "label": "How a question is answered",
+    "nodes": [
+      {
+        "id": "api",
+        "label": "question",
+        "x": 250,
+        "y": 10
+      },
+      {
+        "id": "quota",
+        "label": "daily limit",
+        "x": 40,
+        "y": 108
+      },
+      {
+        "id": "retrieve",
+        "label": "pgvector",
+        "x": 250,
+        "y": 108
+      },
+      {
+        "id": "model",
+        "label": "Gemini",
+        "x": 460,
+        "y": 108
+      },
+      {
+        "id": "answer",
+        "label": "answer + sources",
+        "x": 230,
+        "y": 206
+      }
+    ],
+    "edges": "M320 54v54M250 130h-70M390 130h70M320 152v54",
+    "steps": [
+      {
+        "label": "Ask",
+        "on": [
+          "api"
+        ],
+        "text": "A signed-in user with a confirmed email asks a question of up to 1,000 characters."
+      },
+      {
+        "label": "Limit",
+        "on": [
+          "quota"
+        ],
+        "text": "Each user can ask 20 questions a day, which keeps the AI costs under control."
+      },
+      {
+        "label": "Search",
+        "on": [
+          "retrieve"
+        ],
+        "text": "The question is converted into a vector, and the five most relevant published articles are found, as long as they are similar enough to be useful."
+      },
+      {
+        "label": "Answer",
+        "on": [
+          "model"
+        ],
+        "text": "Gemini writes an answer using only those articles. The article text is treated as untrusted input, and slow responses time out after 60 seconds."
+      },
+      {
+        "label": "Cite",
+        "on": [
+          "answer"
+        ],
+        "text": "The answer is returned with its sources: the title of each article it used, most relevant first."
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "title": "Only reviewed content reaches the AI",
+      "body": "Drafts and unreviewed AI answers are never used as sources. AI-generated answers to community questions are marked as unchecked until an expert confirms or corrects them, and only then become part of the AI’s knowledge."
+    },
+    {
+      "title": "Sessions that can actually be ended",
+      "body": "Access tokens last 15 minutes and are checked against a stored session on every request. Refresh tokens can only be used once and are replaced each time. When a user signs out, their session really ends."
+    },
+    {
+      "title": "Permission checks live in the service layer",
+      "body": "Every change to content goes through one ownership check in the service layer, so a new endpoint cannot accidentally skip it. Private data returns “not found” rather than “forbidden”, so it does not reveal that it exists."
+    }
+  ],
+  "solved": {
+    "before": "The original AI feature stored articles but never used them, and the embedding model it relied on had been retired by Google. I switched to a supported model, split articles into chunks with useful metadata, and added a retrieval step before the AI answers:",
+    "code": "return RetrievalAugmentationAdvisor.builder()\n        .documentRetriever(VectorStoreDocumentRetriever.builder()\n                .vectorStore(vectorStore)\n                .topK(aiProperties.getRag().getTopK())\n                .similarityThreshold(aiProperties.getRag().getSimilarityThreshold())\n                .filterExpression(DocumentService.publishedOnly())\n                .build())\n        .queryAugmenter(blogQueryAugmenter())\n        .build();",
+    "after": "When an article is edited, its stored chunks are replaced, and when it is deleted they are removed. The AI never cites an article that has changed or no longer exists."
+  },
+  "next": [
+    "Move the database schema to Flyway migrations.",
+    "Run the full application test against a real database in CI using Testcontainers.",
+    "Add a GitHub Actions pipeline for builds, tests and secret scanning."
+  ]
+}

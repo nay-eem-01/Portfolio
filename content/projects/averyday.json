@@ -1,0 +1,139 @@
+{
+  "order": 4,
+  "slug": "averyday",
+  "name": "AveryDay",
+  "summary": "A habit tracker for self-learners that installs on your phone like an app.",
+  "decision": "Streaks and progress are calculated from your check-ins every time, never stored, so they can never be wrong.",
+  "stack": "Spring Boot 4, PostgreSQL, Flyway, Testcontainers, React",
+  "image": "/projects/averyday.jpg",
+  "imageAlt": "The AveryDay dashboard with completion rates and goals",
+  "caption": "The dashboard running locally with a demo account.",
+  "links": [
+    {
+      "label": "Backend code",
+      "href": "https://github.com/nay-eem-01/habit-tracker"
+    },
+    {
+      "label": "Frontend code",
+      "href": "https://github.com/nay-eem-01/habit-tracker_web"
+    }
+  ],
+  "live": {
+    "label": "Live app",
+    "href": "https://averyday.vercel.app"
+  },
+  "meta": {
+    "role": "Sole developer: backend, frontend and deployment",
+    "stack": "Java 21, Spring Boot 4, Spring MVC, JPA, PostgreSQL, Flyway, React",
+    "status": "In public beta. It runs on free hosting, so the first load can take a few seconds."
+  },
+  "problem": [
+    "Most habit trackers are not built for learning. They don’t connect a habit to the goal behind it, and their streaks are either so strict that one missed day ruins them or so loose that they mean nothing."
+  ],
+  "users": "Self-learners and developers who set a goal, such as learning a new language in 60 days, and check in every day. The app is in public beta.",
+  "built": [
+    "Goals with linked habits, notes and study resources.",
+    "Habits to build or to quit, on daily, weekday or weekly schedules.",
+    "Streaks, XP, levels and a dashboard of completion rates.",
+    "Rest days with a weekly limit, and push notification reminders.",
+    "Google sign-in, an admin panel, and an installable web app."
+  ],
+  "architecture": {
+    "intro": "A single Spring Boot application organised by feature. Features talk to each other only through their services, never through another feature’s repository. Flyway manages every database change.",
+    "label": "How a session is kept safe",
+    "nodes": [
+      {
+        "id": "api",
+        "label": "web app",
+        "x": 250,
+        "y": 10
+      },
+      {
+        "id": "cookie",
+        "label": "secure cookie",
+        "x": 40,
+        "y": 108
+      },
+      {
+        "id": "hash",
+        "label": "hashed token",
+        "x": 250,
+        "y": 108
+      },
+      {
+        "id": "reuse",
+        "label": "reuse check",
+        "x": 460,
+        "y": 108
+      },
+      {
+        "id": "rotate",
+        "label": "new token",
+        "x": 250,
+        "y": 206
+      }
+    ],
+    "edges": "M320 54v54M250 130h-70M390 130h70M320 152v54",
+    "steps": [
+      {
+        "label": "Refresh",
+        "on": [
+          "api"
+        ],
+        "text": "When the short-lived access token expires, the web app asks for a new one. Several requests at once share a single refresh."
+      },
+      {
+        "label": "Cookie",
+        "on": [
+          "cookie"
+        ],
+        "text": "The refresh token is kept in a secure, HTTP-only cookie, so JavaScript on the page can never read it."
+      },
+      {
+        "label": "Hash",
+        "on": [
+          "hash"
+        ],
+        "text": "The server stores only a hash of the token, so even a database leak would not expose anyone’s session."
+      },
+      {
+        "label": "Reuse",
+        "on": [
+          "reuse"
+        ],
+        "text": "If an old token is ever used again, it is treated as theft and every session for that user is signed out."
+      },
+      {
+        "label": "Rotate",
+        "on": [
+          "rotate"
+        ],
+        "text": "Otherwise the token is replaced with a new one and a fresh 15-minute access token is issued."
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "title": "Calculate progress, don’t store it",
+      "body": "Streaks, statistics, XP and goal progress are all calculated from check-ins when they are requested. Nothing is stored that could fall out of sync with the history."
+    },
+    {
+      "title": "Past days follow the rules of that day",
+      "body": "A day counts as complete if it met the target that applied on that day. Raising a target later never changes your past results. Changing a schedule starts a new streak but keeps your XP."
+    },
+    {
+      "title": "Other people’s data simply does not exist",
+      "body": "Every query is filtered by the signed-in user. If you request someone else’s habit, you get “not found”, which reveals nothing about whether it exists."
+    }
+  ],
+  "solved": {
+    "before": "Adding Google sign-in created a subtle security risk called account pre-hijacking. Someone could register with your email address and a password before you ever signed in with Google, and keep access to the account. Now, when a Google account is linked to an account whose email was never verified, that account’s password and sessions are removed. This integration test proves it:",
+    "code": "@Test\nvoid linkingAnUnverifiedAccountRemovesItsPasswordAndSessions() throws Exception {\n    // someone signed up with this address without owning it (pre-hijacking)\n    register(\"victim@gmail.com\");\n    google(\"t3\", new GoogleIdentity(\"sub-victim\", \"victim@gmail.com\", true, \"Victim\"));\n\n    signIn(\"t3\", null).andExpect(status().isOk());\n    login(\"victim@gmail.com\").andExpect(status().isUnauthorized());\n}",
+    "after": "Google sign-in tokens are verified on the server against Google’s public keys, and a Google account without a verified email is refused."
+  },
+  "next": [
+    "Automatic check-ins from GitHub, so a “commit every day” habit is ticked by real activity.",
+    "A custom domain, so account emails stop landing in spam.",
+    "A paid Pro plan, once there is demand for it."
+  ]
+}
