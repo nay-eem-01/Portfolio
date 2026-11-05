@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import BackToTop from '@/components/BackToTop';
+import Footer from '@/components/Footer';
+import MobileNav from '@/components/MobileNav';
 import ScrollSpy from '@/components/ScrollSpy';
 import ThemeToggle from '@/components/ThemeToggle';
 import Trace from '@/components/Trace';
@@ -30,7 +33,9 @@ export default async function CaseStudy({ params }: Props) {
 
   return (
     <>
-      <header className="bar container">
+      <MobileNav name={person.name} home="/" email={person.email} resume={person.resume}
+        items={[{ href: '/', label: 'Home' }, { href: '/#projects', label: 'All projects' }, ...toc.map(([id, label]) => ({ href: `#${id}`, label }))]} />
+      <header className="bar container" id="top" tabIndex={-1}>
         <Link className="bar__home" href="/">{person.name}</Link>
         <nav aria-label="Site">
           <Link href="/#projects">Projects</Link>
@@ -97,6 +102,8 @@ export default async function CaseStudy({ params }: Props) {
           </article>
         </div>
       </main>
+      <Footer base="/" />
+      <BackToTop />
       <ScrollSpy navSelector=".toc" />
     </>
   );

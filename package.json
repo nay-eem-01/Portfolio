@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve out",
-    "lint": "next lint"
+    "lint": "next lint",
+    "admin:local": "node scripts/admin-local.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "simple-icons": "15.22.0"
   },
   "devDependencies": {
     "@types/node": "^22.18.6",
