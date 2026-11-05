@@ -1,6 +1,6 @@
 import {
-  siApachekafka, siApachemaven, siDocker, siFlyway, siGit, siHibernate, siJunit5, siLinux, siMysql,
-  siNeo4j, siOpenjdk, siPostgresql, siReact, siRedis, siSpring, siSpringboot, siSpringsecurity, siTypescript,
+  siApachekafka, siApachelucene, siApachemaven, siDocker, siFlyway, siGit, siGithubactions, siHibernate, siJavascript, siJunit5, siLinux, siMysql,
+  siNeo4j, siOpenjdk, siPostgresql, siPython, siReact, siRedis, siSpring, siSpringboot, siSpringsecurity, siTypescript,
 } from 'simple-icons';
 
 // Brand marks from Simple Icons (CC0). Skills without a mark render as a text badge.
@@ -9,7 +9,7 @@ const icons: Record<string, { path: string }> = {
   'spring mvc': siSpring, 'spring security': siSpringsecurity, 'spring ai': siSpring, 'spring data neo4j': siNeo4j,
   hibernate: siHibernate, postgresql: siPostgresql, pgvector: siPostgresql, neo4j: siNeo4j, mysql: siMysql,
   redis: siRedis, kafka: siApachekafka, 'apache kafka': siApachekafka, flyway: siFlyway, 'junit 5': siJunit5,
-  maven: siApachemaven, docker: siDocker, git: siGit, linux: siLinux, typescript: siTypescript, react: siReact,
+  maven: siApachemaven, lucene: siApachelucene, 'github actions': siGithubactions, javascript: siJavascript, python: siPython, docker: siDocker, git: siGit, linux: siLinux, typescript: siTypescript, react: siReact,
 };
 
 export default function TechIcon({ name }: { name: string }) {

@@ -79,8 +79,8 @@ code, pre { font-family: var(--font-code); font-size: 0.9em; }
 .rail h1 { font-size: clamp(2.75rem, 2.8vw + 1rem, 3.75rem); max-width: 11ch; padding-top: var(--space-xs); }
 .rail__role { font: 500 var(--text-xl)/1.3 var(--font-body); }
 .rail__line { color: var(--ink-2); max-width: 34ch; }
-.rail__now { display: inline-flex; align-items: center; gap: var(--space-xs); color: var(--muted); font-size: var(--text-sm); }
-.now-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-wash); }
+.rail__now { display: flex; align-items: flex-start; gap: var(--space-xs); color: var(--ink-2); font-size: var(--text-sm); line-height: 1.45; }
+.rail__now .icon { width: 16px; height: 16px; margin-top: 2px; color: var(--accent); }
 .rail__nav { display: grid; gap: 0; padding-block: var(--space-lg); }
 .rail__nav a { position: relative; display: inline-flex; align-items: center; gap: var(--space-md); width: fit-content; min-height: 36px; color: var(--muted); text-decoration: none; font: 500 var(--text-sm)/1 var(--font-body); }
 .rail__nav a::before { content: ""; flex: none; width: 48px; height: 1px; background: currentColor; transform: scaleX(0.5); transform-origin: left; transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease); }
@@ -265,11 +265,16 @@ pre:focus-visible { outline-offset: 2px; }
 /* ===================== contact card ===================== */
 .ccard { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); padding: var(--space-xl); border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--paper-2); }
 .ccard__info { display: grid; gap: var(--space-lg); align-content: start; }
-.ccard__info > p { color: var(--ink-2); }
-.ccard__list { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: var(--space-md) var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--rule); }
-.ccard__list dt { color: var(--muted); font-size: var(--text-sm); }
-.ccard__list dd { margin: 0; overflow-wrap: break-word; }
-.ccard__list a { display: inline-flex; align-items: center; gap: var(--space-xs); }
+.ccard__info > p { color: var(--ink-2); max-width: 60ch; }
+.clinks { list-style: none; margin: 0; padding: 0 0 var(--space-lg); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); border-bottom: 1px solid var(--rule); }
+.clink { display: flex; align-items: center; gap: var(--space-sm); min-height: 64px; padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-sm); border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--paper); color: var(--ink); text-decoration: none; transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease); }
+a.clink:hover { border-color: var(--accent); }
+a.clink:hover .clink__icon { background: var(--accent-wash); color: var(--accent); }
+.clink__icon { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: var(--radius); background: var(--paper-3); color: var(--ink-2); transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.clink__text { display: grid; gap: 2px; min-width: 0; text-align: left; }
+.clink__label { color: var(--muted); font-size: 0.8125rem; line-height: 1.2; }
+.clink__value { font-weight: 500; font-size: 0.9375rem; line-height: 1.3; overflow-wrap: break-word; }
+.clinks > li:first-child { grid-column: 1 / -1; }
 .cform { display: grid; gap: var(--space-md); align-content: start; }
 .field { display: grid; gap: var(--space-2xs); }
 .field label { font-size: var(--text-sm); font-weight: 500; }
@@ -328,6 +333,7 @@ pre:focus-visible { outline-offset: 2px; }
   .prail__controls .btn:disabled { opacity: 0.4; cursor: not-allowed; background: var(--paper-2); border-color: var(--rule); }
   .posts, .skillset { grid-template-columns: minmax(0, 1fr); }
   .ccard { grid-template-columns: minmax(0, 1fr); padding: var(--space-lg); }
+  .clinks { grid-template-columns: minmax(0, 1fr); }
   .foot__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); }
   .totop { right: var(--space-md); bottom: var(--space-md); }
 }

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import BackToTop from '@/components/BackToTop';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
-import { GitHubIcon, LinkedInIcon, MediumIcon } from '@/components/Icons';
+import { BriefcaseIcon, GitHubIcon, LinkedInIcon, MailIcon, MediumIcon, PinIcon } from '@/components/Icons';
 import Links from '@/components/Links';
 import MobileNav from '@/components/MobileNav';
 import ProjectRail from '@/components/ProjectRail';
@@ -28,7 +28,7 @@ export default function Home() {
             <h1>{person.name}</h1>
             <p className="rail__role">{person.role}</p>
             <p className="rail__line">{person.line}</p>
-            <p className="rail__now"><span className="now-dot" aria-hidden="true" />{person.now}</p>
+            <p className="rail__now"><BriefcaseIcon /><span>{person.now}</span></p>
           </div>
           <nav className="rail__nav" aria-label="Sections">
             {sections.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
@@ -150,13 +150,13 @@ export default function Home() {
             <div className="ccard">
               <div className="ccard__info">
                 <p>{contact.text}</p>
-                <dl className="ccard__list">
-                  <div><dt>Email</dt><dd><a href={`mailto:${person.email}`}>{person.email}</a></dd></div>
-                  <div><dt>LinkedIn</dt><dd><a href={person.linkedin}><LinkedInIcon /> {handle(person.linkedin)}</a></dd></div>
-                  <div><dt>GitHub</dt><dd><a href={person.github}><GitHubIcon /> {handle(person.github)}</a></dd></div>
-                  {person.medium && <div><dt>Medium</dt><dd><a href={person.medium}><MediumIcon /> {handle(person.medium)}</a></dd></div>}
-                  <div><dt>Location</dt><dd>{person.location}</dd></div>
-                </dl>
+                <ul className="clinks">
+                  <li><a className="clink" href={`mailto:${person.email}`}><span className="clink__icon"><MailIcon /></span><span className="clink__text"><span className="clink__label">Email</span><span className="clink__value">{person.email}</span></span></a></li>
+                  <li><a className="clink" href={person.linkedin}><span className="clink__icon"><LinkedInIcon /></span><span className="clink__text"><span className="clink__label">LinkedIn</span><span className="clink__value">{handle(person.linkedin)}</span></span></a></li>
+                  <li><a className="clink" href={person.github}><span className="clink__icon"><GitHubIcon /></span><span className="clink__text"><span className="clink__label">GitHub</span><span className="clink__value">{handle(person.github)}</span></span></a></li>
+                  {person.medium && <li><a className="clink" href={person.medium}><span className="clink__icon"><MediumIcon /></span><span className="clink__text"><span className="clink__label">Medium</span><span className="clink__value">{handle(person.medium)}</span></span></a></li>}
+                  <li><div className="clink clink--static"><span className="clink__icon"><PinIcon /></span><span className="clink__text"><span className="clink__label">Location</span><span className="clink__value">{person.location}</span></span></div></li>
+                </ul>
               </div>
               <ContactForm endpoint={contact.formEndpoint} email={person.email} />
             </div>
