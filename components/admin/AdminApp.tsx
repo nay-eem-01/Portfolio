@@ -65,6 +65,7 @@ export default function AdminApp() {
     try {
       const { data, sha } = await repo.readJson<Obj>(path);
       setDoc({ path, title, fields, data, sha, saved: JSON.stringify(data) });
+      document.querySelector('.adm-main')?.scrollTo(0, 0);
     } catch (e) { setStatus({ kind: 'error', message: (e as Error).message }); }
     finally { setLoading(false); }
   }, [repo, dirty]);
@@ -174,6 +175,12 @@ export default function AdminApp() {
         <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
         New project
       </button>
+      <div className="adm-nav__account">
+        <p className="adm-nav__group">Account</p>
+        <p className="adm-nav__user">Signed in as {phase.login}</p>
+        <a href="/">View site</a>
+        {!isLocal() && <button type="button" onClick={() => { forgetToken(); setRepo(null); setDoc(null); setPhase({ kind: 'signed-out' }); }}>Sign out</button>}
+      </div>
     </nav>
   );
 
@@ -183,7 +190,7 @@ export default function AdminApp() {
         <button className="btn theme adm-menu" type="button" aria-label={menu ? 'Close sections' : 'Open sections'} aria-expanded={menu} onClick={() => setMenu(!menu)}>
           <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d={menu ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16'} /></svg>
         </button>
-        <p className="adm-top__brand">Portfolio admin</p>
+        <p className="adm-top__brand">Portfolio <span>admin</span></p>
         <div className="adm-top__right">
           {isLocal() && <span className="pill">Local files</span>}
           <a className="adm-top__link" href="/">View site</a>
@@ -204,17 +211,7 @@ export default function AdminApp() {
                   <h1>{doc.title}</h1>
                   <p className="muted">{doc.path}</p>
                 </div>
-                <div className="adm-doc__actions">
-                  {isProject && <button className="btn btn--quiet btn--danger" type="button" onClick={deleteProject}>Delete</button>}
-                  <button className="btn btn--primary" type="submit" disabled={!dirty || status.kind === 'saving'}>
-                    {status.kind === 'saving' ? 'Publishing…' : 'Publish'}
-                  </button>
-                </div>
-              </div>
-              <div className="adm-status" role="status" aria-live="polite">
-                {status.kind === 'saved' && !dirty && <p className="adm-status__ok">Published. The site updates in about a minute.</p>}
-                {status.kind === 'error' && <p className="af__err">{status.message}</p>}
-                {dirty && status.kind !== 'saving' && <p className="muted">Unsaved changes.</p>}
+                {isProject && <button className="btn btn--quiet btn--danger" type="button" onClick={deleteProject}>Delete project</button>}
               </div>
               {isProject && (
                 <label className="adm-adv"><input type="checkbox" checked={advanced} onChange={(e) => setAdvanced(e.target.checked)} /> Show diagram settings (advanced)</label>
@@ -223,7 +220,14 @@ export default function AdminApp() {
                 <FieldEditor key={`${doc.path}:${f.key}`} field={f} value={doc.data[f.key]} upload={upload} showAdvanced={advanced}
                   onChange={(v) => { setDoc({ ...doc, data: { ...doc.data, [f.key]: v } }); if (status.kind === 'saved') setStatus({ kind: 'idle' }); }} />
               ))}
-              <div className="adm-doc__foot">
+              {/* Pinned to the bottom of the screen, so Publish is always within reach, on phones too. */}
+              <div className="adm-bar">
+                <div className="adm-bar__status" role="status" aria-live="polite">
+                  {status.kind === 'saving' && <p className="muted">Publishing…</p>}
+                  {status.kind === 'saved' && !dirty && <p className="adm-status__ok">Published. The site updates in about a minute.</p>}
+                  {status.kind === 'error' && <p className="adm-bar__err">{status.message}</p>}
+                  {status.kind !== 'saving' && status.kind !== 'error' && !(status.kind === 'saved' && !dirty) && <p className="muted">{dirty ? 'You have unsaved changes.' : 'No changes yet.'}</p>}
+                </div>
                 <button className="btn btn--primary" type="submit" disabled={!dirty || status.kind === 'saving'}>{status.kind === 'saving' ? 'Publishing…' : 'Publish'}</button>
               </div>
             </form>
