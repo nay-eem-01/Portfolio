@@ -4,7 +4,9 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
-export type Job = { title: string; company: string; when: string; from: string; summary: string; tags: string[] };
+export type Role = { title: string; start: string; end?: string; summary: string; tags: string[] }; // months as YYYY-MM; no end = present
+export type Company = { company: string; location: string; roles: Role[] };
+export type Post = { title: string; date: string; minutes: number; summary: string; url: string; tags: string[] };
 export type TraceNode = { id: string; label: string; x: number; y: number; quiet?: boolean };
 export type TraceStep = { label: string; on: string[]; text: string };
 export type Link = { label: string; href: string };
@@ -32,11 +34,13 @@ export type Project = {
 };
 
 type Profile = {
-  name: string; role: string; line: string; now: string;
-  email: string; github: string; linkedin: string; resume: string; photo: string;
+  name: string; role: string; line: string; now: string; location: string;
+  email: string; github: string; linkedin: string; medium: string; resume: string; photo: string;
   about: { lead: string; body: string };
-  skills: { group: string; items: string }[];
+  skills: { group: string; items: string[] }[];
   education: string;
+  writing: Post[];
+  contact: { heading: string; text: string; formEndpoint: string };
 };
 
 const dir = path.join(process.cwd(), 'content');
@@ -49,17 +53,23 @@ function need(file: string, obj: Record<string, unknown>, keys: string[]) {
 }
 
 const profile = read<Profile>('profile.json');
-need('profile.json', profile, ['name', 'role', 'line', 'email', 'github', 'linkedin', 'resume', 'about', 'skills']);
+need('profile.json', profile, ['name', 'role', 'line', 'email', 'github', 'linkedin', 'resume', 'about', 'skills', 'contact']);
 
 export const person = {
-  name: profile.name, role: profile.role, line: profile.line, now: profile.now,
-  email: profile.email, github: profile.github, linkedin: profile.linkedin, resume: profile.resume, photo: profile.photo,
+  name: profile.name, role: profile.role, line: profile.line, now: profile.now, location: profile.location,
+  email: profile.email, github: profile.github, linkedin: profile.linkedin, medium: profile.medium,
+  resume: profile.resume, photo: profile.photo,
 };
 export const about = profile.about;
 export const skills = profile.skills;
 export const education = profile.education;
+export const contact = profile.contact;
+export const writing: Post[] = [...(profile.writing ?? [])].sort((a, b) => b.date.localeCompare(a.date));
 
-export const jobs: Job[] = read<{ jobs: Job[] }>('experience.json').jobs ?? [];
+export const companies: Company[] = (read<{ companies: Company[] }>('experience.json').companies ?? []).map((c) => ({
+  ...c,
+  roles: [...c.roles].map((r) => ({ ...r, end: r.end || undefined })).sort((a, b) => b.start.localeCompare(a.start)),
+}));
 
 export const projects: Project[] = readdirSync(path.join(dir, 'projects'))
   .filter((f) => f.endsWith('.json'))

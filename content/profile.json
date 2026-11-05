@@ -2,19 +2,48 @@
   "skills": [
     {
       "group": "Backend",
-      "items": "Spring Boot, Spring WebFlux, Project Reactor, Spring MVC, Spring Security, JPA and Hibernate, Spring Data Neo4j, Spring AI"
+      "items": [
+        "Java",
+        "Spring Boot",
+        "Spring WebFlux",
+        "Project Reactor",
+        "Spring MVC",
+        "Spring Security",
+        "Hibernate",
+        "Spring AI"
+      ]
     },
     {
-      "group": "Data",
-      "items": "PostgreSQL, pgvector, Neo4j, MySQL, Redis, Kafka, Flyway"
+      "group": "Data and messaging",
+      "items": [
+        "PostgreSQL",
+        "pgvector",
+        "Neo4j",
+        "MySQL",
+        "Redis",
+        "Apache Kafka",
+        "Flyway"
+      ]
     },
     {
       "group": "Testing",
-      "items": "JUnit 5, Mockito, Testcontainers, Playwright"
+      "items": [
+        "JUnit 5",
+        "Mockito",
+        "Testcontainers",
+        "Playwright"
+      ]
     },
     {
-      "group": "Other",
-      "items": "TypeScript, React, Docker, Linux, Git"
+      "group": "Tools",
+      "items": [
+        "Maven",
+        "Docker",
+        "Git",
+        "Linux",
+        "TypeScript",
+        "React"
+      ]
     }
   ],
   "github": "https://github.com/nay-eem-01",
@@ -30,5 +59,38 @@
   "role": "Backend Engineer, Java and Spring Boot",
   "now": "Junior Backend Developer at Dhrubok Infotech, Dhaka",
   "email": "ahmedmdnayeem05@gmail.com",
-  "linkedin": "https://linkedin.com/in/md-nayeem-ahmed"
+  "linkedin": "https://linkedin.com/in/md-nayeem-ahmed",
+  "location": "Uttara, Dhaka, Bangladesh",
+  "writing": [
+    {
+      "title": "How HashMap Dynamically Resizes in Java",
+      "date": "2025-06-05",
+      "minutes": 2,
+      "summary": "What happens under the hood when a HashMap grows, and what resizing means for performance.",
+      "url": "https://medium.com/@ahmedmdnayeem05/how-hashmap-dynamically-resizes-in-java-e4688976b93f",
+      "tags": [
+        "Java",
+        "HashMap",
+        "Data structures"
+      ]
+    },
+    {
+      "title": "Why Java’s Vector Class Is Rarely Used Today",
+      "date": "2025-01-17",
+      "minutes": 3,
+      "summary": "How Vector differs from C++’s std::vector, and why modern Java code reaches for other collections instead.",
+      "url": "https://medium.com/@ahmedmdnayeem05/why-javas-vector-class-is-rarely-used-today-79ebd2188c50",
+      "tags": [
+        "Java",
+        "Collections",
+        "Performance"
+      ]
+    }
+  ],
+  "medium": "https://medium.com/@ahmedmdnayeem05",
+  "contact": {
+    "heading": "Let’s work together",
+    "text": "I’m looking for backend roles where clean architecture and reliability matter. Send me a message here or email me directly.",
+    "formEndpoint": "https://formspree.io/f/xkjngalv"
+  }
 }
