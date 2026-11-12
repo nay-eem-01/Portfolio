@@ -56,10 +56,17 @@
         "Linux",
         "React"
       ]
+    },
+    {
+      "group": "DevOps",
+      "items": [
+        "Azure",
+        "Aws"
+      ]
     }
   ],
   "github": "https://github.com/nay-eem-01",
-  "education": "B.Sc. in Computer Science and Engineering, Green University of Bangladesh, 2022 to 2026, CGPA 3.32",
+  "education": "B.Sc. in Computer Science and Engineering, Green University of Bangladesh, 2022 to 2026",
   "name": "Md. Nayeem Ahmed",
   "resume": "/Nayeem-Ahmed-Resume.pdf",
   "about": {
